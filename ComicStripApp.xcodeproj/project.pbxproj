@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */; };
+		AB8E85021EA9AAE1003DDDD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85011EA9AAE1003DDDD5 /* ViewController.swift */; };
+		AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85031EA9AAE1003DDDD5 /* Main.storyboard */; };
+		AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */; };
+		AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85091EA9AAE1003DDDD5 /* Assets.xcassets */; };
+		AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AB8E85011EA9AAE1003DDDD5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AB8E85041EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AB8E85071EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ComicStripApp.xcdatamodel; sourceTree = "<group>"; };
+		AB8E85091EA9AAE1003DDDD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB8E850C1EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AB8E850E1EA9AAE1003DDDD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB8E84F91EA9AAE0003DDDD5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB8E84F31EA9AAE0003DDDD5 = {
+			isa = PBXGroup;
+			children = (
+				AB8E84FE1EA9AAE1003DDDD5 /* ComicStripApp */,
+				AB8E84FD1EA9AAE1003DDDD5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AB8E84FD1EA9AAE1003DDDD5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB8E84FE1EA9AAE1003DDDD5 /* ComicStripApp */ = {
+			isa = PBXGroup;
+			children = (
+				AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */,
+				AB8E85011EA9AAE1003DDDD5 /* ViewController.swift */,
+				AB8E85031EA9AAE1003DDDD5 /* Main.storyboard */,
+				AB8E85091EA9AAE1003DDDD5 /* Assets.xcassets */,
+				AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */,
+				AB8E850E1EA9AAE1003DDDD5 /* Info.plist */,
+				AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */,
+			);
+			path = ComicStripApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB8E84FB1EA9AAE0003DDDD5 /* ComicStripApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB8E85111EA9AAE1003DDDD5 /* Build configuration list for PBXNativeTarget "ComicStripApp" */;
+			buildPhases = (
+				AB8E84F81EA9AAE0003DDDD5 /* Sources */,
+				AB8E84F91EA9AAE0003DDDD5 /* Frameworks */,
+				AB8E84FA1EA9AAE0003DDDD5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ComicStripApp;
+			productName = ComicStripApp;
+			productReference = AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB8E84F41EA9AAE0003DDDD5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = comicStripClub;
+				TargetAttributes = {
+					AB8E84FB1EA9AAE0003DDDD5 = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = 77743F68A6;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = AB8E84F71EA9AAE0003DDDD5 /* Build configuration list for PBXProject "ComicStripApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AB8E84F31EA9AAE0003DDDD5;
+			productRefGroup = AB8E84FD1EA9AAE1003DDDD5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB8E84FB1EA9AAE0003DDDD5 /* ComicStripApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB8E84FA1EA9AAE0003DDDD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
+				AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */,
+				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB8E84F81EA9AAE0003DDDD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB8E85021EA9AAE1003DDDD5 /* ViewController.swift in Sources */,
+				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
+				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AB8E85031EA9AAE1003DDDD5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB8E85041EA9AAE1003DDDD5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB8E850C1EA9AAE1003DDDD5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB8E850F1EA9AAE1003DDDD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AB8E85101EA9AAE1003DDDD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AB8E85121EA9AAE1003DDDD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 77743F68A6;
+				INFOPLIST_FILE = ComicStripApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.comicstripclub.ComicStripApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		AB8E85131EA9AAE1003DDDD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 77743F68A6;
+				INFOPLIST_FILE = ComicStripApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.comicstripclub.ComicStripApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB8E84F71EA9AAE0003DDDD5 /* Build configuration list for PBXProject "ComicStripApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB8E850F1EA9AAE1003DDDD5 /* Debug */,
+				AB8E85101EA9AAE1003DDDD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB8E85111EA9AAE1003DDDD5 /* Build configuration list for PBXNativeTarget "ComicStripApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB8E85121EA9AAE1003DDDD5 /* Debug */,
+				AB8E85131EA9AAE1003DDDD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AB8E85071EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodel */,
+			);
+			currentVersion = AB8E85071EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodel */;
+			path = ComicStripApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = AB8E84F41EA9AAE0003DDDD5 /* Project object */;
+}
