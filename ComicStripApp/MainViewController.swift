@@ -12,7 +12,7 @@ import GPUImage
 
 class MainViewController: UIViewController {
 
-    @IBOutlet weak var comicStripPanel: UIView!
+    @IBOutlet weak var comicStripPanel: RenderView!
     var previewLayer: AVCaptureVideoPreviewLayer?
     
     var captureSession: AVCaptureSession!
@@ -25,61 +25,13 @@ class MainViewController: UIViewController {
     }
 
     private func initializeCamera(){
-        captureSession = AVCaptureSession()
-        // Do any additional setup after loading the view, typically from a nib.
-        captureSession.sessionPreset = AVCaptureSessionPresetLow
-        
-        let deviceDiscovery = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInDualCamera, .builtInTelephotoCamera, .builtInWideAngleCamera], mediaType: AVMediaTypeVideo, position: AVCaptureDevicePosition.unspecified)
-        
-        // Loop through all the capture devices on this phone
-        captureDevices = deviceDiscovery?.devices ?? []
-        if (captureDevices.count > 0){
-            let captureDevice = captureDevices[0]
-            do {
-                try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
-            } catch {
-                print("Failed to initialize camera")
-            }            
-            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            previewLayer!.frame = comicStripPanel.bounds
-            previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
-            comicStripPanel.layer.addSublayer(previewLayer!)
-            
-            captureSession.startRunning()
-        }
-    }
-    
-    private func updatePreviewLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
-        layer.videoOrientation = orientation
-        if let videoPreviewLayer = previewLayer {
-            let bounds = comicStripPanel.layer.bounds;
-            videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-            videoPreviewLayer.bounds = bounds;
-            videoPreviewLayer.position = CGPoint(x: bounds.midX, y: bounds.midY);
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if let connection =  self.previewLayer?.connection  {
-            let currentDevice: UIDevice = UIDevice.current
-            let orientation: UIDeviceOrientation = currentDevice.orientation
-            let previewLayerConnection : AVCaptureConnection = connection
-            if previewLayerConnection.isVideoOrientationSupported {
-                switch (orientation) {
-                case .portrait: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-                    break
-                case .landscapeRight: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
-                    break
-                case .landscapeLeft: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeRight)
-                    break
-                case .portraitUpsideDown: updatePreviewLayer(layer: previewLayerConnection, orientation: .portraitUpsideDown)
-                    break
-                default: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
-                    break
-                }
-            }
+        do {
+            let camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
+            let filter = SmoothToonFilter()
+            camera --> filter --> comicStripPanel
+            camera.startCapture()
+        } catch {
+            fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
     

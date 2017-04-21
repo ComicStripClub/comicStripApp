@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB7C0D611EA9D4440089A040 /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB8E85251EA9C53A003DDDD5 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */; };
 		AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85031EA9AAE1003DDDD5 /* Main.storyboard */; };
 		AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */; };
@@ -53,6 +54,19 @@
 			remoteInfo = GPUImage_iOS;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB7C0D601EA9D42D0089A040 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AB7C0D611EA9D4440089A040 /* GPUImage.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +168,7 @@
 				AB8E84F81EA9AAE0003DDDD5 /* Sources */,
 				AB8E84F91EA9AAE0003DDDD5 /* Frameworks */,
 				AB8E84FA1EA9AAE0003DDDD5 /* Resources */,
+				AB7C0D601EA9D42D0089A040 /* CopyFiles */,
 			);
 			buildRules = (
 			);
