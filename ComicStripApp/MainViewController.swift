@@ -11,6 +11,9 @@ import AVFoundation
 import GPUImage
 
 class MainViewController: UIViewController {
+    override var shouldAutorotate: Bool {
+        get { return false }
+    }
 
     @IBOutlet weak var comicStripPanel: RenderView!
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -21,6 +24,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initializeCamera()
     }
 
@@ -32,6 +36,32 @@ class MainViewController: UIViewController {
             camera.startCapture()
         } catch {
             fatalError("Could not initialize rendering pipeline: \(error)")
+        }
+    }
+
+    var currentOrientation: UIDeviceOrientation = .unknown
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let newOrientation = UIDevice.current.orientation
+        if (newOrientation != currentOrientation){
+            currentOrientation = newOrientation
+            comicStripPanel.fillMode = .preserveAspectRatioAndFill
+            comicStripPanel.orientation = getImageOrientation(UIDevice.current.orientation)
+        }
+    }
+    
+    private func getImageOrientation(_ orientation: UIDeviceOrientation) -> ImageOrientation {
+        switch orientation {
+        case .landscapeLeft:
+            return .landscapeRight
+        case .landscapeRight:
+            return .landscapeLeft
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        case .portrait:
+            fallthrough
+        default:
+            return .portrait
         }
     }
     
