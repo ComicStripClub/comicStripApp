@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>GPUImage_iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>GPUImage_macOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>BC6E7CAA1C39A9D8006DF678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC6E7CB41C39A9D8006DF678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC9E34E81E524A2200B8604F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC9E34F01E524A2200B8604F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
