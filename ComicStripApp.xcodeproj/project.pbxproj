@@ -15,6 +15,8 @@
 		AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85091EA9AAE1003DDDD5 /* Assets.xcassets */; };
 		AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */; };
 		AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */; };
+		ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */; };
+		ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		AB8E850C1EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB8E850E1EA9AAE1003DDDD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStylingToolbar.swift; sourceTree = "<group>"; };
+		ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicStylingToolbar.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,8 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
+				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
 				AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
@@ -270,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,
 				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
