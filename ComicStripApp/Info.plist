@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>BackIssuesBB_ital.ttf</string>
+		<string>BADABB__.TTF</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) will use the camera to capture images to include in your comics.</string>

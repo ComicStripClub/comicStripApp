@@ -21,6 +21,7 @@
 		ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */; };
 		ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */; };
 		ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */; };
+		ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_boldital.ttf; sourceTree = "<group>"; };
 		ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_ital.ttf; sourceTree = "<group>"; };
 		ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_reg.ttf; sourceTree = "<group>"; };
+		ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BADABB__.TTF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 		ABAA17081EB1E75400C96694 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */,
 				ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */,
 				ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */,
 				ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */,
@@ -293,6 +296,7 @@
 			files = (
 				ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */,
 				ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */,
+				ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */,
 				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
 				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
