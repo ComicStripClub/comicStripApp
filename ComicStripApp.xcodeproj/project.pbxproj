@@ -18,6 +18,9 @@
 		ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */; };
 		ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */; };
 		ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */; };
+		ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */; };
+		ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */; };
+		ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +87,9 @@
 		ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStylingToolbar.swift; sourceTree = "<group>"; };
 		ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicStylingToolbar.xib; sourceTree = "<group>"; };
 		ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThoughtBubble.swift; sourceTree = "<group>"; };
+		ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_boldital.ttf; sourceTree = "<group>"; };
+		ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_ital.ttf; sourceTree = "<group>"; };
+		ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_reg.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +135,7 @@
 		AB8E84FE1EA9AAE1003DDDD5 /* ComicStripApp */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA17071EB1E73E00C96694 /* Assets */,
 				AB8E85161EA9AB43003DDDD5 /* Model */,
 				AB8E85151EA9AB38003DDDD5 /* View */,
 				AB8E85141EA9AB31003DDDD5 /* ViewController */,
@@ -165,6 +172,24 @@
 			children = (
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		ABAA17071EB1E73E00C96694 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17081EB1E75400C96694 /* Fonts */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		ABAA17081EB1E75400C96694 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */,
+				ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */,
+				ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,6 +292,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */,
+				ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */,
+				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
+				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
 				AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
