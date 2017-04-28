@@ -10,13 +10,34 @@ import Foundation
 import UIKit
 import CoreText
 
-@IBDesignable class ThoughtBubble : UITextView {
+class ComicBubbleLayoutManager: NSLayoutManager {
+    
+}
+
+class ComicBubbleTextContainer: NSTextContainer {
+    override var isSimpleRectangularTextContainer: Bool {
+        get { return false }
+    }
+    
+    override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
+        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+        return rect
+    }
+}
+
+@IBDesignable class ThoughtBubble : UITextView, UITextViewDelegate {
     
     private var sublayers: [CAShapeLayer] = []
+    private var cloudLayer: CAShapeLayer!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        let layoutManager = NSLayoutManager()
+        let customTextContainer = ComicBubbleTextContainer(size: CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        customTextContainer.widthTracksTextView = true
+        layoutManager.addTextContainer(customTextContainer)
+        textStorage.addLayoutManager(layoutManager)
+        delegate = self
         font = UIFont(name: "BackIssuesBB-Italic", size: 18.0)
         textAlignment = .center
         showsVerticalScrollIndicator = false
@@ -29,7 +50,7 @@ import CoreText
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let shapes = ThoughtBubble.createShapes(width: bounds.width - 10)
+        let shapes = createShapes(width: bounds.width)
         
         for existingLayer in sublayers {
             existingLayer.removeFromSuperlayer()
@@ -39,28 +60,30 @@ import CoreText
             layer.insertSublayer(shape, at: UInt32(i))
             sublayers.append(shape)
         }
-        textContainer.exclusionPaths = [ThoughtBubble.getExclusionPath(width: bounds.width - 10)]
-
-    }
-    override var contentSize: CGSize {
-        didSet {
-            var topCorrection = (bounds.size.height - contentSize.height * zoomScale) / 2.0
-            topCorrection = max(0, topCorrection)
-            contentInset = UIEdgeInsets(top: topCorrection, left: 0, bottom: 0, right: 0)
-        }
+        textContainer.exclusionPaths = [ThoughtBubble.getExclusionPath(width: bounds.width)]
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        verticallyCenter()
+    }
+    
+    func verticallyCenter(){
+        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        let cloudHeight = cloudLayer.path!.boundingBox.height
+        var topCorrection = (cloudHeight - sizeOfText.height * zoomScale) / 2.0
+        topCorrection = max(0, topCorrection)
+        textContainer.exclusionPaths = [
+            UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
+            ThoughtBubble.getExclusionPath(width: bounds.width)
+        ]
+    }
+
     private class func getExclusionPath(width: CGFloat) -> UIBezierPath {
         let bezier3Path = UIBezierPath()
         bezier3Path.move(to: CGPoint(x: (width * 0.9969), y: (width * 0.2630)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 1.0006), y: (width * 0.3183)), controlPoint1: CGPoint(x: (width * 1.0016), y: (width * 0.2800)), controlPoint2: CGPoint(x: (width * 1.0035), y: (width * 0.2989)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9812), y: (width * 0.3708)), controlPoint1: CGPoint(x: (width * 0.9980), y: (width * 0.3376)), controlPoint2: CGPoint(x: (width * 0.9903), y: (width * 0.3552)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9528), y: (width * 0.4111)), controlPoint1: CGPoint(x: (width * 0.9721), y: (width * 0.3864)), controlPoint2: CGPoint(x: (width * 0.9618), y: (width * 0.3999)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9303), y: (width * 0.4371)), controlPoint1: CGPoint(x: (width * 0.9437), y: (width * 0.4222)), controlPoint2: CGPoint(x: (width * 0.9358), y: (width * 0.4310)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9288), y: (width * 0.4389)), controlPoint1: CGPoint(x: (width * 0.9298), y: (width * 0.4378)), controlPoint2: CGPoint(x: (width * 0.9293), y: (width * 0.4384)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9311), y: (width * 0.4226)), controlPoint1: CGPoint(x: (width * 0.9298), y: (width * 0.4334)), controlPoint2: CGPoint(x: (width * 0.9306), y: (width * 0.4279)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9315), y: (width * 0.4038)), controlPoint1: CGPoint(x: (width * 0.9318), y: (width * 0.4161)), controlPoint2: CGPoint(x: (width * 0.9316), y: (width * 0.4098)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9141), y: (width * 0.4034)), controlPoint1: CGPoint(x: (width * 0.9314), y: (width * 0.4008)), controlPoint2: CGPoint(x: (width * 0.9144), y: (width * 0.4007)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.8975), y: (width * 0.3447)), controlPoint1: CGPoint(x: (width * 0.9980), y: (width * 0.3376)), controlPoint2: CGPoint(x: (width * 0.8976), y: (width * 0.3507)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9141), y: (width * 0.4034)), controlPoint1: CGPoint(x: (width * 0.8974), y: (width * 0.3417)), controlPoint2: CGPoint(x: (width * 0.9144), y: (width * 0.4007)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.9112), y: (width * 0.4196)), controlPoint1: CGPoint(x: (width * 0.9133), y: (width * 0.4086)), controlPoint2: CGPoint(x: (width * 0.9127), y: (width * 0.4140)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.8994), y: (width * 0.4538)), controlPoint1: CGPoint(x: (width * 0.9087), y: (width * 0.4306)), controlPoint2: CGPoint(x: (width * 0.9049), y: (width * 0.4423)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.8790), y: (width * 0.4874)), controlPoint1: CGPoint(x: (width * 0.8940), y: (width * 0.4653)), controlPoint2: CGPoint(x: (width * 0.8872), y: (width * 0.4770)))
@@ -72,8 +95,8 @@ import CoreText
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.6686), y: (width * 0.5470)), controlPoint1: CGPoint(x: (width * 0.6751), y: (width * 0.5500)), controlPoint2: CGPoint(x: (width * 0.6716), y: (width * 0.5486)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.6650), y: (width * 0.5451)), controlPoint1: CGPoint(x: (width * 0.6674), y: (width * 0.5463)), controlPoint2: CGPoint(x: (width * 0.6662), y: (width * 0.5457)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.6630), y: (width * 0.5114)), controlPoint1: CGPoint(x: (width * 0.6661), y: (width * 0.5332)), controlPoint2: CGPoint(x: (width * 0.6652), y: (width * 0.5218)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6275), y: (width * 0.4659)), controlPoint1: CGPoint(x: (width * 0.6585), y: (width * 0.4897)), controlPoint2: CGPoint(x: (width * 0.6223), y: (width * 0.4520)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6385), y: (width * 0.5148)), controlPoint1: CGPoint(x: (width * 0.6327), y: (width * 0.4796)), controlPoint2: CGPoint(x: (width * 0.6373), y: (width * 0.4965)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6118), y: (width * 0.4348)), controlPoint1: CGPoint(x: (width * 0.6585), y: (width * 0.4897)), controlPoint2: CGPoint(x: (width * 0.6066), y: (width * 0.4210)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6385), y: (width * 0.5148)), controlPoint1: CGPoint(x: (width * 0.6170), y: (width * 0.4485)), controlPoint2: CGPoint(x: (width * 0.6373), y: (width * 0.4965)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.6275), y: (width * 0.5695)), controlPoint1: CGPoint(x: (width * 0.6397), y: (width * 0.5331)), controlPoint2: CGPoint(x: (width * 0.6373), y: (width * 0.5530)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.5855), y: (width * 0.6047)), controlPoint1: CGPoint(x: (width * 0.6183), y: (width * 0.5862)), controlPoint2: CGPoint(x: (width * 0.6023), y: (width * 0.5974)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.5728), y: (width * 0.6094)), controlPoint1: CGPoint(x: (width * 0.5813), y: (width * 0.6064)), controlPoint2: CGPoint(x: (width * 0.5771), y: (width * 0.6081)))
@@ -85,43 +108,20 @@ import CoreText
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.5047), y: (width * 0.6081)), controlPoint1: CGPoint(x: (width * 0.5238), y: (width * 0.6158)), controlPoint2: CGPoint(x: (width * 0.5125), y: (width * 0.6114)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.5003), y: (width * 0.6058)), controlPoint1: CGPoint(x: (width * 0.5030), y: (width * 0.6073)), controlPoint2: CGPoint(x: (width * 0.5016), y: (width * 0.6065)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.5056), y: (width * 0.5873)), controlPoint1: CGPoint(x: (width * 0.5028), y: (width * 0.5995)), controlPoint2: CGPoint(x: (width * 0.5045), y: (width * 0.5933)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4916), y: (width * 0.5832)), controlPoint1: CGPoint(x: (width * 0.5083), y: (width * 0.5713)), controlPoint2: CGPoint(x: (width * 0.4970), y: (width * 0.5707)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4633), y: (width * 0.6216)), controlPoint1: CGPoint(x: (width * 0.4858), y: (width * 0.5956)), controlPoint2: CGPoint(x: (width * 0.4763), y: (width * 0.6091)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4416), y: (width * 0.6398)), controlPoint1: CGPoint(x: (width * 0.4569), y: (width * 0.6280)), controlPoint2: CGPoint(x: (width * 0.4494), y: (width * 0.6340)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4293), y: (width * 0.6480)), controlPoint1: CGPoint(x: (width * 0.4377), y: (width * 0.6427)), controlPoint2: CGPoint(x: (width * 0.4335), y: (width * 0.6454)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4228), y: (width * 0.6518)), controlPoint1: CGPoint(x: (width * 0.4271), y: (width * 0.6493)), controlPoint2: CGPoint(x: (width * 0.4250), y: (width * 0.6505)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4158), y: (width * 0.6553)), controlPoint1: CGPoint(x: (width * 0.4205), y: (width * 0.6530)), controlPoint2: CGPoint(x: (width * 0.4182), y: (width * 0.6542)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3606), y: (width * 0.6744)), controlPoint1: CGPoint(x: (width * 0.3972), y: (width * 0.6648)), controlPoint2: CGPoint(x: (width * 0.3784), y: (width * 0.6713)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3126), y: (width * 0.6750)), controlPoint1: CGPoint(x: (width * 0.3429), y: (width * 0.6778)), controlPoint2: CGPoint(x: (width * 0.3264), y: (width * 0.6773)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2801), y: (width * 0.6653)), controlPoint1: CGPoint(x: (width * 0.2987), y: (width * 0.6727)), controlPoint2: CGPoint(x: (width * 0.2876), y: (width * 0.6686)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2745), y: (width * 0.6627)), controlPoint1: CGPoint(x: (width * 0.2779), y: (width * 0.6644)), controlPoint2: CGPoint(x: (width * 0.2761), y: (width * 0.6635)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2786), y: (width * 0.6615)), controlPoint1: CGPoint(x: (width * 0.2759), y: (width * 0.6623)), controlPoint2: CGPoint(x: (width * 0.2773), y: (width * 0.6619)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3157), y: (width * 0.6443)), controlPoint1: CGPoint(x: (width * 0.2929), y: (width * 0.6570)), controlPoint2: CGPoint(x: (width * 0.3052), y: (width * 0.6507)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3599), y: (width * 0.6073)), controlPoint1: CGPoint(x: (width * 0.3367), y: (width * 0.6310)), controlPoint2: CGPoint(x: (width * 0.3507), y: (width * 0.6171)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3701), y: (width * 0.5957)), controlPoint1: CGPoint(x: (width * 0.3645), y: (width * 0.6024)), controlPoint2: CGPoint(x: (width * 0.3679), y: (width * 0.5984)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3735), y: (width * 0.5916)), controlPoint1: CGPoint(x: (width * 0.3724), y: (width * 0.5930)), controlPoint2: CGPoint(x: (width * 0.3735), y: (width * 0.5916)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3693), y: (width * 0.5948)), controlPoint1: CGPoint(x: (width * 0.3735), y: (width * 0.5916)), controlPoint2: CGPoint(x: (width * 0.3720), y: (width * 0.5927)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3569), y: (width * 0.6039)), controlPoint1: CGPoint(x: (width * 0.3665), y: (width * 0.5970)), controlPoint2: CGPoint(x: (width * 0.3623), y: (width * 0.6000)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3089), y: (width * 0.6313)), controlPoint1: CGPoint(x: (width * 0.3461), y: (width * 0.6115)), controlPoint2: CGPoint(x: (width * 0.3300), y: (width * 0.6221)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2329), y: (width * 0.6433)), controlPoint1: CGPoint(x: (width * 0.2879), y: (width * 0.6402)), controlPoint2: CGPoint(x: (width * 0.2613), y: (width * 0.6470)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1500), y: (width * 0.6038)), controlPoint1: CGPoint(x: (width * 0.2046), y: (width * 0.6397)), controlPoint2: CGPoint(x: (width * 0.1746), y: (width * 0.6261)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1063), y: (width * 0.5253)), controlPoint1: CGPoint(x: (width * 0.1254), y: (width * 0.5816)), controlPoint2: CGPoint(x: (width * 0.1096), y: (width * 0.5530)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4916), y: (width * 0.5832)), controlPoint1: CGPoint(x: (width * 0.5000), y: (width * 0.5186)), controlPoint2: CGPoint(x: (width * 0.4970), y: (width * 0.5707)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3693), y: (width * 0.5948)), controlPoint1: CGPoint(x: (width * 0.4858), y: (width * 0.5956)), controlPoint2: CGPoint(x: (width * 0.3720), y: (width * 0.5927)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1398), y: (width * 0.5963)), controlPoint1: CGPoint(x: (width * 0.3665), y: (width * 0.5970)), controlPoint2: CGPoint(x: (width * 0.1398), y: (width * 0.5963)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1063), y: (width * 0.5253)), controlPoint1: CGPoint(x: (width * 0.1152), y: (width * 0.5740)), controlPoint2: CGPoint(x: (width * 0.1096), y: (width * 0.5530)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1055), y: (width * 0.5150)), controlPoint1: CGPoint(x: (width * 0.1061), y: (width * 0.5218)), controlPoint2: CGPoint(x: (width * 0.1054), y: (width * 0.5184)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1058), y: (width * 0.5048)), controlPoint1: CGPoint(x: (width * 0.1056), y: (width * 0.5116)), controlPoint2: CGPoint(x: (width * 0.1057), y: (width * 0.5082)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1072), y: (width * 0.4951)), controlPoint1: CGPoint(x: (width * 0.1060), y: (width * 0.5015)), controlPoint2: CGPoint(x: (width * 0.1068), y: (width * 0.4983)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1080), y: (width * 0.4902)), controlPoint1: CGPoint(x: (width * 0.1075), y: (width * 0.4934)), controlPoint2: CGPoint(x: (width * 0.1076), y: (width * 0.4918)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1093), y: (width * 0.4853)), controlPoint1: CGPoint(x: (width * 0.1084), y: (width * 0.4886)), controlPoint2: CGPoint(x: (width * 0.1089), y: (width * 0.4870)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1213), y: (width * 0.4498)), controlPoint1: CGPoint(x: (width * 0.1124), y: (width * 0.4723)), controlPoint2: CGPoint(x: (width * 0.1170), y: (width * 0.4606)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1084), y: (width * 0.4430)), controlPoint1: CGPoint(x: (width * 0.1305), y: (width * 0.4286)), controlPoint2: CGPoint(x: (width * 0.1215), y: (width * 0.4221)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0994), y: (width * 0.4589)), controlPoint1: CGPoint(x: (width * 0.1054), y: (width * 0.4480)), controlPoint2: CGPoint(x: (width * 0.1024), y: (width * 0.4533)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0734), y: (width * 0.4404)), controlPoint1: CGPoint(x: (width * 0.0921), y: (width * 0.4556)), controlPoint2: CGPoint(x: (width * 0.0827), y: (width * 0.4496)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0460), y: (width * 0.4008)), controlPoint1: CGPoint(x: (width * 0.0635), y: (width * 0.4306)), controlPoint2: CGPoint(x: (width * 0.0538), y: (width * 0.4172)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1398), y: (width * 0.4037)), controlPoint1: CGPoint(x: (width * 0.1124), y: (width * 0.4723)), controlPoint2: CGPoint(x: (width * 0.1355), y: (width * 0.4144)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0460), y: (width * 0.4008)), controlPoint1: CGPoint(x: (width * 0.1395), y: (width * 0.4042)), controlPoint2: CGPoint(x: (width * 0.0466), y: (width * 0.4006)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0298), y: (width * 0.3455)), controlPoint1: CGPoint(x: (width * 0.0382), y: (width * 0.3845)), controlPoint2: CGPoint(x: (width * 0.0319), y: (width * 0.3653)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0348), y: (width * 0.2886)), controlPoint1: CGPoint(x: (width * 0.0278), y: (width * 0.3255)), controlPoint2: CGPoint(x: (width * 0.0300), y: (width * 0.3056)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0567), y: (width * 0.2468)), controlPoint1: CGPoint(x: (width * 0.0399), y: (width * 0.2717)), controlPoint2: CGPoint(x: (width * 0.0476), y: (width * 0.2571)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0821), y: (width * 0.2255)), controlPoint1: CGPoint(x: (width * 0.0655), y: (width * 0.2364)), controlPoint2: CGPoint(x: (width * 0.0750), y: (width * 0.2295)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0838), y: (width * 0.2466)), controlPoint1: CGPoint(x: (width * 0.0822), y: (width * 0.2339)), controlPoint2: CGPoint(x: (width * 0.0830), y: (width * 0.2410)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0858), y: (width * 0.2579)), controlPoint1: CGPoint(x: (width * 0.0844), y: (width * 0.2515)), controlPoint2: CGPoint(x: (width * 0.0853), y: (width * 0.2553)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0858), y: (width * 0.2579)), controlPoint1: CGPoint(x: (width * 0.0399), y: (width * 0.2717)), controlPoint2: CGPoint(x: (width * 0.0853), y: (width * 0.2553)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0867), y: (width * 0.2618)), controlPoint1: CGPoint(x: (width * 0.0864), y: (width * 0.2605)), controlPoint2: CGPoint(x: (width * 0.0867), y: (width * 0.2618)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0871), y: (width * 0.2579)), controlPoint1: CGPoint(x: (width * 0.0867), y: (width * 0.2618)), controlPoint2: CGPoint(x: (width * 0.0868), y: (width * 0.2605)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0884), y: (width * 0.2465)), controlPoint1: CGPoint(x: (width * 0.0874), y: (width * 0.2552)), controlPoint2: CGPoint(x: (width * 0.0876), y: (width * 0.2514)))
@@ -130,44 +130,15 @@ import CoreText
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0936), y: (width * 0.2194)), controlPoint1: CGPoint(x: (width * 0.0938), y: (width * 0.2193)), controlPoint2: CGPoint(x: (width * 0.0937), y: (width * 0.2194)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.0974), y: (width * 0.2066)), controlPoint1: CGPoint(x: (width * 0.0947), y: (width * 0.2153)), controlPoint2: CGPoint(x: (width * 0.0959), y: (width * 0.2110)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.1239), y: (width * 0.1546)), controlPoint1: CGPoint(x: (width * 0.1026), y: (width * 0.1903)), controlPoint2: CGPoint(x: (width * 0.1111), y: (width * 0.1720)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1756), y: (width * 0.1107)), controlPoint1: CGPoint(x: (width * 0.1366), y: (width * 0.1373)), controlPoint2: CGPoint(x: (width * 0.1541), y: (width * 0.1213)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2418), y: (width * 0.0961)), controlPoint1: CGPoint(x: (width * 0.1970), y: (width * 0.0999)), controlPoint2: CGPoint(x: (width * 0.2203), y: (width * 0.0957)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2727), y: (width * 0.0993)), controlPoint1: CGPoint(x: (width * 0.2526), y: (width * 0.0964)), controlPoint2: CGPoint(x: (width * 0.2630), y: (width * 0.0973)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2870), y: (width * 0.1023)), controlPoint1: CGPoint(x: (width * 0.2775), y: (width * 0.1000)), controlPoint2: CGPoint(x: (width * 0.2824), y: (width * 0.1014)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2879), y: (width * 0.1025)), controlPoint1: CGPoint(x: (width * 0.2873), y: (width * 0.1024)), controlPoint2: CGPoint(x: (width * 0.2876), y: (width * 0.1024)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2797), y: (width * 0.1215)), controlPoint1: CGPoint(x: (width * 0.2846), y: (width * 0.1092)), controlPoint2: CGPoint(x: (width * 0.2819), y: (width * 0.1156)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2927), y: (width * 0.1283)), controlPoint1: CGPoint(x: (width * 0.2747), y: (width * 0.1352)), controlPoint2: CGPoint(x: (width * 0.2848), y: (width * 0.1395)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3427), y: (width * 0.0743)), controlPoint1: CGPoint(x: (width * 0.3066), y: (width * 0.1085)), controlPoint2: CGPoint(x: (width * 0.3231), y: (width * 0.0886)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3663), y: (width * 0.0600)), controlPoint1: CGPoint(x: (width * 0.3501), y: (width * 0.0689)), controlPoint2: CGPoint(x: (width * 0.3579), y: (width * 0.0640)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3788), y: (width * 0.0551)), controlPoint1: CGPoint(x: (width * 0.3706), y: (width * 0.0583)), controlPoint2: CGPoint(x: (width * 0.3747), y: (width * 0.0562)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.3916), y: (width * 0.0520)), controlPoint1: CGPoint(x: (width * 0.3830), y: (width * 0.0538)), controlPoint2: CGPoint(x: (width * 0.3873), y: (width * 0.0528)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4175), y: (width * 0.0504)), controlPoint1: CGPoint(x: (width * 0.4004), y: (width * 0.0506)), controlPoint2: CGPoint(x: (width * 0.4092), y: (width * 0.0501)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4600), y: (width * 0.0608)), controlPoint1: CGPoint(x: (width * 0.4343), y: (width * 0.0508)), controlPoint2: CGPoint(x: (width * 0.4491), y: (width * 0.0547)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4809), y: (width * 0.0662)), controlPoint1: CGPoint(x: (width * 0.4709), y: (width * 0.0669)), controlPoint2: CGPoint(x: (width * 0.4835), y: (width * 0.0720)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.4858), y: (width * 0.0611)), controlPoint1: CGPoint(x: (width * 0.4822), y: (width * 0.0648)), controlPoint2: CGPoint(x: (width * 0.4838), y: (width * 0.0630)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.5136), y: (width * 0.0417)), controlPoint1: CGPoint(x: (width * 0.4916), y: (width * 0.0554)), controlPoint2: CGPoint(x: (width * 0.5011), y: (width * 0.0486)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.5342), y: (width * 0.0323)), controlPoint1: CGPoint(x: (width * 0.5200), y: (width * 0.0383)), controlPoint2: CGPoint(x: (width * 0.5267), y: (width * 0.0350)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.5584), y: (width * 0.0273)), controlPoint1: CGPoint(x: (width * 0.5416), y: (width * 0.0299)), controlPoint2: CGPoint(x: (width * 0.5498), y: (width * 0.0280)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6132), y: (width * 0.0361)), controlPoint1: CGPoint(x: (width * 0.5755), y: (width * 0.0256)), controlPoint2: CGPoint(x: (width * 0.5945), y: (width * 0.0286)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6613), y: (width * 0.0667)), controlPoint1: CGPoint(x: (width * 0.6318), y: (width * 0.0435)), controlPoint2: CGPoint(x: (width * 0.6482), y: (width * 0.0545)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6784), y: (width * 0.0856)), controlPoint1: CGPoint(x: (width * 0.6679), y: (width * 0.0727)), controlPoint2: CGPoint(x: (width * 0.6736), y: (width * 0.0791)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.6905), y: (width * 0.1047)), controlPoint1: CGPoint(x: (width * 0.6833), y: (width * 0.0920)), controlPoint2: CGPoint(x: (width * 0.6874), y: (width * 0.0984)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.7064), y: (width * 0.1116)), controlPoint1: CGPoint(x: (width * 0.6955), y: (width * 0.1144)), controlPoint2: CGPoint(x: (width * 0.7077), y: (width * 0.1216)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.7081), y: (width * 0.1107)), controlPoint1: CGPoint(x: (width * 0.7070), y: (width * 0.1112)), controlPoint2: CGPoint(x: (width * 0.7075), y: (width * 0.1110)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.7452), y: (width * 0.0959)), controlPoint1: CGPoint(x: (width * 0.7167), y: (width * 0.1062)), controlPoint2: CGPoint(x: (width * 0.7293), y: (width * 0.0992)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.7578), y: (width * 0.0940)), controlPoint1: CGPoint(x: (width * 0.7491), y: (width * 0.0948)), controlPoint2: CGPoint(x: (width * 0.7534), y: (width * 0.0946)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.7722), y: (width * 0.0927)), controlPoint1: CGPoint(x: (width * 0.7624), y: (width * 0.0936)), controlPoint2: CGPoint(x: (width * 0.7673), y: (width * 0.0929)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.8029), y: (width * 0.0935)), controlPoint1: CGPoint(x: (width * 0.7819), y: (width * 0.0921)), controlPoint2: CGPoint(x: (width * 0.7922), y: (width * 0.0925)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.8678), y: (width * 0.1148)), controlPoint1: CGPoint(x: (width * 0.8241), y: (width * 0.0961)), controlPoint2: CGPoint(x: (width * 0.8466), y: (width * 0.1026)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.8973), y: (width * 0.1352)), controlPoint1: CGPoint(x: (width * 0.8784), y: (width * 0.1208)), controlPoint2: CGPoint(x: (width * 0.8882), y: (width * 0.1278)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.2702), y: (width * 0.1677)), controlPoint1: CGPoint(x: (width * 0.1242), y: (width * 0.1553)), controlPoint2: CGPoint(x: (width * 0.2702), y: (width * 0.1677)))
+        bezier3Path.addLine(to: CGPoint(x: (width * 0.3012), y: (width * 0.1118)))
+        bezier3Path.addLine(to: CGPoint(x: (width * 0.8665), y: (width * 0.1149)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.8973), y: (width * 0.1352)), controlPoint1: CGPoint(x: (width * 0.8770), y: (width * 0.1209)), controlPoint2: CGPoint(x: (width * 0.8882), y: (width * 0.1278)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.9101), y: (width * 0.1468)), controlPoint1: CGPoint(x: (width * 0.9017), y: (width * 0.1390)), controlPoint2: CGPoint(x: (width * 0.9061), y: (width * 0.1428)))
         bezier3Path.addLine(to: CGPoint(x: (width * 0.9131), y: (width * 0.1497)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.9158), y: (width * 0.1525)), controlPoint1: CGPoint(x: (width * 0.9141), y: (width * 0.1507)), controlPoint2: CGPoint(x: (width * 0.9149), y: (width * 0.1516)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 0.9208), y: (width * 0.1584)), controlPoint1: CGPoint(x: (width * 0.9175), y: (width * 0.1543)), controlPoint2: CGPoint(x: (width * 0.9192), y: (width * 0.1564)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9489), y: (width * 0.2091)), controlPoint1: CGPoint(x: (width * 0.9338), y: (width * 0.1751)), controlPoint2: CGPoint(x: (width * 0.9427), y: (width * 0.1935)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9630), y: (width * 0.2054)), controlPoint1: CGPoint(x: (width * 0.9549), y: (width * 0.2249)), controlPoint2: CGPoint(x: (width * 0.9658), y: (width * 0.2235)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9777), y: (width * 0.2189)), controlPoint1: CGPoint(x: (width * 0.9624), y: (width * 0.2015)), controlPoint2: CGPoint(x: (width * 0.9714), y: (width * 0.2082)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9969), y: (width * 0.2630)), controlPoint1: CGPoint(x: (width * 0.9848), y: (width * 0.2311)), controlPoint2: CGPoint(x: (width * 0.9923), y: (width * 0.2459)))
+        bezier3Path.addCurve(to: CGPoint(x: (width * 0.9969), y: (width * 0.2630)), controlPoint1: CGPoint(x: (width * 0.9338), y: (width * 0.1751)), controlPoint2: CGPoint(x: (width * 0.9923), y: (width * 0.2459)))
         bezier3Path.close()
         bezier3Path.move(to: CGPoint(x: (width * 1.0311), y: (width * 0.0031)))
         bezier3Path.addLine(to: CGPoint(x: (width * 0.6273), y: (width * 0.0031)))
@@ -178,19 +149,14 @@ import CoreText
         bezier3Path.addCurve(to: CGPoint(x: (width * 1.0296), y: (width * 0.3226)), controlPoint1: CGPoint(x: (width * 1.0311), y: (width * 0.9969)), controlPoint2: CGPoint(x: (width * 1.0280), y: (width * 0.3349)))
         bezier3Path.addCurve(to: CGPoint(x: (width * 1.0311), y: (width * 0.0031)), controlPoint1: CGPoint(x: (width * 1.0334), y: (width * 0.2979)), controlPoint2: CGPoint(x: (width * 1.0311), y: (width * 0.0031)))
         bezier3Path.close()
-
         return bezier3Path
     }
     
-    private class func createShapes(width: CGFloat) -> [CAShapeLayer] {
+    private func createShapes(width: CGFloat) -> [CAShapeLayer] {
         
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         let blackColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
-        
-        //// Group 2
-        
-        //// Bezier 2 Drawing
         
         //// Bezier 2 Drawing
         let shape2 = CAShapeLayer()
@@ -552,6 +518,7 @@ import CoreText
         bezierPath.close()
         shape.path = bezierPath.cgPath
         shape.fillColor = whiteColor.cgColor
+        cloudLayer = shape
         
         //// Oval Drawing
         let ovalShape = CAShapeLayer()
