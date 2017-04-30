@@ -30,8 +30,7 @@ class ThoughtBubbleElement: ComicFrameElement {
     var type: ComicElementType = .dialogBubble
     lazy var view: UIView = ThoughtBubble(nil)!
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
-        let minFrameSideLength = min(comicFrame.bounds.width, comicFrame.bounds.height)
-        comicFrame.addElement(self, size: CGSize(width: minFrameSideLength / 2, height: minFrameSideLength / 2))
+        comicFrame.addElement(self)
     }
 }
 

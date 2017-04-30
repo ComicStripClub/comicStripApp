@@ -27,6 +27,7 @@
 		ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17151EB5135400C96694 /* ComicFrame.swift */; };
 		ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17171EB513EF00C96694 /* ComicFrame.xib */; };
 		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
+		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		ABAA17151EB5135400C96694 /* ComicFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrame.swift; sourceTree = "<group>"; };
 		ABAA17171EB513EF00C96694 /* ComicFrame.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicFrame.xib; sourceTree = "<group>"; };
 		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,9 +175,10 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA171C1EB63CF800C96694 /* SoundEffects */,
+				ABAA171B1EB63CE700C96694 /* DialogBubbles */,
 				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
 				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
-				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
 				ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */,
 				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
 				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
@@ -208,6 +211,22 @@
 				ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		ABAA171B1EB63CE700C96694 /* DialogBubbles */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
+			);
+			name = DialogBubbles;
+			sourceTree = "<group>";
+		};
+		ABAA171C1EB63CF800C96694 /* SoundEffects */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA171D1EB63D2100C96694 /* SoundEffect.swift */,
+			);
+			name = SoundEffects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +349,7 @@
 			files = (
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
+				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,
