@@ -22,9 +22,16 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
-        // initializeCamera()
+        
+        if (isCameraAvailable()){
+            initializeCamera()
+        }
     }
 
+    private func isCameraAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+    
     private func initializeCamera(){
         do {
             let camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
@@ -41,8 +48,9 @@ class MainViewController: UIViewController {
 extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapSpeechBubbleButton() {
-        let speechBubbles: [ComicFrameElement] =
-            [ThoughtBubbleElement()]
+        let speechBubbles: [ComicFrameElement] = [
+            ThoughtBubbleElement(),
+            ClassicSpeechBubbleElement()]
         presentSelectionController(withElements: speechBubbles)
     }
     

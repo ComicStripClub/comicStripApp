@@ -11,7 +11,7 @@ import UIKit
 import CoreText
 
 class ClassicSpeechBubbleElement: ComicFrameElement {
-    var icon: UIImage = #imageLiteral(resourceName: "thoughtBubble1")
+    var icon: UIImage = #imageLiteral(resourceName: "classicSpeechBubble")
     var type: ComicElementType = .dialogBubble
     lazy var view: UIView = ClassicSpeechBubble(nil)!
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
@@ -22,7 +22,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
 @IBDesignable class ClassicSpeechBubble : UITextView, UITextViewDelegate {
     
     private var sublayers: [CAShapeLayer] = []
-    private var cloudLayer: CAShapeLayer!
+    private var bubbleHeight: CGFloat = 0
     
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(aDecoder)
@@ -46,7 +46,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         backgroundColor = UIColor.clear
         textContainer.lineBreakMode = .byWordWrapping
         textContainer.widthTracksTextView = true
-        contentOffset = CGPoint.zero
+        contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         clipsToBounds = false
     }
     
@@ -55,8 +55,8 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
     // the thought bubble
     override func layoutSubviews() {
         super.layoutSubviews()
-        let shapes = createShapes(width: bounds.width)
-        
+        let (shapes, bubbleHeight) = createShapes(width: bounds.width)
+        self.bubbleHeight = bubbleHeight
         for existingLayer in sublayers {
             existingLayer.removeFromSuperlayer()
         }
@@ -80,25 +80,23 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
     
     private func verticallyCenter(){
         let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        if let cloudHeight = cloudLayer?.path?.boundingBox.height {
-            let lineHeight = font?.lineHeight ?? 0
-            var topCorrection = (cloudHeight - sizeOfText.height * zoomScale) / 2.0 - lineHeight / 2.0
-            topCorrection = max(0, topCorrection)
-            textContainer.exclusionPaths = [
-                UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
-                ThoughtBubble.getExclusionPath(width: bounds.width)
-            ]
-            if (bounds.height > bounds.width) {
-                textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
-            }
+        var topCorrection = (bubbleHeight - sizeOfText.height * zoomScale) / 2.0
+        topCorrection = max(0, topCorrection)
+        textContainer.exclusionPaths = [
+            UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
+            getExclusionPath()
+        ]
+        if (bounds.height > bounds.width) {
+            textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
         }
     }
 
-    private class func getExclusionPath(width: CGFloat) -> UIBezierPath {
-        return UIBezierPath(
+    private func getExclusionPath() -> UIBezierPath {
+        let lineHeight = font?.lineHeight ?? 0
+        return UIBezierPath(rect: CGRect(x: 0, y: bubbleHeight - lineHeight / 2, width: bounds.width, height: bounds.height - bubbleHeight))
     }
     
-    private func createShapes(width: CGFloat) -> [CAShapeLayer] {
+    private func createShapes(width: CGFloat) -> (shapes:[CAShapeLayer], bubbleHeight: CGFloat) {
         
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
@@ -108,6 +106,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         //// Bezier Drawing
         let whiteBackgroundShape = CAShapeLayer()
         let bezierPath = UIBezierPath()
+        let bottomOfBubble = (width * 0.4903)
         bezierPath.move(to: CGPoint(x: (width * 0.1843), y: (width * 0.4903)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.1487), y: (width * 0.7223)), controlPoint1: CGPoint(x: (width * 0.1632), y: (width * 0.5516)), controlPoint2: CGPoint(x: (width * 0.1514), y: (width * 0.6475)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.3280), y: (width * 0.4903)), controlPoint1: CGPoint(x: (width * 0.1917), y: (width * 0.6424)), controlPoint2: CGPoint(x: (width * 0.2759), y: (width * 0.5256)))
@@ -119,7 +118,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         bezierPath.close()
         bezierPath.usesEvenOddFillRule = true
         whiteBackgroundShape.path = bezierPath.cgPath
-        whiteBackgroundShape.fillColor = whiteColor
+        whiteBackgroundShape.fillColor = whiteColor.cgColor
         whiteBackgroundShape.fillRule = kCAFillRuleEvenOdd
         
         
@@ -148,8 +147,8 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         bezier2Path.close()
         bezier2Path.usesEvenOddFillRule = true
         speechBubbleBorderShape.path = bezier2Path.cgPath
-        speechBubbleBorderShape.fillColor = blackColor
-        return [whiteBackgroundShape, speechBubbleBorderShape]
+        speechBubbleBorderShape.fillColor = blackColor.cgColor
+        return (shapes: [whiteBackgroundShape, speechBubbleBorderShape], bubbleHeight: bottomOfBubble)
     }
 
 }
