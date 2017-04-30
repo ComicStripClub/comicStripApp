@@ -15,6 +15,9 @@ class ComicFrame: UIView {
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
 
+    private var elements: [ComicFrameElement] = []
+    private var currentPanningOperationStartPoint: CGPoint?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -37,6 +40,32 @@ class ComicFrame: UIView {
         let topOffset = (bounds.height - size.height) / 2
         let leftOffset = (bounds.width - size.width) / 2
         elementView.frame = CGRect(origin: CGPoint(x: leftOffset, y: topOffset), size: size)
-        addSubview(elementView)
+        contentView.addSubview(elementView)
+        
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanElement))
+        elementView.addGestureRecognizer(panRecognizer)
+        
+        elements.append(element)
+    }
+    
+    @objc private func didPanElement(_ panGestureRecognizer: UIPanGestureRecognizer){
+        let pannedElement = panGestureRecognizer.view!
+        switch panGestureRecognizer.state {
+        case .began:
+            currentPanningOperationStartPoint = pannedElement.frame.origin
+            break
+        case .changed:
+            let start = currentPanningOperationStartPoint!
+            let translation = panGestureRecognizer.translation(in: self)
+            let x = min(max(start.x + translation.x, -20), bounds.width - pannedElement.bounds.width + 20)
+            let y = min(max(start.y + translation.y, -20), bounds.height - pannedElement.bounds.height + 20)
+            pannedElement.frame.origin = CGPoint(x: x, y: y)
+            break
+        case .ended:
+            break
+        default:
+            // Handle cancellation or failure
+            break
+        }
     }
 }

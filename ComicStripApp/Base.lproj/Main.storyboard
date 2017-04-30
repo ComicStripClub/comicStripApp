@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicFrame" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="60" width="375" height="535"/>
+                                <rect key="frame" x="8" y="60" width="359" height="527"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
@@ -35,12 +35,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" id="LZx-Mn-7Ao"/>
+                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" constant="8" id="LZx-Mn-7Ao"/>
                             <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="NV4-ku-TR2"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wnm-6H-rl4"/>
-                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" id="YvG-cu-6qd"/>
+                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="8" id="YvG-cu-6qd"/>
                             <constraint firstAttribute="trailing" secondItem="j94-Y9-5Wd" secondAttribute="trailing" id="ZST-iv-hqS"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mlY-xV-969"/>
+                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="mlY-xV-969"/>
                             <constraint firstAttribute="bottom" secondItem="j94-Y9-5Wd" secondAttribute="bottom" id="u2e-6l-t4p"/>
                         </constraints>
                     </view>
@@ -128,7 +128,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

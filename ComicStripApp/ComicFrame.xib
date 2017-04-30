@@ -27,11 +27,19 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="viQ-FQ-fAr" secondAttribute="trailing" id="2H8-8Z-O4A"/>
-                <constraint firstItem="viQ-FQ-fAr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6lW-By-1Ta"/>
-                <constraint firstItem="viQ-FQ-fAr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VLs-28-2bW"/>
-                <constraint firstAttribute="bottom" secondItem="viQ-FQ-fAr" secondAttribute="bottom" id="jWB-FL-sp6"/>
+                <constraint firstAttribute="bottom" secondItem="viQ-FQ-fAr" secondAttribute="bottom" id="3Y8-bb-18S"/>
+                <constraint firstAttribute="trailing" secondItem="viQ-FQ-fAr" secondAttribute="trailing" id="VmZ-b3-Cj5"/>
+                <constraint firstItem="viQ-FQ-fAr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YQ9-mA-iF8"/>
+                <constraint firstItem="viQ-FQ-fAr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b4G-qT-rij"/>
             </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                    <real key="value" value="4"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
         </view>
     </objects>
 </document>
