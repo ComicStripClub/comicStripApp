@@ -8,10 +8,23 @@
 
 import UIKit
 
+protocol ComicStripToolbarDelegate {
+    func didTapSpeechBubbleButton()
+    func didTapSoundEffectsButton()
+    func didTapStyleButton()
+}
+
 @IBDesignable class ComicStylingToolbar: UIView {
 
+    var delegate: ComicStripToolbarDelegate?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        initializeSubViews()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         initializeSubViews()
     }
     
@@ -23,12 +36,15 @@ import UIKit
     }
     
     @IBAction func didTapSpeechBubbleButton(_ sender: Any) {
+        delegate?.didTapSpeechBubbleButton()
     }
     
     @IBAction func didTapSoundEffectsButton(_ sender: Any) {
+        delegate?.didTapSoundEffectsButton()
     }
     
     @IBAction func didTapStyleButton(_ sender: Any) {
+        delegate?.didTapStyleButton()
     }
     
     /*

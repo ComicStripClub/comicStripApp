@@ -10,18 +10,27 @@ import Foundation
 import UIKit
 import CoreText
 
-class ComicBubbleLayoutManager: NSLayoutManager {
-    
-}
+//class ComicBubbleLayoutManager: NSLayoutManager {
+//    
+//}
+//
+//class ComicBubbleTextContainer: NSTextContainer {
+//    override var isSimpleRectangularTextContainer: Bool {
+//        get { return false }
+//    }
+//    
+//    override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
+//        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+//        return rect
+//    }
+//}
 
-class ComicBubbleTextContainer: NSTextContainer {
-    override var isSimpleRectangularTextContainer: Bool {
-        get { return false }
-    }
-    
-    override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
-        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
-        return rect
+class ThoughtBubbleElement: ComicFrameElement {
+    var icon: UIImage = #imageLiteral(resourceName: "thoughtBubble1")
+    var type: ComicElementType = .dialogBubble
+    lazy var view: UIView = ThoughtBubble(nil)!
+    lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
+        comicFrame.addElement(self, size: CGSize(width: comicFrame.bounds.width / 3, height: comicFrame.bounds.height / 3))
     }
 }
 
@@ -30,8 +39,18 @@ class ComicBubbleTextContainer: NSTextContainer {
     private var sublayers: [CAShapeLayer] = []
     private var cloudLayer: CAShapeLayer!
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required convenience init?(coder aDecoder: NSCoder) {
+        self.init(aDecoder)
+    }
+    
+    init?(_ coder: NSCoder? = nil) {
+        if let coder = coder {
+            super.init(coder: coder)
+        }
+        else {
+            super.init(frame: CGRect.zero, textContainer: nil)
+        }
+        
         let layoutManager = NSLayoutManager()
         let customTextContainer = ComicBubbleTextContainer(size: CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
         customTextContainer.widthTracksTextView = true
@@ -46,8 +65,12 @@ class ComicBubbleTextContainer: NSTextContainer {
         adjustsFontForContentSizeCategory = true
         backgroundColor = UIColor.clear
         textContainer.lineBreakMode = .byWordWrapping
+
     }
     
+    // Draws the thought bubble outline/fill in the background of the UITextView,
+    // and sets the exclusionPaths so that text flows within the boundaries of 
+    // the thought bubble
     override func layoutSubviews() {
         super.layoutSubviews()
         let shapes = createShapes(width: bounds.width)

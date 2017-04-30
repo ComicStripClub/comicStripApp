@@ -22,6 +22,10 @@
 		ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */; };
 		ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */; };
 		ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */; };
+		ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */; };
+		ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */; };
+		ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17151EB5135400C96694 /* ComicFrame.swift */; };
+		ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17171EB513EF00C96694 /* ComicFrame.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +96,10 @@
 		ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_ital.ttf; sourceTree = "<group>"; };
 		ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_reg.ttf; sourceTree = "<group>"; };
 		ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BADABB__.TTF; sourceTree = "<group>"; };
+		ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicElementSelectionViewController.swift; sourceTree = "<group>"; };
+		ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrameElementCell.swift; sourceTree = "<group>"; };
+		ABAA17151EB5135400C96694 /* ComicFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrame.swift; sourceTree = "<group>"; };
+		ABAA17171EB513EF00C96694 /* ComicFrame.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicFrame.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */,
+				ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -165,6 +174,9 @@
 				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
 				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
 				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
+				ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */,
+				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
+				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -296,6 +308,7 @@
 			files = (
 				ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */,
 				ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */,
+				ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */,
 				ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */,
 				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
 				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
@@ -312,9 +325,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
+				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,
+				ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */,
 				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
 			);

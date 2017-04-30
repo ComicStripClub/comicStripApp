@@ -21,25 +21,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="RenderView" customModule="GPUImage">
-                                <rect key="frame" x="0.0" y="60" width="375" height="588"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t2p-cZ-yJM" customClass="ThoughtBubble" customModule="ComicStripApp" customModuleProvider="target">
-                                        <rect key="frame" x="36" y="190" width="288" height="294"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris </string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
+                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicFrame" customModule="ComicStripApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="60" width="375" height="535"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="595" width="375" height="72"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="eXG-P8-hN7"/>
+                                    <constraint firstAttribute="height" constant="72" id="eXG-P8-hN7"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -48,20 +38,108 @@
                             <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" id="LZx-Mn-7Ao"/>
                             <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="NV4-ku-TR2"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wnm-6H-rl4"/>
-                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="-41" id="YvG-cu-6qd"/>
+                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" id="YvG-cu-6qd"/>
                             <constraint firstAttribute="trailing" secondItem="j94-Y9-5Wd" secondAttribute="trailing" id="ZST-iv-hqS"/>
                             <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mlY-xV-969"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sVu-ZQ-ixd"/>
                             <constraint firstAttribute="bottom" secondItem="j94-Y9-5Wd" secondAttribute="bottom" id="u2e-6l-t4p"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="comicStripPanel" destination="e8f-3c-5jF" id="DWR-MZ-byF"/>
+                        <outlet property="comicFrame" destination="e8f-3c-5jF" id="DWR-MZ-byF"/>
+                        <outlet property="comicStylingToolbar" destination="j94-Y9-5Wd" id="PEI-Rv-S06"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
+        </scene>
+        <!--Comic Element Selection View Controller-->
+        <scene sceneID="ALT-Oc-cG4">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PVf-vV-cT3" customClass="ComicElementSelectionViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rie-np-dPs"/>
+                        <viewControllerLayoutGuide type="bottom" id="0OC-ak-932"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rKN-Dk-zui">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sUC-GA-2Ge">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SQg-GV-DsD">
+                                    <size key="itemSize" width="152" height="143"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ComicFrameElementCell" id="YBK-3h-9lp" customClass="ComicFrameElementCell" customModule="ComicStripApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="152" height="143"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="152" height="143"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
+                                                    <rect key="frame" x="8" y="8" width="136" height="127"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="mJf-Qc-yO4" secondAttribute="trailing" constant="8" id="46M-Dg-jEc"/>
+                                            <constraint firstItem="mJf-Qc-yO4" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" constant="8" id="LM3-ze-4sF"/>
+                                            <constraint firstItem="mJf-Qc-yO4" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" constant="8" id="NBj-f9-KG7"/>
+                                            <constraint firstAttribute="bottom" secondItem="mJf-Qc-yO4" secondAttribute="bottom" constant="8" id="a77-hV-dJ9"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="image" destination="mJf-Qc-yO4" id="WFw-gA-GkH"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sUC-GA-2Ge" firstAttribute="leading" secondItem="rKN-Dk-zui" secondAttribute="leading" id="RWl-sJ-7eX"/>
+                            <constraint firstItem="0OC-ak-932" firstAttribute="top" secondItem="sUC-GA-2Ge" secondAttribute="bottom" id="b5B-lj-6IS"/>
+                            <constraint firstItem="sUC-GA-2Ge" firstAttribute="top" secondItem="rie-np-dPs" secondAttribute="bottom" id="drG-Np-jrR"/>
+                            <constraint firstAttribute="trailing" secondItem="sUC-GA-2Ge" secondAttribute="trailing" id="mG2-GA-znI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="m3e-JK-6em">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="H1A-24-x1G">
+                            <connections>
+                                <action selector="didTapCancelButton:" destination="PVf-vV-cT3" id="8dc-tE-bhi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="sUC-GA-2Ge" id="Foa-mB-XEF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="in1-Ku-3Lq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972" y="824.43778110944538"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LV8-Wc-5NG">
+            <objects>
+                <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PVf-vV-cT3" kind="relationship" relationship="rootViewController" id="egs-Kr-NP8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FJc-0u-4m9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="824.43778110944538"/>
         </scene>
     </scenes>
 </document>

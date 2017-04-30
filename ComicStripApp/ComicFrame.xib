@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12118"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicFrame" customModule="ComicStripApp" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="o6Q-9Q-Ad6"/>
+                <outlet property="renderView" destination="viQ-FQ-fAr" id="gDR-nf-I0G"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viQ-FQ-fAr" customClass="RenderView" customModule="GPUImage">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="viQ-FQ-fAr" secondAttribute="trailing" id="2H8-8Z-O4A"/>
+                <constraint firstItem="viQ-FQ-fAr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6lW-By-1Ta"/>
+                <constraint firstItem="viQ-FQ-fAr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VLs-28-2bW"/>
+                <constraint firstAttribute="bottom" secondItem="viQ-FQ-fAr" secondAttribute="bottom" id="jWB-FL-sp6"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
