@@ -40,6 +40,7 @@ class SoundEffectImage: UIImageView {
         }
         
         isUserInteractionEnabled = true
+        contentMode = .scaleAspectFit
         
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinchImage))
         addGestureRecognizer(pinchRecognizer)

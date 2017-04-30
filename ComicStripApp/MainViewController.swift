@@ -47,8 +47,9 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapSoundEffectsButton() {
-        let soundEffects: [ComicFrameElement] =
-            [SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham"))]
+        let soundEffects: [ComicFrameElement] = [
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
         presentSelectionController(withElements: soundEffects)
     }
     

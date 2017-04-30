@@ -28,6 +28,7 @@
 		ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17171EB513EF00C96694 /* ComicFrame.xib */; };
 		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
 		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
+		ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		ABAA17171EB513EF00C96694 /* ComicFrame.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicFrame.xib; sourceTree = "<group>"; };
 		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
+				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */,
 				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
 				ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */,
+				ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
