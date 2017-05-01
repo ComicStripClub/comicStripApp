@@ -15,70 +15,74 @@ class MainViewController: UIViewController {
         get { return false }
     }
 
-    @IBOutlet weak var comicStripPanel: RenderView!
-    var previewLayer: AVCaptureVideoPreviewLayer?
-    
-    var captureSession: AVCaptureSession!
-    // If we find a device we'll store it here for later use
-    var captureDevices : [AVCaptureDevice]!
+    @IBOutlet weak var comicFrame: ComicFrame!
+    @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
+    private var currentComicFrame: ComicFrame?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        comicStylingToolbar.delegate = self
         
-        initializeCamera()
+        if (isCameraAvailable()){
+            initializeCamera()
+        }
     }
 
+    private func isCameraAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+    
     private func initializeCamera(){
         do {
             let camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
             let filter = SmoothToonFilter()
-            camera --> filter --> comicStripPanel
+            camera --> filter --> comicFrame.renderView
             camera.startCapture()
         } catch {
             fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
 
-    var currentOrientation: UIDeviceOrientation = .unknown
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let newOrientation = UIDevice.current.orientation
-        if (newOrientation != currentOrientation){
-            currentOrientation = newOrientation
-            comicStripPanel.fillMode = .preserveAspectRatioAndFill
-            comicStripPanel.orientation = getImageOrientation(UIDevice.current.orientation)
-        }
+}
+
+extension MainViewController: ComicStripToolbarDelegate {
+    
+    func didTapSpeechBubbleButton() {
+        let speechBubbles: [ComicFrameElement] = [
+            ThoughtBubbleElement(),
+            ClassicSpeechBubbleElement()]
+        presentSelectionController(withElements: speechBubbles)
     }
     
-    private func getImageOrientation(_ orientation: UIDeviceOrientation) -> ImageOrientation {
-        switch orientation {
-        case .landscapeLeft:
-            return .landscapeRight
-        case .landscapeRight:
-            return .landscapeLeft
-        case .portraitUpsideDown:
-            return .portraitUpsideDown
-        case .portrait:
-            fallthrough
-        default:
-            return .portrait
-        }
+    func didTapSoundEffectsButton() {
+        let soundEffects: [ComicFrameElement] = [
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
+        presentSelectionController(withElements: soundEffects)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func didTapStyleButton() {
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func presentSelectionController(withElements elements: [ComicFrameElement]){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let selectionNavController = storyboard.instantiateViewController(withIdentifier: "ComicElementSelectionNavController") as! UINavigationController
+        let selectionViewController = selectionNavController.topViewController as! ComicElementSelectionViewController
+        selectionViewController.comicFrameElements = elements
+        selectionViewController.delegate = self
+        present(selectionNavController, animated: true, completion: nil)
     }
-    */
+}
 
+extension MainViewController: ComicElementSelectionDelegate {
+    
+    func didCancel() {
+        presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func didChooseComicElement(_ element: ComicFrameElement) {
+        element.effectFunc(comicFrame)
+        presentedViewController?.dismiss(animated: true, completion: nil)
+    }
 }

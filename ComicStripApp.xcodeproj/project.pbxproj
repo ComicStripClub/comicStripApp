@@ -15,6 +15,20 @@
 		AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85091EA9AAE1003DDDD5 /* Assets.xcassets */; };
 		AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */; };
 		AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */; };
+		ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */; };
+		ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */; };
+		ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */; };
+		ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */; };
+		ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */; };
+		ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */; };
+		ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */; };
+		ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */; };
+		ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */; };
+		ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17151EB5135400C96694 /* ComicFrame.swift */; };
+		ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17171EB513EF00C96694 /* ComicFrame.xib */; };
+		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
+		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
+		ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +92,20 @@
 		AB8E850C1EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB8E850E1EA9AAE1003DDDD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStylingToolbar.swift; sourceTree = "<group>"; };
+		ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicStylingToolbar.xib; sourceTree = "<group>"; };
+		ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThoughtBubble.swift; sourceTree = "<group>"; };
+		ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_boldital.ttf; sourceTree = "<group>"; };
+		ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_ital.ttf; sourceTree = "<group>"; };
+		ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BackIssuesBB_reg.ttf; sourceTree = "<group>"; };
+		ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BADABB__.TTF; sourceTree = "<group>"; };
+		ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicElementSelectionViewController.swift; sourceTree = "<group>"; };
+		ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrameElementCell.swift; sourceTree = "<group>"; };
+		ABAA17151EB5135400C96694 /* ComicFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrame.swift; sourceTree = "<group>"; };
+		ABAA17171EB513EF00C96694 /* ComicFrame.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicFrame.xib; sourceTree = "<group>"; };
+		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +151,7 @@
 		AB8E84FE1EA9AAE1003DDDD5 /* ComicStripApp */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA17071EB1E73E00C96694 /* Assets */,
 				AB8E85161EA9AB43003DDDD5 /* Model */,
 				AB8E85151EA9AB38003DDDD5 /* View */,
 				AB8E85141EA9AB31003DDDD5 /* ViewController */,
@@ -140,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */,
+				ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -147,6 +177,14 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABAA171C1EB63CF800C96694 /* SoundEffects */,
+				ABAA171B1EB63CE700C96694 /* DialogBubbles */,
+				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
+				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
+				ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */,
+				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
+				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
+				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -156,6 +194,42 @@
 			children = (
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		ABAA17071EB1E73E00C96694 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17081EB1E75400C96694 /* Fonts */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		ABAA17081EB1E75400C96694 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */,
+				ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */,
+				ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */,
+				ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		ABAA171B1EB63CE700C96694 /* DialogBubbles */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
+				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
+			);
+			name = DialogBubbles;
+			sourceTree = "<group>";
+		};
+		ABAA171C1EB63CF800C96694 /* SoundEffects */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA171D1EB63D2100C96694 /* SoundEffect.swift */,
+			);
+			name = SoundEffects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +331,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */,
+				ABAA170D1EB1E77200C96694 /* BackIssuesBB_ital.ttf in Resources */,
+				ABAA17181EB513EF00C96694 /* ComicFrame.xib in Resources */,
+				ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */,
+				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
+				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
 				AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
@@ -270,8 +350,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
+				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
+				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
+				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
+				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,
+				ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */,
 				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
+				ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */,
+				ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
