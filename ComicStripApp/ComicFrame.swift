@@ -14,6 +14,7 @@ class ComicFrame: UIView {
     
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
+    @IBOutlet weak var frameCountLabel: UILabel!
 
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
