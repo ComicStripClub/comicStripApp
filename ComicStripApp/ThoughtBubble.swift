@@ -10,21 +10,6 @@ import Foundation
 import UIKit
 import CoreText
 
-//class ComicBubbleLayoutManager: NSLayoutManager {
-//    
-//}
-//
-//class ComicBubbleTextContainer: NSTextContainer {
-//    override var isSimpleRectangularTextContainer: Bool {
-//        get { return false }
-//    }
-//    
-//    override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
-//        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
-//        return rect
-//    }
-//}
-
 class ThoughtBubbleElement: ComicFrameElement {
     var icon: UIImage = #imageLiteral(resourceName: "thoughtBubble1")
     var type: ComicElementType = .dialogBubble
@@ -81,6 +66,16 @@ class ThoughtBubbleElement: ComicFrameElement {
             sublayers.append(shape)
         }
         verticallyCenter()
+    }
+    
+    // Only count touches which are inside the dialog bubble
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for layer in sublayers {
+            if (layer.path!.contains(point)){
+                return super.point(inside: point, with: event)
+            }
+        }
+        return false
     }
     
     override var contentSize: CGSize {

@@ -71,6 +71,9 @@
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" constant="8" id="Zep-O5-p5j"/>
                 <constraint firstAttribute="bottom" secondItem="ulp-q8-cGb" secondAttribute="bottom" constant="8" id="iyV-rk-zYc"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-2.5" y="-197.5"/>
         </view>

@@ -23,11 +23,18 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
         
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        view.addGestureRecognizer(tapGestureRecognizer)
+        
         if (isCameraAvailable()){
             initializeCamera()
         }
     }
 
+    @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
+       view.endEditing(true)
+    }
+    
     private func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }

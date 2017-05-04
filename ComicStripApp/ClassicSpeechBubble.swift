@@ -68,6 +68,16 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         verticallyCenter()
     }
     
+    // Only count touches which are inside the dialog bubble
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for layer in sublayers {
+            if (layer.path!.contains(point)){
+                return super.point(inside: point, with: event)
+            }
+        }
+        return false
+    }
+    
     override var contentSize: CGSize {
         didSet {
             verticallyCenter()
