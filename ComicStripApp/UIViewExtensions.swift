@@ -41,3 +41,21 @@ import UIKit
         }
     }
 }
+
+extension UIView {
+    var currentFirstResponder: UIResponder? {
+        get {
+            if self.isFirstResponder {
+                return self
+            }
+            
+            for view in self.subviews {
+                if let responder = view.currentFirstResponder {
+                    return responder
+                }
+            }
+            
+            return nil
+        }
+    }
+}

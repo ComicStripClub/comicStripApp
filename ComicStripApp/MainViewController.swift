@@ -29,8 +29,35 @@ class MainViewController: UIViewController {
         if (isCameraAvailable()){
             initializeCamera()
         }
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+    
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if let firstResponder = view.currentFirstResponder as? UIView {
+                let focusRect = firstResponder.convert(firstResponder.bounds, to: nil)
+                if (focusRect.intersects(keyboardFrame)){
+                    let shift = keyboardFrame.minY - focusRect.maxY
+                    UIView.animate(withDuration: 0.5, animations: { 
+                        self.view.transform = CGAffineTransform(translationX: 0, y: shift)
+                    })
+                }
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        })
+    }
+    
     @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
        view.endEditing(true)
     }
