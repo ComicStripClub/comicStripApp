@@ -20,6 +20,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
 }
 
 @IBDesignable class ClassicSpeechBubble : UITextView, UITextViewDelegate {
+    private let MINIMUM_WIDTH: CGFloat = 100
     
     private var sublayers: [CAShapeLayer] = []
     private var bubbleHeight: CGFloat = 0
@@ -45,7 +46,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         adjustsFontForContentSizeCategory = true
         backgroundColor = UIColor.clear
         textContainer.lineBreakMode = .byWordWrapping
-        textContainer.widthTracksTextView = true
+        textContainer.widthTracksTextView = false
         contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         clipsToBounds = false
     }
@@ -85,15 +86,57 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        resizeIfNeeded()
         verticallyCenter()
     }
     
+    private var isResizing: Bool = false
+    
+    private func resizeIfNeeded(){
+        guard (!isResizing) else {
+            return
+        }
+        
+        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        // Resize if necessary
+        let lineHeight = font?.lineHeight ?? 0
+        let oldCenter = center
+        var newWidth: CGFloat?
+        if (sizeOfText.height + lineHeight >= bubbleHeight){
+            newWidth = frame.size.width * 1.15
+        } else if (sizeOfText.height < bubbleHeight / 3.0 && frame.size.width > MINIMUM_WIDTH) {
+            newWidth = max(sizeOfText.height + 50, MINIMUM_WIDTH)
+        }
+        
+        if let newWidth = newWidth {
+            isResizing = true
+            let widthScale = newWidth / self.frame.size.width
+            let aspectRatio = self.frame.size.width / self.frame.size.height
+            let oldTransform = self.transform
+            let newInset = max(self.contentInset.left * widthScale, 8)
+            UIView.animate(withDuration: 0.15, delay: 0, animations: {
+                self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
+            }, completion: { (b) in
+                self.transform = oldTransform
+                self.frame.size.width = newWidth
+                self.frame.size.height = newWidth / aspectRatio
+                self.center = oldCenter
+                self.setNeedsLayout()
+                self.isResizing = false
+                self.resizeIfNeeded()
+            })
+        }
+        
+    }
+
     private func verticallyCenter(){
         let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
         var topCorrection = (bubbleHeight - sizeOfText.height * zoomScale) / 2.0
         topCorrection = max(0, topCorrection)
         textContainer.exclusionPaths = [
             UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
+            UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: 8, height: bounds.height))),
+            UIBezierPath(rect: CGRect(x: bounds.width - 8, y: 0, width: 8, height: bounds.height)),
             getExclusionPath()
         ]
         if (bounds.height > bounds.width) {
@@ -103,7 +146,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
 
     private func getExclusionPath() -> UIBezierPath {
         let lineHeight = font?.lineHeight ?? 0
-        return UIBezierPath(rect: CGRect(x: 0, y: bubbleHeight - lineHeight / 2, width: bounds.width, height: bounds.height - bubbleHeight))
+        return UIBezierPath(rect: CGRect(x: 8, y: bubbleHeight - lineHeight / 2, width: bounds.width, height: bounds.height - bubbleHeight))
     }
     
     private func createShapes(width: CGFloat) -> (shapes:[CAShapeLayer], bubbleHeight: CGFloat) {
