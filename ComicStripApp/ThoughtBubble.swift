@@ -19,133 +19,12 @@ class ThoughtBubbleElement: ComicFrameElement {
     }
 }
 
-@IBDesignable class ThoughtBubble : UITextView, UITextViewDelegate {
-    private let MINIMUM_WIDTH: CGFloat = 100
-    
-    private var sublayers: [CAShapeLayer] = []
-    private var cloudLayer: CAShapeLayer!
-    
-    required convenience init?(coder aDecoder: NSCoder) {
-        self.init(aDecoder)
+@IBDesignable class ThoughtBubble : BaseDialogBubble {
+    override init?(_ coder: NSCoder? = nil) {
+        super.init(coder)
     }
     
-    init?(_ coder: NSCoder? = nil) {
-        if let coder = coder {
-            super.init(coder: coder)
-        }
-        else {
-            super.init(frame: CGRect.zero, textContainer: nil)
-        }
-        
-        delegate = self
-        font = UIFont(name: "BackIssuesBB-Italic", size: 14.0)
-        textAlignment = .center
-        showsVerticalScrollIndicator = false
-        showsHorizontalScrollIndicator = false
-        isScrollEnabled = false
-        backgroundColor = UIColor.clear
-        textContainer.lineBreakMode = .byWordWrapping
-        textContainer.widthTracksTextView = false
-        contentOffset = CGPoint.zero
-        clipsToBounds = false
-        resizeIfNeeded()
-    }
-    
-    // Draws the thought bubble outline/fill in the background of the UITextView,
-    // and sets the exclusionPaths so that text flows within the boundaries of 
-    // the thought bubble
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let shapes = createShapes(width: bounds.width)
-        
-        for existingLayer in sublayers {
-            existingLayer.removeFromSuperlayer()
-        }
-        
-        for (i, shape) in shapes.enumerated() {
-            // shape.transform = CATransform3DMakeScale(-1.0, 1.0, 1.0)
-            layer.insertSublayer(shape, at: UInt32(i))
-            sublayers.append(shape)
-        }
-        verticallyCenter()
-    }
-    
-    // Only count touches which are inside the dialog bubble
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        for layer in sublayers {
-            if (layer.path!.contains(point)){
-                return super.point(inside: point, with: event)
-            }
-        }
-        return false
-    }
-    
-    override var contentSize: CGSize {
-        didSet {
-            verticallyCenter()
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        resizeIfNeeded()
-        verticallyCenter()
-    }
-    
-    private var isResizing: Bool = false
-    
-    private func resizeIfNeeded(){
-        guard (!isResizing) else {
-            return
-        }
-        
-        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        if let cloudHeight = cloudLayer?.path?.boundingBox.height {
-            // Resize if necessary
-            let lineHeight = font?.lineHeight ?? 0
-            let oldCenter = center
-            var newWidth: CGFloat?
-            if (sizeOfText.height + lineHeight >= cloudHeight){
-                newWidth = frame.size.width * 1.15
-            } else if (sizeOfText.height < cloudHeight / 4.0 && frame.size.width > MINIMUM_WIDTH) {
-                newWidth = max(sizeOfText.height + 50, MINIMUM_WIDTH)
-            }
-            
-            if let newWidth = newWidth {
-                isResizing = true
-                let widthScale = newWidth / self.frame.size.width
-                let oldTransform = self.transform
-                UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
-                    self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
-                }, completion: { (b) in
-                    self.transform = oldTransform
-                    self.frame.size.width = newWidth
-                    self.frame.size.height = newWidth
-                    self.center = oldCenter
-                    self.setNeedsLayout()
-                    self.isResizing = false
-                    self.resizeIfNeeded()
-                })
-            }
-        }
-    }
-    
-    private func verticallyCenter(){
-        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        if let cloudHeight = cloudLayer?.path?.boundingBox.height {
-            let lineHeight = font?.lineHeight ?? 0
-            var topCorrection = (cloudHeight - sizeOfText.height * zoomScale) / 2.0 - lineHeight / 2.0
-            topCorrection = max(0, topCorrection)
-            textContainer.exclusionPaths = [
-                UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
-                ThoughtBubble.getExclusionPath(width: bounds.width)
-            ]
-            if (bounds.height > bounds.width) {
-                textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
-            }
-        }
-    }
-
-    private class func getExclusionPath(width: CGFloat) -> UIBezierPath {
+    override func getExclusionPath(width: CGFloat) -> UIBezierPath {
         let bezier3Path = UIBezierPath()
         bezier3Path.move(to: CGPoint(x: (width * 0.9249), y: (width * 0.2553)))
         bezier3Path.addLine(to: CGPoint(x: (width * 0.9639), y: (width * 0.2543)))
@@ -177,7 +56,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         return bezier3Path
     }
     
-    private func createShapes(width: CGFloat) -> [CAShapeLayer] {
+    override func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
         
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
@@ -536,7 +415,6 @@ class ThoughtBubbleElement: ComicFrameElement {
         bezierPath.close()
         shape.path = bezierPath.cgPath
         shape.fillColor = whiteColor.cgColor
-        cloudLayer = shape
         
         //// Oval Drawing
         let ovalShape = CAShapeLayer()
@@ -578,7 +456,9 @@ class ThoughtBubbleElement: ComicFrameElement {
         oval6Shape.path = oval6Path.cgPath
         oval6Shape.fillColor = whiteColor.cgColor
         
-        return [shape, shape2, ovalShape, oval2Shape, oval3Shape, oval4Shape, oval5Shape, oval6Shape]
+        return (
+            shapes: [shape, shape2, ovalShape, oval2Shape, oval3Shape, oval4Shape, oval5Shape, oval6Shape],
+            mainBubble: shape)
     }
 
 }
