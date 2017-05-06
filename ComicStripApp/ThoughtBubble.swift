@@ -63,6 +63,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         }
         
         for (i, shape) in shapes.enumerated() {
+            // shape.transform = CATransform3DMakeScale(-1.0, 1.0, 1.0)
             layer.insertSublayer(shape, at: UInt32(i))
             sublayers.append(shape)
         }

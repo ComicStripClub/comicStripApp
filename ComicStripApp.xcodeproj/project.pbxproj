@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */; };
 		AB325B011EB1A38C0037C3BE /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; };
 		AB325B021EB1A3980037C3BE /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialogBubble.swift; sourceTree = "<group>"; };
 		AB325AEB1EB1A2FB0037C3BE /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
 				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
+				AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */,
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
