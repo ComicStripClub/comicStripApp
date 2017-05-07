@@ -68,6 +68,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     var backgroundShapes: [CAShapeLayer] = []
     var mainBubbleLayer: CAShapeLayer!
+    private var shouldAutoResize: Bool = true
     
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(aDecoder)
@@ -95,10 +96,44 @@ class ComicBubbleTextContainer: NSTextContainer {
         isScrollEnabled = false
         backgroundColor = UIColor.clear
         clipsToBounds = false
+        
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinchBubble))
+        addGestureRecognizer(pinchRecognizer)
     }
 
     func textContainerFull() {
+        guard (shouldAutoResize) else {
+            return
+        }
         increaseTextContainerSize()
+    }
+    
+    private var originalWidth: CGFloat = 0
+    @objc private func userDidPinchBubble(_ gestureRecognizer: UIPinchGestureRecognizer){
+        switch gestureRecognizer.state {
+        case .began:
+            shouldAutoResize = false
+            originalWidth = bounds.width
+            break
+        case .changed:
+            let scale = gestureRecognizer.scale
+            isResizing = true
+            let oldCenter = center
+            let newWidth = originalWidth * scale
+            self.frame.size = CGSize(width: newWidth, height: newWidth)
+            self.center = oldCenter
+            self.setNeedsLayout()
+            self.updateExclusionPath()
+            let layoutMgr = self.layoutManager as! ComicBubbleLayoutManager
+            layoutMgr.verticallyCenter()
+            self.isResizing = false
+            break
+        case .ended:
+            break
+        default:
+            // Handle cancellation or failure
+            break
+        }
     }
     
     override var transform: CGAffineTransform {
