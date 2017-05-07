@@ -10,8 +10,38 @@ import Foundation
 import UIKit
 import CoreText
 
+class MyLayoutManager: NSLayoutManager {
+    override init() {
+        super.init()
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func lineFragmentRect(forGlyphAt glyphIndex: Int, effectiveRange effectiveGlyphRange: NSRangePointer?) -> CGRect {
+        return super.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: effectiveGlyphRange)
+    }
+    
+}
 
-@IBDesignable class BaseDialogBubble : UITextView, UITextViewDelegate {
+protocol TextContainerDelegate {
+    func textContainerFull()
+}
+
+class MyTextContainer: NSTextContainer {
+    var delegate: TextContainerDelegate?
+    override var isSimpleRectangularTextContainer: Bool { get { return false } }
+    override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
+        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+        print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
+        if (rect.isEmpty){
+            delegate?.textContainerFull()
+        }
+        return rect
+    }
+}
+
+@IBDesignable class BaseDialogBubble : UITextView, UITextViewDelegate, TextContainerDelegate {
     private let MINIMUM_WIDTH: CGFloat = 100
     
     var backgroundShapes: [CAShapeLayer] = []
@@ -22,14 +52,17 @@ import CoreText
     }
     
     init?(_ coder: NSCoder? = nil) {
+        let txtStorage = NSTextStorage()
+        let layoutMgr = MyLayoutManager()
+        txtStorage.addLayoutManager(layoutMgr)
+        
         let customTextContainer = MyTextContainer()
-        customTextContainer.replaceLayoutManager(MyLayoutManager())
         customTextContainer.lineBreakMode = .byWordWrapping
         customTextContainer.widthTracksTextView = false
         customTextContainer.heightTracksTextView = false
+        layoutMgr.addTextContainer(customTextContainer)
         
         super.init(frame: CGRect.zero, textContainer: customTextContainer)
-        
         delegate = self
         font = UIFont(name: "BackIssuesBB-Italic", size: 14.0)
         textAlignment = .center
@@ -41,9 +74,8 @@ import CoreText
         resizeIfNeeded()
     }
     
-    func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
-        let boundingRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: text.characters.count), in: textContainer!)
-        print("FinishedLayout \(boundingRect)")
+    func textContainerFull() {
+        <#code#>
     }
     
     // Draws the thought bubble outline/fill in the background of the UITextView,
@@ -93,86 +125,28 @@ import CoreText
     private var isResizing: Bool = false
     private var lastTextHeight: CGFloat = 0
     
-    private class MyLayoutManager: NSLayoutManager {
-        override init() {
-            super.init()
-        }
-        required init?(coder: NSCoder) {
-            super.init(coder: coder)
-        }
-    }
-    
-    private class MyTextContainer: NSTextContainer {
-    
-        override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
-            let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
-            print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
-            return rect
-        }
-    }
-    private func resizeIfNeeded(){
+
+    private func increaseTextContainerSize(by scaleFactor: Double = 1.10){
         guard (!isResizing) else {
             return
         }
-        
-        layoutManager.ensureLayout(for: textContainer)
-        print("textContainerSize: \(textContainer.size)")
-        let textBounds = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: text?.characters.count ?? 0), in: textContainer)
-        print("textBounds: \(textBounds.size)");
-
-        let sizeOfText = textBounds.size // sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        if let bubbleHeight = mainBubbleLayer?.path?.boundingBox.height {
-            if (abs(sizeOfText.height - lastTextHeight) < 1) {
-                return
-            }
-
-            print ("Text [\(sizeOfText.width), \(sizeOfText.height)] Bubble [\(mainBubbleLayer!.path!.boundingBox.width), \(mainBubbleLayer!.path!.boundingBox.height)]")
-            lastTextHeight = sizeOfText.height
-            // Resize if necessary
-            let lineHeight = font?.lineHeight ?? 0
-            let oldCenter = center
-            var newWidth: CGFloat?
-
-            if (sizeOfText.height + lineHeight >= bubbleHeight){
-                var textSize = sizeOfText
-                var newBubbleHeight = bubbleHeight
-                let bubbleHeightRatio = bubbleHeight / bounds.height
-                newWidth = bounds.width * 1.10
-                while textSize.height + lineHeight >= newBubbleHeight {
-                    newWidth = newWidth! + (0.10 * bounds.width)
-                    print("Trying newWidth \(newWidth!)")
-                    textContainer.size = CGSize(width: newWidth!, height: newWidth!)
-                    layoutManager.ensureLayout(for: textContainer)
-                    let textBounds = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: text.characters.count), in: textContainer)
-                    textSize = textBounds.size
-                    print("New size (\(textSize))")
-                    newBubbleHeight = newWidth! * bubbleHeightRatio
-                }
-            } else if (sizeOfText.height < bubbleHeight / 3.0 && frame.size.width > MINIMUM_WIDTH) {
-                newWidth = max(sizeOfText.height + 50, MINIMUM_WIDTH)
-            }
-            
-            if let newWidth = newWidth {
-                isResizing = true
-                let widthScale = newWidth / self.frame.size.width
-                let oldTransform = self.transform
-                UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
-                    self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
-                    print("resizing: \(newWidth)")
-                }, completion: { (b) in
-                    print("finishedResizing: \(newWidth)")
-                    self.transform = oldTransform
-                    self.frame.size = CGSize(width: newWidth, height: newWidth)
-                    self.center = oldCenter
-                    self.setNeedsLayout()
-                    self.isResizing = false
-                    self.resizeIfNeeded()
-                    if (!self.isResizing) {
-                        self.verticallyCenter()
-                    }
-                })
-            }
-        }
+        isResizing = true
+        let oldCenter = center
+        var newWidth = bounds.width * scaleFactor
+        let widthScale = newWidth / self.frame.size.width
+        let oldTransform = self.transform
+        UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
+            self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
+            print("resizing: \(newWidth)")
+        }, completion: { (b) in
+            print("finishedResizing: \(newWidth)")
+            self.transform = oldTransform
+            self.frame.size = CGSize(width: newWidth, height: newWidth)
+            self.center = oldCenter
+            self.setNeedsLayout()
+            self.isResizing = false
+            self.verticallyCenter()
+        })
     }
     
     private var lastHeightDifferential: CGFloat = CGFloat.greatestFiniteMagnitude
