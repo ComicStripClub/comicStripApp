@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import GPUImage
+import ISHHoverBar
 
 class ComicFrame: UIView {
     
@@ -17,14 +18,15 @@ class ComicFrame: UIView {
 
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
-    private var elementToolbar: ComicElementToolbar!
+    private var elementToolbar: ISHHoverBar!
     
     private var selectedElement: ComicFrameElement? {
         didSet {
             if let selectedView = selectedElement?.view {
                 elementToolbar.isHidden = false
-                elementToolbar.frame.origin = selectedView.frame.origin
-                let f = elementToolbar.frame
+                elementToolbar.frame.origin = CGPoint(x: selectedView.frame.maxX, y: selectedView.frame.origin.y)
+            } else {
+                elementToolbar.isHidden = true
             }
         }
     }
@@ -44,10 +46,19 @@ class ComicFrame: UIView {
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
-        elementToolbar = ComicElementToolbar()
-        elementToolbar.frame.size = elementToolbar.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-        elementToolbar.isHidden = true
+        
+        elementToolbar = ISHHoverBar()
+        let deleteButton = UIBarButtonItem(image: UIImage.imageFromSystemBarButton(.trash), style: .plain, target: self, action: #selector(didDeleteElement))
+        elementToolbar.items = [deleteButton]
+        elementToolbar.orientation = .vertical
         addSubview(elementToolbar)
+        elementToolbar.frame.size = elementToolbar.intrinsicContentSize
+        elementToolbar.isHidden = true
+    }
+    
+    @objc func didDeleteElement(_: UIBarButtonItem){
+        removeElement(selectedElement!)
+        selectedElement = nil
     }
     
     func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
@@ -69,6 +80,16 @@ class ComicFrame: UIView {
         elements.append(element)
     }
     
+    private func removeElement(_ element: ComicFrameElement){
+        for (i, el) in elements.enumerated() {
+            if (el.view.isEqual(element.view)){
+                elements.remove(at: i)
+                element.view.removeFromSuperview()
+                break
+            }
+        }
+    }
+    
     private func elementFromView(_ view: UIView) -> ComicFrameElement? {
         for e in elements {
             if (view.isEqual(e.view)){
@@ -88,10 +109,6 @@ class ComicFrame: UIView {
         case .changed:
             let translation = panGestureRecognizer.translation(in: self)
             pannedElement.transform = currentGestureStartTransform.concatenating(CGAffineTransform(translationX: translation.x, y: translation.y))
-//            let start = currentPanningOperationStartPoint!
-//            let x = min(max(start.x + translation.x, -20), bounds.width - pannedElement.bounds.width + 20)
-//            let y = min(max(start.y + translation.y, -20), bounds.height - pannedElement.bounds.height + 20)
-//            pannedElement.frame.origin = CGPoint(x: x, y: y)
             break
         case .ended:
             break
