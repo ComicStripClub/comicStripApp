@@ -10,30 +10,16 @@ import Foundation
 import UIKit
 import CoreText
 
-class MyLayoutManager: NSLayoutManager {
-    override init() {
-        super.init()
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    override func lineFragmentRect(forGlyphAt glyphIndex: Int, effectiveRange effectiveGlyphRange: NSRangePointer?) -> CGRect {
-        return super.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: effectiveGlyphRange)
-    }
-    
-}
-
 protocol TextContainerDelegate {
     func textContainerFull()
 }
 
-class MyTextContainer: NSTextContainer {
+class ComicBubbleTextContainer: NSTextContainer {
     var delegate: TextContainerDelegate?
     override var isSimpleRectangularTextContainer: Bool { get { return false } }
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
-        print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
+        // print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
         if (rect.isEmpty){
             delegate?.textContainerFull()
         }
@@ -53,17 +39,19 @@ class MyTextContainer: NSTextContainer {
     
     init?(_ coder: NSCoder? = nil) {
         let txtStorage = NSTextStorage()
-        let layoutMgr = MyLayoutManager()
+        let layoutMgr = NSLayoutManager()
         txtStorage.addLayoutManager(layoutMgr)
         
-        let customTextContainer = MyTextContainer()
+        let customTextContainer = ComicBubbleTextContainer()
         customTextContainer.lineBreakMode = .byWordWrapping
         customTextContainer.widthTracksTextView = false
         customTextContainer.heightTracksTextView = false
         layoutMgr.addTextContainer(customTextContainer)
         
         super.init(frame: CGRect.zero, textContainer: customTextContainer)
+        
         delegate = self
+        customTextContainer.delegate = self
         font = UIFont(name: "BackIssuesBB-Italic", size: 14.0)
         textAlignment = .center
         showsVerticalScrollIndicator = false
@@ -71,11 +59,10 @@ class MyTextContainer: NSTextContainer {
         isScrollEnabled = false
         backgroundColor = UIColor.clear
         clipsToBounds = false
-        resizeIfNeeded()
     }
     
     func textContainerFull() {
-        <#code#>
+        increaseTextContainerSize()
     }
     
     // Draws the thought bubble outline/fill in the background of the UITextView,
@@ -118,7 +105,6 @@ class MyTextContainer: NSTextContainer {
     
     func textViewDidChange(_ textView: UITextView) {
         print("textChanged: \(textView.text!)")
-        resizeIfNeeded()
         verticallyCenter()
     }
     
@@ -126,7 +112,7 @@ class MyTextContainer: NSTextContainer {
     private var lastTextHeight: CGFloat = 0
     
 
-    private func increaseTextContainerSize(by scaleFactor: Double = 1.10){
+    private func increaseTextContainerSize(by scaleFactor: CGFloat = 1.10){
         guard (!isResizing) else {
             return
         }

@@ -47,11 +47,11 @@ class ThoughtBubbleElement: ComicFrameElement {
         bezier3Path.addLine(to: CGPoint(x: (width * 0.8829), y: (width * 0.1622)))
         bezier3Path.addLine(to: CGPoint(x: (width * 0.9249), y: (width * 0.2553)))
         bezier3Path.close()
-        bezier3Path.move(to: CGPoint(x: (width * 1.000), y: (width * 0.000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 1.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 1.000), y: (width * 1.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 1.000), y: (width * 0.000)))
+        bezier3Path.move(to: CGPoint(x: (width * 1.05), y: (width * -0.005)))
+        bezier3Path.addLine(to: CGPoint(x: (width * -0.005), y: (width * -0.005)))
+        bezier3Path.addLine(to: CGPoint(x: (width * -0.005), y: (width * 1.005)))
+        bezier3Path.addLine(to: CGPoint(x: (width * 1.005), y: (width * 1.005)))
+        bezier3Path.addLine(to: CGPoint(x: (width * 1.005), y: (width * -0.005)))
         bezier3Path.close()
         return bezier3Path
     }
@@ -317,7 +317,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         bezier2Path.addCurve(to: CGPoint(x: (width * 0.9714), y: (width * 0.3733)), controlPoint1: CGPoint(x: (width * 0.9455), y: (width * 0.4003)), controlPoint2: CGPoint(x: (width * 0.9590), y: (width * 0.3889)))
         bezier2Path.addCurve(to: CGPoint(x: (width * 0.9883), y: (width * 0.3464)), controlPoint1: CGPoint(x: (width * 0.9777), y: (width * 0.3655)), controlPoint2: CGPoint(x: (width * 0.9835), y: (width * 0.3564)))
         bezier2Path.addCurve(to: CGPoint(x: (width * 0.9986), y: (width * 0.3129)), controlPoint1: CGPoint(x: (width * 0.9931), y: (width * 0.3363)), controlPoint2: CGPoint(x: (width * 0.9971), y: (width * 0.3248)))
-        bezier2Path.addCurve(to: CGPoint(x: (width * 0.9894), y: (width * 0.2469)), controlPoint1: CGPoint(x: (width * 1.0023), y: (width * 0.2889)), controlPoint2: CGPoint(x: (width * 0.9977), y: (width * 0.2654)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.9894), y: (width * 0.2469)), controlPoint1: CGPoint(x: (width * 1.0000), y: (width * 0.2889)), controlPoint2: CGPoint(x: (width * 0.9977), y: (width * 0.2654)))
         bezier2Path.close()
         shape2.path = bezier2Path.cgPath
         shape2.fillColor = blackColor.cgColor
@@ -411,7 +411,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         bezierPath.addCurve(to: CGPoint(x: (width * 0.9714), y: (width * 0.3733)), controlPoint1: CGPoint(x: (width * 0.9455), y: (width * 0.4003)), controlPoint2: CGPoint(x: (width * 0.9590), y: (width * 0.3889)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.9883), y: (width * 0.3464)), controlPoint1: CGPoint(x: (width * 0.9777), y: (width * 0.3655)), controlPoint2: CGPoint(x: (width * 0.9835), y: (width * 0.3564)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.9986), y: (width * 0.3129)), controlPoint1: CGPoint(x: (width * 0.9931), y: (width * 0.3363)), controlPoint2: CGPoint(x: (width * 0.9971), y: (width * 0.3248)))
-        bezierPath.addCurve(to: CGPoint(x: (width * 0.9894), y: (width * 0.2469)), controlPoint1: CGPoint(x: (width * 1.0023), y: (width * 0.2889)), controlPoint2: CGPoint(x: (width * 0.9977), y: (width * 0.2654)))
+        bezierPath.addCurve(to: CGPoint(x: (width * 0.9894), y: (width * 0.2469)), controlPoint1: CGPoint(x: (width * 1.0000), y: (width * 0.2889)), controlPoint2: CGPoint(x: (width * 0.9977), y: (width * 0.2654)))
         bezierPath.close()
         shape.path = bezierPath.cgPath
         shape.fillColor = whiteColor.cgColor
