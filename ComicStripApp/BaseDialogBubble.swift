@@ -19,6 +19,8 @@ class ComicBubbleLayoutManager: NSLayoutManager {
         super.init(coder: coder)
     }
     
+    var mainBubbleLayer: CAShapeLayer!
+    
     override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         txtContainer.minLineFragmentY = 0
@@ -36,9 +38,9 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     func verticallyCenter(){
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         let rect = usedRect(for: txtContainer)
-        let heightDelta = txtContainer.size.height - rect.height;
+        let heightDelta = mainBubbleLayer.path!.boundingBox.height - rect.height;
         let lineHeight = lineFragmentRect(forGlyphAt: 0, effectiveRange: nil).size.height
-        txtContainer.minLineFragmentY = heightDelta / 2.0 - lineHeight
+        txtContainer.minLineFragmentY = heightDelta / 2.0 - lineHeight / 2.0
         invalidateLayout(forCharacterRange: NSRange(location: 0, length: textStorage!.length), actualCharacterRange: nil)
     }
     
@@ -156,8 +158,8 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     override func insertText(_ text: String) {
         super.insertText(text)
-        let layoutMgr = layoutManager as! ComicBubbleLayoutManager
-        layoutMgr.verticallyCenter()
+//        let layoutMgr = layoutManager as! ComicBubbleLayoutManager
+//        layoutMgr.verticallyCenter()
     }
     
     init?(_ coder: NSCoder? = nil) {
@@ -207,7 +209,9 @@ class ComicBubbleTextContainer: NSTextContainer {
             layer.insertSublayer(shape, at: UInt32(i))
         }
         textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
-        textContainer.size.height = mainBubbleLayer!.path!.boundingBox.maxY
+        let layoutMgr = layoutManager as! ComicBubbleLayoutManager
+        layoutMgr.mainBubbleLayer = self.mainBubbleLayer
+        // textContainer.size.height = mainBubbleLayer!.path!.boundingBox.maxY
 //        verticallyCenter()
     }
     
@@ -231,6 +235,8 @@ class ComicBubbleTextContainer: NSTextContainer {
     func textViewDidChange(_ textView: UITextView) {
         print("textChanged: \(textView.text!)")
 //        verticallyCenter()
+        let layoutMgr = layoutManager as! ComicBubbleLayoutManager
+        layoutMgr.verticallyCenter()
     }
     
     private var isResizing: Bool = false
@@ -250,7 +256,6 @@ class ComicBubbleTextContainer: NSTextContainer {
             self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
             print("resizing: \(newWidth)")
         }, completion: { (b) in
-            print("finishedResizing: \(newWidth)")
             self.transform = oldTransform
             self.frame.size = CGSize(width: newWidth, height: newWidth)
             self.center = oldCenter
@@ -258,6 +263,7 @@ class ComicBubbleTextContainer: NSTextContainer {
             self.updateExclusionPath()
             let layoutMgr = self.layoutManager as! ComicBubbleLayoutManager
             layoutMgr.verticallyCenter()
+            print("finishedResizing: \(newWidth)")
             self.isResizing = false
         })
     }
