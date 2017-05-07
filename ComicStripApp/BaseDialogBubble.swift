@@ -20,7 +20,26 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     }
     
     override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
+        let txtContainer = textContainers[0] as! ComicBubbleTextContainer
+        txtContainer.verticallyCenterExclusionPath = nil
+        //txtContainer.minLineFragmentY = 0
         super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+
+//        var index = 0
+//        var lineRange = NSRange()
+//        while (index < numberOfGlyphs) {
+//            enumerateLineFragments(forGlyphRange: <#T##NSRange#>, using: <#T##(CGRect, CGRect, NSTextContainer, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void#>)
+//            lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange)
+//            index = NSMaxRange(lineRange);
+//        }
+    }
+    
+    func verticallyCenter(){
+        let txtContainer = textContainers[0] as! ComicBubbleTextContainer
+        let rect = usedRect(for: txtContainer)
+        let heightDelta = txtContainer.size.height - rect.height;
+        //txtContainer.minLineFragmentY = heightDelta / 2.0
+        txtContainer.verticallyCenterExclusionPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: txtContainer.size.width, height: heightDelta / 2.0))
     }
     
     override func setLocation(_ location: CGPoint, forStartOfGlyphRange glyphRange: NSRange) {
@@ -44,7 +63,13 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     override func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, withinSelectedGlyphRange selectedRange: NSRange, in textContainer: NSTextContainer, using block: @escaping (CGRect, UnsafeMutablePointer<ObjCBool>) -> Void) {
         super.enumerateEnclosingRects(forGlyphRange: glyphRange, withinSelectedGlyphRange: selectedRange, in: textContainer, using: block)
     }
-    
+    override func enumerateLineFragments(forGlyphRange glyphRange: NSRange, using block: @escaping (CGRect, CGRect, NSTextContainer, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        super.enumerateLineFragments(forGlyphRange: glyphRange, using: block)
+    }
+}
+
+protocol TextContainerDelegate {
+    func textContainerFull()
 }
 
 class ComicBubbleTextStorage: NSTextStorage {
@@ -57,19 +82,22 @@ class ComicBubbleTextStorage: NSTextStorage {
     }
     
     let backingStore = NSMutableAttributedString()
-
+    
     override var string: String {
         return backingStore.string
     }
     override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any] {
         return backingStore.attributes(at: location, effectiveRange: range)
     }
-
+    
     override func replaceCharacters(in range: NSRange, with str: String) {
         beginEditing()
         backingStore.replaceCharacters(in: range, with: str)
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
         endEditing()
+        
+        let layoutMgr = layoutManagers[0] as! ComicBubbleLayoutManager
+        layoutMgr.verticallyCenter()
     }
     
     override func setAttributes(_ attrs: [String : Any]?, range: NSRange) {
@@ -79,22 +107,31 @@ class ComicBubbleTextStorage: NSTextStorage {
         endEditing()
     }
 }
-
-protocol TextContainerDelegate {
-    func textContainerFull()
-}
-
 class ComicBubbleTextContainer: NSTextContainer {
     var delegate: TextContainerDelegate?
     var numberOfLines: Int = 0
-    
+    var minLineFragmentY: CGFloat = 0
+    var verticallyCenterExclusionPath: UIBezierPath? {
+        didSet {
+            if let oldPath = oldValue {
+                for (i, path) in exclusionPaths.enumerated() {
+                    if (path.isEqual(oldPath)){
+                        exclusionPaths.remove(at: i)
+                        break
+                    }
+                }
+            }
+            if let newPath = verticallyCenterExclusionPath {
+                exclusionPaths.append(newPath)
+            }
+        }
+    }
+
     override var isSimpleRectangularTextContainer: Bool { get { return false } }
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         var adjustedRect = proposedRect
-        if (proposedRect.minY < 1){
-            adjustedRect.origin.y += 40
-        }
+        adjustedRect.origin.y = max(proposedRect.origin.y, minLineFragmentY)
         let rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
         // print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
         if (rect.isEmpty){
@@ -137,7 +174,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         backgroundColor = UIColor.clear
         clipsToBounds = false
     }
-    
+
     func textContainerFull() {
         increaseTextContainerSize()
     }
@@ -161,6 +198,7 @@ class ComicBubbleTextContainer: NSTextContainer {
             layer.insertSublayer(shape, at: UInt32(i))
         }
         textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
+        textContainer.size.height = mainBubbleLayer!.path!.boundingBox.maxY
 //        verticallyCenter()
     }
     
