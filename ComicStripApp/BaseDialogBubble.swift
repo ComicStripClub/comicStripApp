@@ -13,12 +13,71 @@ import CoreText
 class ComicBubbleLayoutManager: NSLayoutManager {
     override init() {
         super.init()
+        
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
+    override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
+        super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
+    }
     
+    override func setLocation(_ location: CGPoint, forStartOfGlyphRange glyphRange: NSRange) {
+        super.setLocation(location, forStartOfGlyphRange: glyphRange)
+    }
+    override func ensureLayout(for container: NSTextContainer) {
+        super.ensureLayout(for: container)
+    }
+    override func ensureLayout(forBoundingRect bounds: CGRect, in container: NSTextContainer) {
+        super.ensureLayout(forBoundingRect: bounds, in: container)
+    }
+    override func ensureLayout(forGlyphRange glyphRange: NSRange) {
+        super.ensureLayout(forGlyphRange: glyphRange)
+    }
+    override func ensureLayout(forCharacterRange charRange: NSRange) {
+        super.ensureLayout(forCharacterRange: charRange)
+    }
+    override func invalidateLayout(forCharacterRange charRange: NSRange, actualCharacterRange actualCharRange: NSRangePointer?) {
+        super.invalidateLayout(forCharacterRange: charRange, actualCharacterRange: actualCharRange)
+    }
+    override func enumerateEnclosingRects(forGlyphRange glyphRange: NSRange, withinSelectedGlyphRange selectedRange: NSRange, in textContainer: NSTextContainer, using block: @escaping (CGRect, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        super.enumerateEnclosingRects(forGlyphRange: glyphRange, withinSelectedGlyphRange: selectedRange, in: textContainer, using: block)
+    }
+    
+}
+
+class ComicBubbleTextStorage: NSTextStorage {
+    override init() {
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    let backingStore = NSMutableAttributedString()
+
+    override var string: String {
+        return backingStore.string
+    }
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any] {
+        return backingStore.attributes(at: location, effectiveRange: range)
+    }
+
+    override func replaceCharacters(in range: NSRange, with str: String) {
+        beginEditing()
+        backingStore.replaceCharacters(in: range, with: str)
+        edited([.editedCharacters, .editedAttributes], range: range, changeInLength: (str as NSString).length - range.length)
+        endEditing()
+    }
+    
+    override func setAttributes(_ attrs: [String : Any]?, range: NSRange) {
+        beginEditing()
+        backingStore.setAttributes(attrs, range: range)
+        edited(.editedAttributes, range: range, changeInLength: 0)
+        endEditing()
+    }
 }
 
 protocol TextContainerDelegate {
@@ -27,9 +86,16 @@ protocol TextContainerDelegate {
 
 class ComicBubbleTextContainer: NSTextContainer {
     var delegate: TextContainerDelegate?
+    var numberOfLines: Int = 0
+    
     override var isSimpleRectangularTextContainer: Bool { get { return false } }
+    
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
-        let rect = super.lineFragmentRect(forProposedRect: proposedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+        var adjustedRect = proposedRect
+        if (proposedRect.minY < 1){
+            adjustedRect.origin.y += 40
+        }
+        let rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
         // print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
         if (rect.isEmpty){
             delegate?.textContainerFull()
@@ -49,7 +115,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     init?(_ coder: NSCoder? = nil) {
-        let txtStorage = NSTextStorage()
+        let txtStorage = ComicBubbleTextStorage()
         let layoutMgr = ComicBubbleLayoutManager()
         txtStorage.addLayoutManager(layoutMgr)
         
@@ -94,6 +160,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         for (i, shape) in backgroundShapes.enumerated() {
             layer.insertSublayer(shape, at: UInt32(i))
         }
+        textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
 //        verticallyCenter()
     }
     
@@ -141,11 +208,14 @@ class ComicBubbleTextContainer: NSTextContainer {
             self.frame.size = CGSize(width: newWidth, height: newWidth)
             self.center = oldCenter
             self.setNeedsLayout()
+            self.updateExclusionPath()
             self.isResizing = false
-//            self.verticallyCenter()
         })
     }
     
+    private func updateExclusionPath(){
+        textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
+    }
     private var lastHeightDifferential: CGFloat = CGFloat.greatestFiniteMagnitude
     
 //    private func verticallyCenter(){
