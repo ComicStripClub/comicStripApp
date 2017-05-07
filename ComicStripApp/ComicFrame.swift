@@ -23,16 +23,14 @@ class ComicFrame: UIView {
     
     private var selectedElement: ComicFrameElement? {
         didSet {
-            if let selectedView = selectedElement?.view {
+            if selectedElement?.view != nil {
                 elementToolbar.isHidden = false
                 var items = commonActions!
                 if let contextualActions = selectedElement!.actions {
                     items.append(contentsOf: contextualActions)
                 }
                 elementToolbar.items = items
-                elementToolbar.frame = CGRect(
-                    origin: CGPoint(x: selectedView.frame.maxX, y: selectedView.frame.origin.y),
-                    size: elementToolbar.intrinsicContentSize)
+                updateToolbarPosition()
             } else {
                 elementToolbar.isHidden = true
             }
@@ -120,47 +118,45 @@ class ComicFrame: UIView {
                         break
                     }
                 }
-                selectedElement = candidate
+                
+                if (!elementToolbar.point(inside: convert(point, to: elementToolbar), with: event)){
+                    selectedElement = candidate
+                }
             }
         }
         return super.point(inside: point, with: event)
     }
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesBegan(touches, with: event)
-//        
-//        var candidate: ComicFrameElement?
-//        for touch in touches {
-//            let touchPoint = touch.location(in: self)
-//            for element in elements {
-//                if (element.view.frame.contains(touchPoint)){
-//                    if (candidate == nil){
-//                        candidate = element
-//                    } else if (!candidate!.view.isEqual(element.view)){
-//                        candidate = nil
-//                        break
-//                    }
-//                }
-//            }
-//        }
-//        selectedElement = candidate
-//    }
     
     @objc private func didPanElement(_ panGestureRecognizer: UIPanGestureRecognizer){
         let pannedElement = panGestureRecognizer.view!
         switch panGestureRecognizer.state {
         case .began:
             currentGestureStartTransform = pannedElement.transform
+            selectedElement = elementFromView(pannedElement)
             break
         case .changed:
             let translation = panGestureRecognizer.translation(in: self)
             pannedElement.transform = currentGestureStartTransform.concatenating(CGAffineTransform(translationX: translation.x, y: translation.y))
+            updateToolbarPosition()
             break
         case .ended:
             break
         default:
             // Handle cancellation or failure
             break
+        }
+    }
+    
+    private func updateToolbarPosition() {
+        if let selectedView = selectedElement?.view {
+            var x = selectedView.frame.maxX
+            if (x + elementToolbar.intrinsicContentSize.width > contentView.frame.maxX) {
+                x = max(contentView.frame.minX, selectedView.frame.minX - elementToolbar.intrinsicContentSize.width)
+            }
+            let y = min(max(0, selectedView.frame.origin.y), contentView.frame.maxY - elementToolbar.intrinsicContentSize.height)
+            elementToolbar.frame = CGRect(
+                origin: CGPoint(x: x, y: y),
+                size: elementToolbar.intrinsicContentSize)
         }
     }
 }
