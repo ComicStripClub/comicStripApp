@@ -17,6 +17,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
         comicFrame.addElement(self)
     }
+    var actions: [UIBarButtonItem]? { get { return (view as! BaseDialogBubble).actions } }
 }
 
 @IBDesignable class ClassicSpeechBubble : BaseDialogBubble {

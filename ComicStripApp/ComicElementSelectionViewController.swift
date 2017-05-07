@@ -9,7 +9,7 @@
 import UIKit
 import GPUImage
 
-enum ComicElementType {
+enum ComicElementType: Int {
     case dialogBubble
     case soundEffect
     case style
@@ -19,6 +19,7 @@ protocol ComicFrameElement {
     var type: ComicElementType { get }
     var icon: UIImage { get }
     var view: UIView { get }
+    var actions: [UIBarButtonItem]? { get }
     var effectFunc: (_ frame: ComicFrame) -> Void { get }
 }
 

@@ -71,12 +71,13 @@ class ComicBubbleTextContainer: NSTextContainer {
     var backgroundShapes: [CAShapeLayer] = []
     var mainBubbleLayer: CAShapeLayer!
     private var shouldAutoResize: Bool = true
-    private var flipBubbleImageView: UIImageView!
     
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(aDecoder)
     }
-    
+
+    var actions: [UIBarButtonItem]?
+
     init?(_ coder: NSCoder? = nil) {
         let txtStorage = NSTextStorage()
         let layoutMgr = ComicBubbleLayoutManager()
@@ -100,19 +101,17 @@ class ComicBubbleTextContainer: NSTextContainer {
         backgroundColor = UIColor.clear
         clipsToBounds = false
 
-        let flipImageView = UIImageView(image: #imageLiteral(resourceName: "flipIcon"))
-        flipImageView.isUserInteractionEnabled = true
-        flipImageView.contentMode = .scaleAspectFill
-        flipImageView.bounds.size = CGSize(width: 32, height: 32)
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapFlipButton))
-        flipImageView.addGestureRecognizer(tapRecognizer)
-        addSubview(flipImageView)
-        flipBubbleImageView = flipImageView
+        let rotateAction = UIBarButtonItem(image: UIImage.imageFromSystemBarButton(.reply), style: .plain, target: self, action: #selector(didRotateBubble))
+        actions = [rotateAction]
 
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinchBubble))
         addGestureRecognizer(pinchRecognizer)
     }
 
+    @objc private func didRotateBubble(_: UIBarButtonItem){
+        changeOrientation()
+    }
+    
     @objc private func didTapFlipButton(_: UITapGestureRecognizer){
         changeOrientation()
     }
@@ -155,7 +154,6 @@ class ComicBubbleTextContainer: NSTextContainer {
     override var transform: CGAffineTransform {
         didSet {
             updateExclusionPath()
-            updateButtonPositions()
             print("Frame: \(frame)")
         }
     }
@@ -189,24 +187,8 @@ class ComicBubbleTextContainer: NSTextContainer {
             adjustShapeForBubbleOrientation(shape)
         }
         updateExclusionPath()
-        updateButtonPositions()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.mainBubbleLayer = self.mainBubbleLayer
-    }
-    
-    private func updateButtonPositions(){
-        let bubbleBounds = mainBubbleLayer.path!.boundingBox
-        var x: CGFloat = bubbleBounds.width - flipBubbleImageView.bounds.width
-        var y: CGFloat = 0
-        if let parentView = superview{
-            if (frame.maxX > parentView.bounds.width){
-                x = parentView.bounds.width - frame.minX - flipBubbleImageView.bounds.width
-            }
-            if (frame.minY < 0){
-                y = -frame.minY
-            }
-        }
-        flipBubbleImageView.frame.origin = CGPoint(x: x, y: y)
     }
     
     private func adjustShapeForBubbleOrientation(_ shape: CAShapeLayer) {
@@ -246,9 +228,6 @@ class ComicBubbleTextContainer: NSTextContainer {
             if (layer.path!.contains(transformedPoint)){
                 return super.point(inside: point, with: event)
             }
-        }
-        if (flipBubbleImageView.frame.contains(point)){
-            return true
         }
         return false
     }

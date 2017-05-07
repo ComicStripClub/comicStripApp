@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class SoundEffectElement: ComicFrameElement {
+    var actions: [UIBarButtonItem]?
     var icon: UIImage
     var type: ComicElementType = .soundEffect
     var view: UIView
