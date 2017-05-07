@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import GPUImage
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     override var shouldAutorotate: Bool {
         get { return false }
     }
@@ -18,15 +18,22 @@ class MainViewController: UIViewController {
     @IBOutlet weak var comicFrame: ComicFrame!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     private var currentComicFrame: ComicFrame?
-    
+    let imagePicker = UIImagePickerController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
-        
+        imagePicker.delegate = self
+
         if (isCameraAvailable()){
             initializeCamera()
         }
         comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
+        comicFrame.onClickCallback = {
+            self.imagePicker.allowsEditing = false
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
     }
 
     private func isCameraAvailable() -> Bool {
@@ -60,6 +67,18 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham")),
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
         presentSelectionController(withElements: soundEffects)
+    }
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        }
+        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        } else{
+            print("Could not load image")
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     func didTapStyleButton() {

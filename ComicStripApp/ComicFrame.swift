@@ -11,14 +11,15 @@ import UIKit
 import GPUImage
 
 class ComicFrame: UIView {
-    
+    @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
     @IBOutlet weak var frameCountLabel: UILabel!
-
+    let imagePicker = UIImagePickerController()
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
-    
+    var onClickCallback: ((Void) -> Void)?
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -29,6 +30,9 @@ class ComicFrame: UIView {
         initSubviews()
     }
     
+    @IBAction func onGalleryPick(_ sender: UIButton) {
+        onClickCallback?()
+    }
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
