@@ -71,6 +71,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     var backgroundShapes: [CAShapeLayer] = []
     var mainBubbleLayer: CAShapeLayer!
     private var shouldAutoResize: Bool = true
+    private var flipBubbleImageView: UIImageView!
     
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(aDecoder)
@@ -103,15 +104,10 @@ class ComicBubbleTextContainer: NSTextContainer {
         flipImageView.isUserInteractionEnabled = true
         flipImageView.contentMode = .scaleAspectFill
         flipImageView.bounds.size = CGSize(width: 32, height: 32)
-        let verticalConstraint = NSLayoutConstraint(item: flipImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
-        let horizontalConstraint = NSLayoutConstraint(item: flipImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: flipImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32)
-        let heightConstraint = NSLayoutConstraint(item: flipImageView, attribute: .height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32)
-        flipImageView.addConstraints([widthConstraint, heightConstraint])
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapFlipButton))
         flipImageView.addGestureRecognizer(tapRecognizer)
         addSubview(flipImageView)
-        addConstraints([horizontalConstraint, verticalConstraint])
+        flipBubbleImageView = flipImageView
 
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinchBubble))
         addGestureRecognizer(pinchRecognizer)
@@ -159,6 +155,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     override var transform: CGAffineTransform {
         didSet {
             updateExclusionPath()
+            updateButtonPositions()
             print("Frame: \(frame)")
         }
     }
@@ -166,8 +163,8 @@ class ComicBubbleTextContainer: NSTextContainer {
     enum BubbleOrientation: Int {
         case normal
         case flippedHorizontally
-        case flippedVertically
         case flippedHorizontallyAndVertically
+        case flippedVertically
     }
     
     private var bubbleOrientation: BubbleOrientation = .normal
@@ -188,19 +185,47 @@ class ComicBubbleTextContainer: NSTextContainer {
         (self.backgroundShapes, mainBubble) = drawBackgroundShapes(width: bounds.width)
         self.mainBubbleLayer = mainBubble
         for (i, shape) in backgroundShapes.enumerated() {
-            adjustShapeForBubbleOrientation(shape)
             layer.insertSublayer(shape, at: UInt32(i))
+            adjustShapeForBubbleOrientation(shape)
         }
         updateExclusionPath()
+        updateButtonPositions()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.mainBubbleLayer = self.mainBubbleLayer
+    }
+    
+    private func updateButtonPositions(){
+        let bubbleBounds = mainBubbleLayer.path!.boundingBox
+        var x: CGFloat = bubbleBounds.width - flipBubbleImageView.bounds.width
+        var y: CGFloat = 0
+        if let parentView = superview{
+            if (frame.maxX > parentView.bounds.width){
+                x = parentView.bounds.width - frame.minX - flipBubbleImageView.bounds.width
+            }
+            if (frame.minY < 0){
+                y = -frame.minY
+            }
+        }
+        flipBubbleImageView.frame.origin = CGPoint(x: x, y: y)
     }
     
     private func adjustShapeForBubbleOrientation(_ shape: CAShapeLayer) {
         switch bubbleOrientation {
         case .flippedHorizontally:
-            shape.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            shape.transform = CATransform3DMakeScale(-1.0, 1, 1)
+            let translate = CATransform3DMakeTranslation(bounds.width, 0, 0)
+            let scale = CATransform3DMakeScale(-1.0, 1, 1)
+            shape.transform = CATransform3DConcat(scale, translate)
+            break
+        case .flippedVertically:
+            let translate = CATransform3DMakeTranslation(0, bounds.height, 0)
+            let scale = CATransform3DMakeScale(1, -1.0, 1)
+            shape.transform = CATransform3DConcat(scale, translate)
+            break
+        case .flippedHorizontallyAndVertically:
+            let translate = CATransform3DMakeTranslation(bounds.width, bounds.height, 0)
+            let scale = CATransform3DMakeScale(-1.0, -1.0, 1)
+            shape.transform = CATransform3DConcat(scale, translate)
+            break
         case .normal:
             fallthrough
         default:
@@ -216,9 +241,14 @@ class ComicBubbleTextContainer: NSTextContainer {
     // Only count touches which are inside the dialog bubble
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         for layer in backgroundShapes {
-            if (layer.path!.contains(point)){
+            let affineTransform = CATransform3DGetAffineTransform(layer.transform)
+            let transformedPoint = __CGPointApplyAffineTransform(point, affineTransform)
+            if (layer.path!.contains(transformedPoint)){
                 return super.point(inside: point, with: event)
             }
+        }
+        if (flipBubbleImageView.frame.contains(point)){
+            return true
         }
         return false
     }
@@ -264,7 +294,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     private func updateExclusionPath(){
-        var exclusionPaths = [getExclusionPath(width: bounds.width)]
+        var exclusionPaths = [getTransformedExclusionPath(width: bounds.width)]
         if (frame.origin.x < 0){
             exclusionPaths.append(UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: -frame.origin.x, height: bounds.height))))
         }
@@ -283,6 +313,30 @@ class ComicBubbleTextContainer: NSTextContainer {
             }
         }
         textContainer.exclusionPaths = exclusionPaths
+    }
+    
+    func getTransformedExclusionPath(width: CGFloat) -> UIBezierPath {
+        let path = getExclusionPath(width: width)
+        switch bubbleOrientation {
+        case .flippedHorizontally:
+            let scale = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            let translate = CGAffineTransform(translationX: bounds.width, y: 0)
+            path.apply(scale.concatenating(translate))
+            break
+        case .flippedVertically:
+            let scale = CGAffineTransform(scaleX: 1.0, y: -1.0)
+            let translate = CGAffineTransform(translationX: 0, y: bounds.height)
+            path.apply(scale.concatenating(translate))
+            break
+        case .flippedHorizontallyAndVertically:
+            let scale = CGAffineTransform(scaleX: -1.0, y: -1.0)
+            let translate = CGAffineTransform(translationX: bounds.width, y: bounds.height)
+            path.apply(scale.concatenating(translate))
+            break
+        default:
+            break
+        }
+        return path
     }
     
     func getExclusionPath(width: CGFloat) -> UIBezierPath {
