@@ -10,6 +10,17 @@ import Foundation
 import UIKit
 import CoreText
 
+class ComicBubbleLayoutManager: NSLayoutManager {
+    override init() {
+        super.init()
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    
+}
+
 protocol TextContainerDelegate {
     func textContainerFull()
 }
@@ -39,7 +50,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     init?(_ coder: NSCoder? = nil) {
         let txtStorage = NSTextStorage()
-        let layoutMgr = NSLayoutManager()
+        let layoutMgr = ComicBubbleLayoutManager()
         txtStorage.addLayoutManager(layoutMgr)
         
         let customTextContainer = ComicBubbleTextContainer()
@@ -83,7 +94,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         for (i, shape) in backgroundShapes.enumerated() {
             layer.insertSublayer(shape, at: UInt32(i))
         }
-        verticallyCenter()
+//        verticallyCenter()
     }
     
     // Only count touches which are inside the dialog bubble
@@ -105,20 +116,20 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     func textViewDidChange(_ textView: UITextView) {
         print("textChanged: \(textView.text!)")
-        verticallyCenter()
+//        verticallyCenter()
     }
     
     private var isResizing: Bool = false
     private var lastTextHeight: CGFloat = 0
     
 
-    private func increaseTextContainerSize(by scaleFactor: CGFloat = 1.10){
+    private func increaseTextContainerSize(by scaleFactor: CGFloat = 1.05){
         guard (!isResizing) else {
             return
         }
         isResizing = true
         let oldCenter = center
-        var newWidth = bounds.width * scaleFactor
+        let newWidth = bounds.width * scaleFactor
         let widthScale = newWidth / self.frame.size.width
         let oldTransform = self.transform
         UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
@@ -131,35 +142,35 @@ class ComicBubbleTextContainer: NSTextContainer {
             self.center = oldCenter
             self.setNeedsLayout()
             self.isResizing = false
-            self.verticallyCenter()
+//            self.verticallyCenter()
         })
     }
     
     private var lastHeightDifferential: CGFloat = CGFloat.greatestFiniteMagnitude
     
-    private func verticallyCenter(){
-        guard (!isResizing) else {
-            return
-        }
-        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        if let bubbleHeight = mainBubbleLayer?.path?.boundingBox.height {
-            let heightDifference = bubbleHeight - sizeOfText.height;
-            if (abs(lastHeightDifferential - heightDifference) < 1.0){
-                return
-            }
-            lastHeightDifferential = heightDifference
-            var topCorrection = mainBubbleLayer!.path!.boundingBox.minY +
-                (heightDifference) / 2.0
-            topCorrection = max(0, topCorrection)
-            textContainer.exclusionPaths = [
-                getExclusionPath(width: bounds.width),
-                UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection)))
-            ]
-            if (bounds.height > bounds.width) {
-                textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
-            }
-        }
-    }
+//    private func verticallyCenter(){
+//        guard (!isResizing) else {
+//            return
+//        }
+//        if let bubbleHeight = mainBubbleLayer?.path?.boundingBox.height {
+//            let sizeOfText = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: text.characters.count), in: textContainer).size
+//            let heightDifference = bubbleHeight - sizeOfText.height;
+//            if (abs(lastHeightDifferential - heightDifference) < 1.0){
+//                return
+//            }
+//            lastHeightDifferential = heightDifference
+//            var topCorrection = mainBubbleLayer!.path!.boundingBox.minY +
+//                (heightDifference) / 2.0
+//            topCorrection = max(0, topCorrection)
+//            textContainer.exclusionPaths = [
+//                getExclusionPath(width: bounds.width),
+//                UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection)))
+//            ]
+//            if (bounds.height > bounds.width) {
+//                textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
+//            }
+//        }
+//    }
     
     func getExclusionPath(width: CGFloat) -> UIBezierPath {
         return UIBezierPath()
