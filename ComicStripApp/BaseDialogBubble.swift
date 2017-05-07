@@ -22,8 +22,10 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     var mainBubbleLayer: CAShapeLayer!
     
     override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
-        let txtContainer = textContainers[0] as! ComicBubbleTextContainer
-        txtContainer.minLineFragmentY = 0
+        if (editMask.contains(.editedCharacters)){
+            let txtContainer = textContainers[0] as! ComicBubbleTextContainer
+            txtContainer.minLineFragmentY = 0
+        }
         super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
     }
     
@@ -96,11 +98,29 @@ class ComicBubbleTextContainer: NSTextContainer {
         isScrollEnabled = false
         backgroundColor = UIColor.clear
         clipsToBounds = false
-        
+
+        let flipImageView = UIImageView(image: #imageLiteral(resourceName: "flipIcon"))
+        flipImageView.isUserInteractionEnabled = true
+        flipImageView.contentMode = .scaleAspectFill
+        flipImageView.bounds.size = CGSize(width: 32, height: 32)
+        let verticalConstraint = NSLayoutConstraint(item: flipImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
+        let horizontalConstraint = NSLayoutConstraint(item: flipImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: flipImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32)
+        let heightConstraint = NSLayoutConstraint(item: flipImageView, attribute: .height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32)
+        flipImageView.addConstraints([widthConstraint, heightConstraint])
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapFlipButton))
+        flipImageView.addGestureRecognizer(tapRecognizer)
+        addSubview(flipImageView)
+        addConstraints([horizontalConstraint, verticalConstraint])
+
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinchBubble))
         addGestureRecognizer(pinchRecognizer)
     }
 
+    @objc private func didTapFlipButton(_: UITapGestureRecognizer){
+        changeOrientation()
+    }
+    
     func textContainerFull() {
         guard (shouldAutoResize) else {
             return
@@ -143,6 +163,15 @@ class ComicBubbleTextContainer: NSTextContainer {
         }
     }
     
+    enum BubbleOrientation: Int {
+        case normal
+        case flippedHorizontally
+        case flippedVertically
+        case flippedHorizontallyAndVertically
+    }
+    
+    private var bubbleOrientation: BubbleOrientation = .normal
+    
     // Draws the thought bubble outline/fill in the background of the UITextView,
     // and sets the exclusionPaths so that text flows within the boundaries of
     // the thought bubble
@@ -159,11 +188,29 @@ class ComicBubbleTextContainer: NSTextContainer {
         (self.backgroundShapes, mainBubble) = drawBackgroundShapes(width: bounds.width)
         self.mainBubbleLayer = mainBubble
         for (i, shape) in backgroundShapes.enumerated() {
+            adjustShapeForBubbleOrientation(shape)
             layer.insertSublayer(shape, at: UInt32(i))
         }
         updateExclusionPath()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.mainBubbleLayer = self.mainBubbleLayer
+    }
+    
+    private func adjustShapeForBubbleOrientation(_ shape: CAShapeLayer) {
+        switch bubbleOrientation {
+        case .flippedHorizontally:
+            shape.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            shape.transform = CATransform3DMakeScale(-1.0, 1, 1)
+        case .normal:
+            fallthrough
+        default:
+            break
+        }
+    }
+    
+    func changeOrientation(){
+        bubbleOrientation = BubbleOrientation(rawValue: (bubbleOrientation.rawValue + 1) % 4) ?? .normal
+        setNeedsLayout()
     }
     
     // Only count touches which are inside the dialog bubble
@@ -229,9 +276,10 @@ class ComicBubbleTextContainer: NSTextContainer {
                 let xOrigin = parentView.bounds.width - frame.minX
                 exclusionPaths.append(UIBezierPath(rect: CGRect(x: xOrigin, y: 0, width: frame.maxX - xOrigin, height: bounds.height)))
             }
-            if (frame.maxY > parentView.bounds.height){
+            let mainBubbleBounds = mainBubbleLayer.path!.boundingBox
+            if (frame.minY + mainBubbleBounds.maxY > parentView.bounds.height){
                 let yOrigin = parentView.bounds.height - frame.minY
-                exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: yOrigin, width: bounds.width, height: frame.maxY - yOrigin)))
+                exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: yOrigin, width: bounds.width, height: (frame.minY + mainBubbleBounds.maxY) - yOrigin)))
             }
         }
         textContainer.exclusionPaths = exclusionPaths
