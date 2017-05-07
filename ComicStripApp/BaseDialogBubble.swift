@@ -101,6 +101,13 @@ class ComicBubbleTextContainer: NSTextContainer {
         increaseTextContainerSize()
     }
     
+    override var transform: CGAffineTransform {
+        didSet {
+            updateExclusionPath()
+            print("Frame: \(frame)")
+        }
+    }
+    
     // Draws the thought bubble outline/fill in the background of the UITextView,
     // and sets the exclusionPaths so that text flows within the boundaries of
     // the thought bubble
@@ -119,7 +126,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         for (i, shape) in backgroundShapes.enumerated() {
             layer.insertSublayer(shape, at: UInt32(i))
         }
-        textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
+        updateExclusionPath()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.mainBubbleLayer = self.mainBubbleLayer
     }
@@ -175,7 +182,24 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     private func updateExclusionPath(){
-        textContainer.exclusionPaths = [getExclusionPath(width: bounds.width)]
+        var exclusionPaths = [getExclusionPath(width: bounds.width)]
+        if (frame.origin.x < 0){
+            exclusionPaths.append(UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: -frame.origin.x, height: bounds.height))))
+        }
+        if (frame.origin.y < 0){
+            exclusionPaths.append(UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: bounds.width, height: -frame.origin.y))))
+        }
+        if let parentView = superview {
+            if (frame.maxX > parentView.bounds.width){
+                let xOrigin = parentView.bounds.width - frame.minX
+                exclusionPaths.append(UIBezierPath(rect: CGRect(x: xOrigin, y: 0, width: frame.maxX - xOrigin, height: bounds.height)))
+            }
+            if (frame.maxY > parentView.bounds.height){
+                let yOrigin = parentView.bounds.height - frame.minY
+                exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: yOrigin, width: bounds.width, height: frame.maxY - yOrigin)))
+            }
+        }
+        textContainer.exclusionPaths = exclusionPaths
     }
     
     func getExclusionPath(width: CGFloat) -> UIBezierPath {
