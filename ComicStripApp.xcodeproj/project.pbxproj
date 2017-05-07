@@ -30,6 +30,8 @@
 		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
 		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
 		ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */; };
+		ABF72B5C1EBFB60000A533E3 /* ComicElementToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF72B5B1EBFB60000A533E3 /* ComicElementToolbar.xib */; };
+		ABF72B611EBFB8F100A533E3 /* ComicElementToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72B601EBFB8F100A533E3 /* ComicElementToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,8 @@
 		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
+		ABF72B5B1EBFB60000A533E3 /* ComicElementToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicElementToolbar.xib; sourceTree = "<group>"; };
+		ABF72B601EBFB8F100A533E3 /* ComicElementToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicElementToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,8 @@
 				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
 				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
 				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
+				ABF72B5B1EBFB60000A533E3 /* ComicElementToolbar.xib */,
+				ABF72B601EBFB8F100A533E3 /* ComicElementToolbar.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				ABAA17101EB1EF3200C96694 /* BADABB__.TTF in Resources */,
 				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
 				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
+				ABF72B5C1EBFB60000A533E3 /* ComicElementToolbar.xib in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
 				AB8E850A1EA9AAE1003DDDD5 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
@@ -354,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */,
+				ABF72B611EBFB8F100A533E3 /* ComicElementToolbar.swift in Sources */,
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,

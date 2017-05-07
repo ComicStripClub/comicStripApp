@@ -17,6 +17,17 @@ class ComicFrame: UIView {
 
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
+    private var elementToolbar: ComicElementToolbar!
+    
+    private var selectedElement: ComicFrameElement? {
+        didSet {
+            if let selectedView = selectedElement?.view {
+                elementToolbar.isHidden = false
+                elementToolbar.frame.origin = selectedView.frame.origin
+                let f = elementToolbar.frame
+            }
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,12 +38,16 @@ class ComicFrame: UIView {
         super.init(frame: frame)
         initSubviews()
     }
-    
+
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
+        elementToolbar = ComicElementToolbar()
+        elementToolbar.frame.size = elementToolbar.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        elementToolbar.isHidden = true
+        addSubview(elementToolbar)
     }
     
     func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
@@ -51,8 +66,16 @@ class ComicFrame: UIView {
         
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanElement))
         elementView.addGestureRecognizer(panRecognizer)
-        
         elements.append(element)
+    }
+    
+    private func elementFromView(_ view: UIView) -> ComicFrameElement? {
+        for e in elements {
+            if (view.isEqual(e.view)){
+                return e
+            }
+        }
+        return nil
     }
     
     @objc private func didPanElement(_ panGestureRecognizer: UIPanGestureRecognizer){
@@ -60,6 +83,7 @@ class ComicFrame: UIView {
         switch panGestureRecognizer.state {
         case .began:
             currentGestureStartTransform = pannedElement.transform
+            selectedElement = elementFromView(pannedElement)
             break
         case .changed:
             let translation = panGestureRecognizer.translation(in: self)

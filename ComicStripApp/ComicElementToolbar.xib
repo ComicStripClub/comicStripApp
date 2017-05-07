@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicElementToolbar" customModule="ComicStripApp" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="NbZ-Nf-nUQ"/>
+                <outlet property="toolbar" destination="eph-j0-aQR" id="Dde-dy-E74"/>
+                <outlet property="trashButton" destination="svj-AV-AOc" id="L9Q-Q0-bmH"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="104" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="eph-j0-aQR">
+                    <rect key="frame" x="0.0" y="0.0" width="104" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="gam-xA-gJF"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="w1i-OP-ESn"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem systemItem="trash" id="svj-AV-AOc">
+                            <color key="tintColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </items>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </toolbar>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="eph-j0-aQR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jf4-3a-qr6"/>
+                <constraint firstAttribute="trailing" secondItem="eph-j0-aQR" secondAttribute="trailing" id="rtO-uO-5vT"/>
+                <constraint firstItem="eph-j0-aQR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tha-hX-jut"/>
+                <constraint firstAttribute="bottom" secondItem="eph-j0-aQR" secondAttribute="bottom" id="vcz-Ya-POu"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                    <real key="value" value="1"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="5"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="-100" y="-220"/>
+        </view>
+    </objects>
+</document>
