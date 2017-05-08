@@ -33,7 +33,7 @@ class ComicboardViewController: UIPageViewController {
         }
     }
     
-    func getComicFrame(currentFrameCount: Int) -> UIViewController{
+    func getComicFrame(currentFrameCount: Int) -> UIViewController {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         viewController.currentFrameCount = currentFrameCount

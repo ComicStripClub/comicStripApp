@@ -15,7 +15,6 @@ class ComicFrame: UIView {
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
-    @IBOutlet weak var frameCountLabel: UILabel!
     let imagePicker = UIImagePickerController()
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
@@ -85,7 +84,7 @@ class ComicFrame: UIView {
         var finalSize: CGSize
         if (size == nil){
             let minFrameSideLength = min(bounds.width, bounds.height)
-            finalSize = CGSize(width: minFrameSideLength / 2, height: minFrameSideLength / 2)
+            finalSize = CGSize(width: minFrameSideLength / 3, height: minFrameSideLength / 3)
         } else {
             finalSize = size!
         }
@@ -121,6 +120,8 @@ class ComicFrame: UIView {
         return nil
     }
     
+    // When point(inside:withEvent:) is called, use it to determine which ComicFrameElement
+    // is under the tap/touch, and mark it as selected
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if let eventType = event?.type {
             if (eventType == .touches) {
@@ -161,6 +162,9 @@ class ComicFrame: UIView {
         }
     }
     
+    // Ensure the toolbar that appears for the selected ComicFrameElement stays
+    // anchored to the top-right of the element.  If there's not enough space, 
+    // move it to the left side of the element.
     private func updateToolbarPosition() {
         if let selectedView = selectedElement?.view {
             var x = selectedView.frame.maxX

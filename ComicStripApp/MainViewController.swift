@@ -11,6 +11,12 @@ import AVFoundation
 import GPUImage
 
 class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    private let supportedFilters: [String: () -> ImageProcessingOperation] = [
+        "SmoothToonFilter" : { return SmoothToonFilter() },
+        "Posterize" : { return Posterize() },
+        "Pixelate" : { return Pixellate() }
+    ]
+    
     override var shouldAutorotate: Bool {
         get { return false }
     }
@@ -18,8 +24,13 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var comicFrame: ComicFrame!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     private var currentComicFrame: ComicFrame?
-    let imagePicker = UIImagePickerController()
     
+    var camera: Camera!
+    
+    var currentFilter: (() -> ImageProcessingOperation)?
+    
+    let imagePicker = UIImagePickerController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
@@ -31,18 +42,17 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         if (isCameraAvailable()){
             initializeCamera()
         }
+        currentFilter = supportedFilters.first!.value
+        
         handleComicFrameEvents()
     }
     
     private func handleComicFrameEvents(){
-        comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
-        
         comicFrame.onClickGalleryCallback = {
             self.imagePicker.allowsEditing = false
             self.imagePicker.sourceType = .photoLibrary
             self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
             self.present(self.imagePicker, animated: true, completion: nil)
-            
         }
         
         comicFrame.onClickShareCallback = {
@@ -71,6 +81,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
 
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
@@ -111,9 +122,10 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     private func initializeCamera(){
         do {
-            let camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
-            let filter = SmoothToonFilter()
-            camera --> filter --> comicFrame.renderView
+            camera = try Camera(sessionPreset:AVCaptureSessionPresetPhoto)
+            let filter = currentFilter!()
+            camera.addTarget(filter)
+            filter.addTarget(comicFrame.renderView)
             camera.startCapture()
         } catch {
             fatalError("Could not initialize rendering pipeline: \(error)")
@@ -121,13 +133,25 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        var pickedImage: UIImage?
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            comicFrame.framePhoto.image = image
+            pickedImage = image
         }
         else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            comicFrame.framePhoto.image = image
+            pickedImage = image
         } else{
             print("Could not load image")
+        }
+        
+        if let pickedImage = pickedImage {
+            var filteredImage = pickedImage
+            if let filter = currentFilter?() {
+                filteredImage = pickedImage.filterWithPipeline({ (input, output) in
+                    input.addTarget(filter)
+                    filter.addTarget(output)
+                })
+            }
+            comicFrame.framePhoto.image = filteredImage
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -135,6 +159,21 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 }
 
 extension MainViewController: ComicStripToolbarDelegate {
+  
+    func didTapCaptureButton() {
+        let pictureOutput = PictureOutput()
+        pictureOutput.encodedImageFormat = .jpeg
+        pictureOutput.imageAvailableCallback = { image in
+            // Do something with the image
+            self.comicFrame.framePhoto.image = image
+            self.comicStylingToolbar.mode = .editing
+            self.camera.stopCapture()
+        }
+    }
+    
+    func didTapSwitchCameraButton() {
+        
+    }
     
     func didTapSpeechBubbleButton() {
         let speechBubbles: [ComicFrameElement] = [
@@ -149,8 +188,6 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
         presentSelectionController(withElements: soundEffects)
     }
-    
-    
     
     func didTapStyleButton() {
         

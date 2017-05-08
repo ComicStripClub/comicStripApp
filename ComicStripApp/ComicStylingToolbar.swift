@@ -12,14 +12,27 @@ protocol ComicStripToolbarDelegate {
     func didTapSpeechBubbleButton()
     func didTapSoundEffectsButton()
     func didTapStyleButton()
+    func didTapCaptureButton()
+    func didTapSwitchCameraButton()
 }
 
 @IBDesignable class ComicStylingToolbar: UIView {
 
+    enum ComicStylingToolbarMode {
+        case capture
+        case editing
+    }
+    
     var delegate: ComicStripToolbarDelegate?
-    @IBOutlet weak var stylingModeToolbar: UIView!
     @IBOutlet weak var cameraModeToolbar: UIView!
-    @IBOutlet weak var captureIconView: UIView!
+    @IBOutlet weak var editingModeToolbar: UIView!
+    
+    var mode: ComicStylingToolbarMode = .capture {
+        didSet {
+            cameraModeToolbar.isHidden = (mode == .editing)
+            editingModeToolbar.isHidden = (mode == .capture)
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -36,30 +49,16 @@ protocol ComicStripToolbarDelegate {
         let contentView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         contentView.frame = bounds
         addSubview(contentView)
-        
-        drawCaptureIcon()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        drawCaptureIcon()
+    @IBAction func didTapCaptureButton(_ sender: Any) {
+        delegate?.didTapCaptureButton()
     }
     
-    private func drawCaptureIcon() {
-        for sub in captureIconView.subviews {
-            sub.removeFromSuperview()
-        }
-        let outerCircleSide: CGFloat = captureIconView.bounds.width - 8
-        let centerPoint = convert(captureIconView.center, to: captureIconView)
-        let outerCircle = UIView.createCircle(diameter: outerCircleSide, centeredAt: centerPoint)
-        outerCircle.layer.borderColor = UIColor.white.cgColor
-        outerCircle.layer.borderWidth = 4
-        captureIconView.addSubview(outerCircle)
-        let innerCircle = UIView.createCircle(diameter: outerCircleSide - 15, centeredAt: centerPoint)
-        innerCircle.layer.backgroundColor = UIColor.white.cgColor
-        captureIconView.addSubview(innerCircle)
+    @IBAction func didTapSwitchCameraButton(_ sender: Any) {
+        delegate?.didTapSwitchCameraButton()
     }
-    
+
     @IBAction func didTapSpeechBubbleButton(_ sender: Any) {
         delegate?.didTapSpeechBubbleButton()
     }

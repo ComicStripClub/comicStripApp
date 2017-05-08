@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicFrame" customModule="ComicStripApp" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="o6Q-9Q-Ad6"/>
-                <outlet property="frameCountLabel" destination="ETH-Zk-SFl" id="Ns5-1C-U3x"/>
                 <outlet property="framePhoto" destination="Nvi-RK-4TA" id="Ltv-8M-017"/>
                 <outlet property="renderView" destination="viQ-FQ-fAr" id="gDR-nf-I0G"/>
                 <outlet property="shareButton" destination="tj7-Rn-kQK" id="Z8P-jM-MlP"/>
@@ -25,45 +24,38 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viQ-FQ-fAr" customClass="RenderView" customModule="GPUImage">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nvi-RK-4TA" userLabel="framePhoto">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="0.27600810486221672" blue="0.210904739307605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETH-Zk-SFl">
-                            <rect key="frame" x="38" y="77" width="122" height="65"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="1" green="0.44561258710000001" blue="0.39500742770000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNo-gd-EzY">
-                            <rect key="frame" x="295" y="482" width="46" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="gallery"/>
-                            <connections>
-                                <action selector="onGalleryPick:" destination="-1" eventType="touchUpInside" id="Kqz-zD-ASZ"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tj7-Rn-kQK" userLabel="share">
-                            <rect key="frame" x="299" y="444" width="38" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="share"/>
-                            <connections>
-                                <action selector="onShareComic:" destination="-1" eventType="touchUpInside" id="dYY-B6-XtD"/>
-                            </connections>
-                        </button>
-                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nvi-RK-4TA" userLabel="framePhoto">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tj7-Rn-kQK" userLabel="share">
+                    <rect key="frame" x="329" y="8" width="38" height="30"/>
+                    <state key="normal" title="share"/>
+                    <connections>
+                        <action selector="onShareComic:" destination="-1" eventType="touchUpInside" id="dYY-B6-XtD"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNo-gd-EzY">
+                    <rect key="frame" x="8" y="629" width="46" height="30"/>
+                    <state key="normal" title="gallery"/>
+                    <connections>
+                        <action selector="onGalleryPick:" destination="-1" eventType="touchUpInside" id="Kqz-zD-ASZ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="viQ-FQ-fAr" secondAttribute="bottom" id="3Y8-bb-18S"/>
+                <constraint firstAttribute="trailing" secondItem="tj7-Rn-kQK" secondAttribute="trailing" constant="8" id="4om-an-ado"/>
+                <constraint firstItem="tj7-Rn-kQK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Vm4-Rh-n6u"/>
                 <constraint firstAttribute="trailing" secondItem="viQ-FQ-fAr" secondAttribute="trailing" id="VmZ-b3-Cj5"/>
                 <constraint firstItem="viQ-FQ-fAr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YQ9-mA-iF8"/>
+                <constraint firstAttribute="bottom" secondItem="sNo-gd-EzY" secondAttribute="bottom" constant="8" id="YUu-gX-o5R"/>
                 <constraint firstItem="viQ-FQ-fAr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b4G-qT-rij"/>
+                <constraint firstItem="sNo-gd-EzY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="kR0-xh-DFG"/>
             </constraints>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
