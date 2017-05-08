@@ -13,6 +13,7 @@ class ComicFrameElementCell: UICollectionViewCell {
     var comicFrameElement: ComicFrameElement? {
         didSet {
             image?.image = comicFrameElement?.icon
+            
         }
     }
     

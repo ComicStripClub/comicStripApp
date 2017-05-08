@@ -39,6 +39,21 @@ class ComicboardViewController: UIPageViewController {
         viewController.currentFrameCount = currentFrameCount
         return viewController
     }
+    
+    @IBAction func saveComicAsImages(_ sender: UIBarButtonItem) {
+        saveAnimatedImage()
+    }
+    func saveAnimatedImage(){
+//        var tempCount = 0
+        for viewController in comicFrameViewControllers {
+            let mainViewController = viewController as! MainViewController
+            
+            let snapshotImageFromMyView = Utils.getImageFromView(view: mainViewController.comicFrame)
+//            Utils.saveImageAsJPEGToPhotos(name: "abc"+String(tempCount), image: snapshotImageFromMyView)
+//            tempCount = tempCount+1
+            UIImageWriteToSavedPhotosAlbum(snapshotImageFromMyView, nil, nil, nil)
+        }
+    }
     /*
      // MARK: - Navigation
      
@@ -76,7 +91,6 @@ extension ComicboardViewController: UIPageViewControllerDataSource{
         guard let viewControllerIndex = comicFrameViewControllers.index(of: viewController) else {
             return nil
         }
-        
         let nextIndex = viewControllerIndex + 1
         let orderedViewControllersCount = comicFrameViewControllers.count
         

@@ -63,7 +63,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapStyleButton() {
-        
+    
     }
     
     func presentSelectionController(withElements elements: [ComicFrameElement]){
