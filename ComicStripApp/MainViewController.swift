@@ -19,23 +19,56 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     private var currentComicFrame: ComicFrame?
     let imagePicker = UIImagePickerController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
         imagePicker.delegate = self
-
+        
         if (isCameraAvailable()){
             initializeCamera()
         }
+        handleComicFrameEvents()
+    }
+    
+    private func handleComicFrameEvents(){
         comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
-        comicFrame.onClickCallback = {
+        
+        comicFrame.onClickGalleryCallback = {
             self.imagePicker.allowsEditing = false
             self.imagePicker.sourceType = .photoLibrary
+            self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
             self.present(self.imagePicker, animated: true, completion: nil)
+            
         }
-    }
+        
+        comicFrame.onClickShareCallback = {
+            if self.comicFrame.framePhoto.image == nil{
+                print("No photo is selected")
+                return
+            }
+            let image = self.comicFrame.framePhoto.image
+            let imageToShare = [ image! ]
+            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            getTopViewController()?.present(activityViewController, animated: true, completion: nil)
+        }
+        
+        
+        func getTopViewController() -> UIViewController?{
+            if var topController = UIApplication.shared.keyWindow?.rootViewController
+            {
+                while (topController.presentedViewController != nil)
+                {
+                    topController = topController.presentedViewController!
+                }
+                return topController
+            }
+            return nil
+        }
 
+    }
+    
     private func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
@@ -50,7 +83,19 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
-
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        }
+        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        } else{
+            print("Could not load image")
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension MainViewController: ComicStripToolbarDelegate {
@@ -69,17 +114,7 @@ extension MainViewController: ComicStripToolbarDelegate {
         presentSelectionController(withElements: soundEffects)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            comicFrame.framePhoto.image = image
-        }
-        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            comicFrame.framePhoto.image = image
-        } else{
-            print("Could not load image")
-        }
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     
     func didTapStyleButton() {
         
