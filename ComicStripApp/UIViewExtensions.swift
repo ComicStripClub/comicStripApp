@@ -50,6 +50,17 @@ import UIKit
         circle.center = point
         return circle
     }
+    
+    
+    // Using a function since `var image` might conflict with an existing variable
+    // (like on `UIImageView`)
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            self.drawHierarchy(in: bounds, afterScreenUpdates: false)
+        }
+    }
+    
 }
 
 extension UIView {

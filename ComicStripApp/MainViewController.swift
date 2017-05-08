@@ -65,12 +65,8 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         
         comicFrame.onClickShareCallback = {
-            if self.comicFrame.framePhoto.image == nil{
-                print("No photo is selected")
-                return
-            }
-            let image = self.comicFrame.framePhoto.image
-            let imageToShare = [ image! ]
+            let image = self.comicFrame.asImage()
+            let imageToShare = [ image ]
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             getTopViewController()?.present(activityViewController, animated: true, completion: nil)
@@ -179,7 +175,8 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 let renderView = comicFrame.addProcessedFramePhoto()
                 renderView.orientation = ImageOrientation.fromOrientation(pickedImage.imageOrientation)
                 filter.addTarget(renderView)
-                input.processImage()
+                input.processImage(synchronously: true)
+                comicStylingToolbar.mode = .editing
             }
         }
         self.dismiss(animated: true, completion: nil)
