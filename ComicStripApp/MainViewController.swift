@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     override var shouldAutorotate: Bool {
         get { return false }
     }
-
+    var currentFrameCount = -1;
     @IBOutlet weak var comicFrame: ComicFrame!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     private var currentComicFrame: ComicFrame?
@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
         if (isCameraAvailable()){
             initializeCamera()
         }
+        comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
     }
 
     override func viewWillAppear(_ animated: Bool) {

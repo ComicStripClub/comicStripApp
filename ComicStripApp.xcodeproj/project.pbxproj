@@ -32,6 +32,7 @@
 		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
 		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
 		ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */; };
+		B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
 		AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.release.xcconfig"; sourceTree = "<group>"; };
+		B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicboardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 			children = (
 				AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */,
 				ABAA17111EB4F7F800C96694 /* ComicElementSelectionViewController.swift */,
+				B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -206,6 +209,42 @@
 			children = (
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		ABAA17071EB1E73E00C96694 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17081EB1E75400C96694 /* Fonts */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		ABAA17081EB1E75400C96694 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA170F1EB1EF3200C96694 /* BADABB__.TTF */,
+				ABAA17091EB1E77200C96694 /* BackIssuesBB_boldital.ttf */,
+				ABAA170A1EB1E77200C96694 /* BackIssuesBB_ital.ttf */,
+				ABAA170B1EB1E77200C96694 /* BackIssuesBB_reg.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		ABAA171B1EB63CE700C96694 /* DialogBubbles */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
+				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
+			);
+			name = DialogBubbles;
+			sourceTree = "<group>";
+		};
+		ABAA171C1EB63CF800C96694 /* SoundEffects */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA171D1EB63D2100C96694 /* SoundEffect.swift */,
+			);
+			name = SoundEffects;
 			sourceTree = "<group>";
 		};
 		ABAA17071EB1E73E00C96694 /* Assets */ = {
@@ -435,6 +474,7 @@
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
+				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
 				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
@@ -579,6 +619,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 77743F68A6;
 				INFOPLIST_FILE = ComicStripApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.comicstripclub.ComicStripApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -593,6 +634,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 77743F68A6;
 				INFOPLIST_FILE = ComicStripApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.comicstripclub.ComicStripApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
