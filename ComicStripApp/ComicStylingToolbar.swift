@@ -17,6 +17,9 @@ protocol ComicStripToolbarDelegate {
 @IBDesignable class ComicStylingToolbar: UIView {
 
     var delegate: ComicStripToolbarDelegate?
+    @IBOutlet weak var stylingModeToolbar: UIView!
+    @IBOutlet weak var cameraModeToolbar: UIView!
+    @IBOutlet weak var captureIconView: UIView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,6 +36,28 @@ protocol ComicStripToolbarDelegate {
         let contentView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         contentView.frame = bounds
         addSubview(contentView)
+        
+        drawCaptureIcon()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        drawCaptureIcon()
+    }
+    
+    private func drawCaptureIcon() {
+        for sub in captureIconView.subviews {
+            sub.removeFromSuperview()
+        }
+        let outerCircleSide: CGFloat = captureIconView.bounds.width - 8
+        let centerPoint = convert(captureIconView.center, to: captureIconView)
+        let outerCircle = UIView.createCircle(diameter: outerCircleSide, centeredAt: centerPoint)
+        outerCircle.layer.borderColor = UIColor.white.cgColor
+        outerCircle.layer.borderWidth = 4
+        captureIconView.addSubview(outerCircle)
+        let innerCircle = UIView.createCircle(diameter: outerCircleSide - 15, centeredAt: centerPoint)
+        innerCircle.layer.backgroundColor = UIColor.white.cgColor
+        captureIconView.addSubview(innerCircle)
     }
     
     @IBAction func didTapSpeechBubbleButton(_ sender: Any) {

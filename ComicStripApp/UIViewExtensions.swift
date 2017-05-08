@@ -40,6 +40,16 @@ import UIKit
             return layer.cornerRadius
         }
     }
+    
+    class func createCircle(diameter: CGFloat, centeredAt point: CGPoint) -> UIView
+    {
+        let circle = UIView()
+        circle.translatesAutoresizingMaskIntoConstraints = true
+        circle.frame.size = CGSize(width: diameter, height: diameter)
+        circle.layer.cornerRadius = diameter / 2.0
+        circle.center = point
+        return circle
+    }
 }
 
 extension UIView {

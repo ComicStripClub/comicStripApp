@@ -10,14 +10,20 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraModeToolbar" destination="k1u-j7-888" id="2yB-da-K2c"/>
+                <outlet property="captureIconView" destination="Mdu-nR-pDc" id="QOc-RE-Usd"/>
+                <outlet property="stylingModeToolbar" destination="ulp-q8-cGb" id="21f-ZI-hkA"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="b3I-SQ-Hh9">
             <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
-                    <rect key="frame" x="63.5" y="8" width="248" height="49"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
+                    <rect key="frame" x="17" y="8" width="341" height="49"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
                             <rect key="frame" x="-0.5" y="0.0" width="49" height="49"/>
@@ -49,27 +55,62 @@
                                 <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="nJT-fw-9Vc"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khm-1o-zTR">
+                            <rect key="frame" x="292" y="0.0" width="49" height="49"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="kg8-Ef-Rbu"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="camera_icon2"/>
+                            <connections>
+                                <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="cSq-jm-auT"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="xrE-59-4pg" secondAttribute="trailing" id="4bX-Zt-vZW"/>
                         <constraint firstItem="KLu-Tl-PUs" firstAttribute="leading" secondItem="7AO-Th-tLd" secondAttribute="trailing" constant="41" id="8pI-GQ-3cv"/>
                         <constraint firstItem="7AO-Th-tLd" firstAttribute="height" secondItem="ulp-q8-cGb" secondAttribute="height" id="Jiu-ak-Js3"/>
+                        <constraint firstItem="Khm-1o-zTR" firstAttribute="centerY" secondItem="xrE-59-4pg" secondAttribute="centerY" id="Kwk-nM-7GZ"/>
                         <constraint firstItem="7AO-Th-tLd" firstAttribute="leading" secondItem="ulp-q8-cGb" secondAttribute="leading" id="L3G-4m-hXP"/>
+                        <constraint firstItem="Khm-1o-zTR" firstAttribute="leading" secondItem="xrE-59-4pg" secondAttribute="trailing" constant="44" id="PJe-PL-Xne"/>
+                        <constraint firstItem="Khm-1o-zTR" firstAttribute="height" secondItem="xrE-59-4pg" secondAttribute="height" id="S5n-vq-Dwk"/>
+                        <constraint firstAttribute="trailing" secondItem="Khm-1o-zTR" secondAttribute="trailing" id="XgQ-p1-n8m"/>
                         <constraint firstItem="7AO-Th-tLd" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="amb-dj-3Gn"/>
                         <constraint firstItem="xrE-59-4pg" firstAttribute="height" secondItem="KLu-Tl-PUs" secondAttribute="height" id="c6j-VF-NO9"/>
                         <constraint firstItem="KLu-Tl-PUs" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="cOX-mD-uWp"/>
                         <constraint firstItem="xrE-59-4pg" firstAttribute="leading" secondItem="KLu-Tl-PUs" secondAttribute="trailing" constant="44" id="cZw-Fg-gZY"/>
                         <constraint firstItem="xrE-59-4pg" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="l2H-5U-lNY"/>
+                        <constraint firstItem="Khm-1o-zTR" firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="mGd-cW-eBt"/>
                         <constraint firstItem="KLu-Tl-PUs" firstAttribute="height" secondItem="7AO-Th-tLd" secondAttribute="height" id="uya-EO-rPQ"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1u-j7-888" userLabel="Camera mode toolbar">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mdu-nR-pDc" userLabel="Capture icon">
+                            <rect key="frame" x="154.5" y="-0.5" width="65" height="65"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Mdu-nR-pDc" secondAttribute="height" multiplier="1:1" id="La2-iX-l3O"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.3302034257" green="0.6444978696" blue="0.98843103649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="Mdu-nR-pDc" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="Ppj-bO-yhv"/>
+                        <constraint firstItem="Mdu-nR-pDc" firstAttribute="height" secondItem="k1u-j7-888" secondAttribute="height" id="mo4-6h-iMN"/>
+                        <constraint firstItem="Mdu-nR-pDc" firstAttribute="centerX" secondItem="k1u-j7-888" secondAttribute="centerX" id="reB-Ri-9VE"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.33020342573807954" green="0.64449786958036648" blue="0.98843103647232056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="centerX" secondItem="b3I-SQ-Hh9" secondAttribute="centerX" id="0LW-Dl-mul"/>
+                <constraint firstAttribute="trailing" secondItem="k1u-j7-888" secondAttribute="trailing" id="Ncf-GJ-UYN"/>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" constant="8" id="Zep-O5-p5j"/>
+                <constraint firstItem="k1u-j7-888" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" id="i9N-Nc-4DO"/>
+                <constraint firstItem="k1u-j7-888" firstAttribute="leading" secondItem="b3I-SQ-Hh9" secondAttribute="leading" id="iRr-vv-8nW"/>
                 <constraint firstAttribute="bottom" secondItem="ulp-q8-cGb" secondAttribute="bottom" constant="8" id="iyV-rk-zYc"/>
+                <constraint firstAttribute="bottom" secondItem="k1u-j7-888" secondAttribute="bottom" id="oef-gV-Voe"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -81,6 +122,7 @@
     <resources>
         <image name="Bang" width="536" height="425"/>
         <image name="SpeechBubble-1" width="278" height="281"/>
+        <image name="camera_icon2" width="512" height="512"/>
         <image name="style_color" width="128" height="128"/>
     </resources>
 </document>
