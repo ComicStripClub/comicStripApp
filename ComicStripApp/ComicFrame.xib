@@ -15,6 +15,7 @@
                 <outlet property="frameCountLabel" destination="ETH-Zk-SFl" id="Ns5-1C-U3x"/>
                 <outlet property="framePhoto" destination="Nvi-RK-4TA" id="Ltv-8M-017"/>
                 <outlet property="renderView" destination="viQ-FQ-fAr" id="gDR-nf-I0G"/>
+                <outlet property="shareButton" destination="tj7-Rn-kQK" id="Z8P-jM-MlP"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -43,6 +44,14 @@
                             <state key="normal" title="gallery"/>
                             <connections>
                                 <action selector="onGalleryPick:" destination="-1" eventType="touchUpInside" id="Kqz-zD-ASZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tj7-Rn-kQK" userLabel="share">
+                            <rect key="frame" x="299" y="444" width="38" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="share"/>
+                            <connections>
+                                <action selector="onShareComic:" destination="-1" eventType="touchUpInside" id="dYY-B6-XtD"/>
                             </connections>
                         </button>
                     </subviews>
