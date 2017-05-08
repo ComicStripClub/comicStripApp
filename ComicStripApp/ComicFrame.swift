@@ -37,7 +37,6 @@ class ComicFrame: UIView {
     }
     
     @IBAction func onShareComic(_ sender: UIButton) {        
-        print("share")
         onClickShareCallback?()
     }
     

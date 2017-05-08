@@ -51,7 +51,6 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let imageToShare = [ image! ]
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-            activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
             getTopViewController()?.present(activityViewController, animated: true, completion: nil)
         }
         
