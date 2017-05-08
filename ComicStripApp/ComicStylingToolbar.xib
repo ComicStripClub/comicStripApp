@@ -61,6 +61,7 @@
                             </constraints>
                             <state key="normal" title="Button" image="camera_icon2"/>
                             <connections>
+                                <action selector="didTapGoToCaptureMode:" destination="-1" eventType="touchUpInside" id="iOQ-Tf-kIV"/>
                                 <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="cSq-jm-auT"/>
                             </connections>
                         </button>

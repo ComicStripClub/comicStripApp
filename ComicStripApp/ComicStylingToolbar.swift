@@ -14,6 +14,7 @@ protocol ComicStripToolbarDelegate {
     func didTapStyleButton()
     func didTapCaptureButton()
     func didTapSwitchCameraButton()
+    func didTapGoToCaptureMode()
 }
 
 @IBDesignable class ComicStylingToolbar: UIView {
@@ -48,9 +49,11 @@ protocol ComicStripToolbarDelegate {
         let nib = UINib(nibName: String(describing: ComicStylingToolbar.self), bundle: nil)
         let contentView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
     @IBAction func didTapCaptureButton(_ sender: Any) {
@@ -61,6 +64,9 @@ protocol ComicStripToolbarDelegate {
         delegate?.didTapSwitchCameraButton()
     }
 
+    @IBAction func didTapGoToCaptureMode(_ sender: Any) {
+        delegate?.didTapGoToCaptureMode()
+    }
     @IBAction func didTapSpeechBubbleButton(_ sender: Any) {
         delegate?.didTapSpeechBubbleButton()
     }

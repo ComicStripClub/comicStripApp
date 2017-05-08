@@ -78,6 +78,9 @@ class ComicFrame: UIView {
         contentView.frame = bounds
         addSubview(contentView)
         
+        renderView.fillMode = .preserveAspectRatioAndFill
+        renderView.orientation = .portrait
+        
         elementToolbar = ISHHoverBar()
         let deleteButton = UIBarButtonItem(image: UIImage.imageFromSystemBarButton(.trash), style: .plain, target: self, action: #selector(didDeleteElement))
         commonActions = [deleteButton]

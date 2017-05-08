@@ -14,8 +14,9 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private let supportedFilters: [String: () -> ImageProcessingOperation] = [
         "SmoothToonFilter" : {
             let toonFilter = SmoothToonFilter()
-            toonFilter.threshold = 0.3
-            toonFilter.quantizationLevels = 8.0
+            toonFilter.blurRadiusInPixels = 5.0
+            toonFilter.threshold = 0.2
+            toonFilter.quantizationLevels = 10.0
             return toonFilter
         },
         "Posterize" : { return Posterize() },
@@ -31,6 +32,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private var currentComicFrame: ComicFrame?
     
     var camera: Camera!
+    var cameraLocation: PhysicalCameraLocation = .backFacing
     
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)?
     var currentCameraFilter: ImageProcessingOperation?
@@ -127,18 +129,27 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
     
-    private func initializeCamera(){
+    func initializeCamera(){
         do {
-            camera = try Camera(sessionPreset:AVCaptureSessionPresetPhoto)
+            camera = try Camera(sessionPreset: AVCaptureSessionPreset640x480, cameraDevice: nil, location: cameraLocation, captureAsYUV: true)
             let filter = currentFilter!.value()
+            currentCameraFilter = filter
             camera.addTarget(filter)
             filter.addTarget(comicFrame.renderView)
+            if (cameraLocation == .backFacing) {
+                comicFrame.renderView.orientation = .portrait
+                comicFrame.renderView.transform = CGAffineTransform.identity
+            } else {
+                comicFrame.renderView.orientation = .portraitUpsideDown
+                comicFrame.renderView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
             camera.startCapture()
         } catch {
             fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
-    private func deinitializeCamera(){
+    
+    func deinitializeCamera(){
         if let cam = camera {
             cam.stopCapture()
             cam.removeAllTargets()
@@ -201,22 +212,14 @@ extension ImageOrientation {
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
-        let pictureOutput = PictureOutput()
-        pictureOutput.encodedImageFormat = .jpeg
-        pictureOutput.imageAvailableCallback = { image in
-            // Do something with the image
-            self.comicFrame.framePhoto.image = image
-            self.comicStylingToolbar.mode = .editing
-            self.camera.stopCapture()
-        }
-        
-        if let cameraFilter = currentCameraFilter {
-            cameraFilter.addTarget(pictureOutput)
-        }
+        self.camera.stopCapture()
+        self.comicStylingToolbar.mode = .editing
     }
     
     func didTapSwitchCameraButton() {
-        
+        deinitializeCamera()
+        cameraLocation = (cameraLocation == .backFacing) ? .frontFacing : .backFacing
+        initializeCamera()
     }
     
     func didTapSpeechBubbleButton() {
@@ -235,6 +238,11 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapStyleButton() {
         
+    }
+    
+    func didTapGoToCaptureMode() {
+        self.camera.startCapture()
+        self.comicStylingToolbar.mode = .capture
     }
     
     func presentSelectionController(withElements elements: [ComicFrameElement]){
