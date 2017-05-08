@@ -21,6 +21,8 @@ class ComicFrame: UIView {
     private var elementToolbar: ISHHoverBar!
     private var commonActions: [UIBarButtonItem]!
     
+    private var processedFramePhoto: RenderView?
+    
     private var selectedElement: ComicFrameElement? {
         didSet {
             if selectedElement?.view != nil {
@@ -35,6 +37,17 @@ class ComicFrame: UIView {
                 elementToolbar.isHidden = true
             }
         }
+    }
+    
+    func addProcessedFramePhoto() -> RenderView {
+        if let currentPhoto = processedFramePhoto {
+            currentPhoto.removeFromSuperview()
+        }
+        let newRenderView = RenderView(frame: contentView.bounds)
+        newRenderView.fillMode = .preserveAspectRatioAndFill
+        contentView.insertSubview(newRenderView, aboveSubview: renderView)
+        processedFramePhoto = newRenderView
+        return processedFramePhoto!
     }
     
     var onClickGalleryCallback: ((Void) -> Void)?

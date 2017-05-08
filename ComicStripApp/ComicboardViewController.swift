@@ -10,6 +10,8 @@ import UIKit
 
 class ComicboardViewController: UIPageViewController {
     
+    override var shouldAutorotate: Bool { get { return false } }
+    
     var frameCount = 3
     var comicFrameViewControllers = [UIViewController]()
     

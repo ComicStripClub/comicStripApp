@@ -47,8 +47,10 @@ protocol ComicStripToolbarDelegate {
     private func initializeSubViews(){
         let nib = UINib(nibName: String(describing: ComicStylingToolbar.self), bundle: nil)
         let contentView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-        contentView.frame = bounds
         addSubview(contentView)
+        leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
     
     @IBAction func didTapCaptureButton(_ sender: Any) {

@@ -12,7 +12,12 @@ import GPUImage
 
 class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let supportedFilters: [String: () -> ImageProcessingOperation] = [
-        "SmoothToonFilter" : { return SmoothToonFilter() },
+        "SmoothToonFilter" : {
+            let toonFilter = SmoothToonFilter()
+            toonFilter.threshold = 0.3
+            toonFilter.quantizationLevels = 8.0
+            return toonFilter
+        },
         "Posterize" : { return Posterize() },
         "Pixelate" : { return Pixellate() }
     ]
@@ -27,7 +32,8 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     var camera: Camera!
     
-    var currentFilter: (() -> ImageProcessingOperation)?
+    var currentFilter: (key: String, value: () -> ImageProcessingOperation)?
+    var currentCameraFilter: ImageProcessingOperation?
     
     let imagePicker = UIImagePickerController()
 
@@ -39,10 +45,11 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
         
+        currentFilter = supportedFilters.first
+
         if (isCameraAvailable()){
             initializeCamera()
         }
-        currentFilter = supportedFilters.first!.value
         
         handleComicFrameEvents()
     }
@@ -123,12 +130,22 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private func initializeCamera(){
         do {
             camera = try Camera(sessionPreset:AVCaptureSessionPresetPhoto)
-            let filter = currentFilter!()
+            let filter = currentFilter!.value()
             camera.addTarget(filter)
             filter.addTarget(comicFrame.renderView)
             camera.startCapture()
         } catch {
             fatalError("Could not initialize rendering pipeline: \(error)")
+        }
+    }
+    private func deinitializeCamera(){
+        if let cam = camera {
+            cam.stopCapture()
+            cam.removeAllTargets()
+            if let filter = currentCameraFilter {
+                filter.removeAllTargets()
+            }
+            comicFrame.renderView.removeSourceAtIndex(0)
         }
     }
     
@@ -144,20 +161,43 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         
         if let pickedImage = pickedImage {
-            var filteredImage = pickedImage
-            if let filter = currentFilter?() {
-                filteredImage = pickedImage.filterWithPipeline({ (input, output) in
-                    input.addTarget(filter)
-                    filter.addTarget(output)
-                })
+            if let filter = currentFilter?.value() {
+                deinitializeCamera()
+                let input = PictureInput(image: pickedImage/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
+                input.addTarget(filter)
+                let renderView = comicFrame.addProcessedFramePhoto()
+                renderView.orientation = ImageOrientation.fromOrientation(pickedImage.imageOrientation)
+                filter.addTarget(renderView)
+                input.processImage()
             }
-            comicFrame.framePhoto.image = filteredImage
         }
         self.dismiss(animated: true, completion: nil)
     }
     
 }
 
+extension ImageOrientation {
+    static func fromOrientation(_ orientation: UIImageOrientation) -> ImageOrientation {
+        switch orientation {
+        case .upMirrored:
+            fallthrough
+        case .down:
+            return .portraitUpsideDown
+        case .left:
+            fallthrough
+        case .leftMirrored:
+            return .landscapeRight
+        case .right:
+            fallthrough
+        case .rightMirrored:
+            return .landscapeLeft
+        case .downMirrored:
+            fallthrough
+        default:
+            return .portrait
+        }
+    }
+}
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
@@ -168,6 +208,10 @@ extension MainViewController: ComicStripToolbarDelegate {
             self.comicFrame.framePhoto.image = image
             self.comicStylingToolbar.mode = .editing
             self.camera.stopCapture()
+        }
+        
+        if let cameraFilter = currentCameraFilter {
+            cameraFilter.addTarget(pictureOutput)
         }
     }
     
