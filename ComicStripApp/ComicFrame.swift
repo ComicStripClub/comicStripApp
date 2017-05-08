@@ -12,11 +12,11 @@ import GPUImage
 import ISHHoverBar
 
 class ComicFrame: UIView {
-    
+    @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
     @IBOutlet weak var frameCountLabel: UILabel!
-
+    let imagePicker = UIImagePickerController()
     private var elements: [ComicFrameElement] = []
     private var currentGestureStartTransform: CGAffineTransform!
     private var elementToolbar: ISHHoverBar!
@@ -38,6 +38,10 @@ class ComicFrame: UIView {
         }
     }
     
+    var onClickGalleryCallback: ((Void) -> Void)?
+    var onClickShareCallback: ((Void) -> Void)?
+
+    @IBOutlet weak var shareButton: UIButton!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -47,7 +51,15 @@ class ComicFrame: UIView {
         super.init(frame: frame)
         initSubviews()
     }
-
+    
+    @IBAction func onGalleryPick(_ sender: UIButton) {
+        onClickGalleryCallback?()
+    }
+    
+    @IBAction func onShareComic(_ sender: UIButton) {        
+        onClickShareCallback?()
+    }
+    
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)

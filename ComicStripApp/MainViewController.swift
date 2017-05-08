@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import GPUImage
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     override var shouldAutorotate: Bool {
         get { return false }
     }
@@ -18,10 +18,12 @@ class MainViewController: UIViewController {
     @IBOutlet weak var comicFrame: ComicFrame!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     private var currentComicFrame: ComicFrame?
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         comicStylingToolbar.delegate = self
+        imagePicker.delegate = self
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -29,9 +31,46 @@ class MainViewController: UIViewController {
         if (isCameraAvailable()){
             initializeCamera()
         }
-        comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
+        handleComicFrameEvents()
     }
+    
+    private func handleComicFrameEvents(){
+        comicFrame.frameCountLabel.text = "Frame count \(currentFrameCount)"
+        
+        comicFrame.onClickGalleryCallback = {
+            self.imagePicker.allowsEditing = false
+            self.imagePicker.sourceType = .photoLibrary
+            self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+            self.present(self.imagePicker, animated: true, completion: nil)
+            
+        }
+        
+        comicFrame.onClickShareCallback = {
+            if self.comicFrame.framePhoto.image == nil{
+                print("No photo is selected")
+                return
+            }
+            let image = self.comicFrame.framePhoto.image
+            let imageToShare = [ image! ]
+            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            getTopViewController()?.present(activityViewController, animated: true, completion: nil)
+        }
+        
+        
+        func getTopViewController() -> UIViewController?{
+            if var topController = UIApplication.shared.keyWindow?.rootViewController
+            {
+                while (topController.presentedViewController != nil)
+                {
+                    topController = topController.presentedViewController!
+                }
+                return topController
+            }
+            return nil
+        }
 
+    }
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
@@ -80,7 +119,19 @@ class MainViewController: UIViewController {
             fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
-
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        }
+        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            comicFrame.framePhoto.image = image
+        } else{
+            print("Could not load image")
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension MainViewController: ComicStripToolbarDelegate {
@@ -98,6 +149,8 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
         presentSelectionController(withElements: soundEffects)
     }
+    
+    
     
     func didTapStyleButton() {
         

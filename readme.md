@@ -6,7 +6,7 @@
 
 ### Required:
 * [x] On launch, user is presented with the default comic strip creation flow
-* [ ] User can add a photo from their gallery or capture a new photo 
+* [x] User can add a photo from their gallery or capture a new photo 
 * [x] Speech bubbles / sound effects
 * [x] User can add text to the frame, position it, and add some indicator to point to the 'speaker'/'thinker'
   * [x] User can choose between different bubble types, and resize the bubbles
@@ -16,7 +16,7 @@
   * [ ] User can select from several different styles/filters to apply to the photo
 * [x] User can add a caption
 * [ ] User can add multiple frames to their comic strip (up to 3)
-* [ ] User can share their output to Facebook, Instagram, iMessage (any social app that supports images) or save to phone
+* [x] User can share their output to Facebook, Instagram, iMessage (any social app that supports images) or save to phone
   
 ### Optional:
 * [ ] User can capture photo using enhanced live camera preview with 'cartoon' filter applied
