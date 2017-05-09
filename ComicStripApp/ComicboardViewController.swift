@@ -10,6 +10,8 @@ import UIKit
 
 class ComicboardViewController: UIPageViewController {
     
+    override var shouldAutorotate: Bool { get { return false } }
+    
     var frameCount = 3
     var comicFrameViewControllers = [UIViewController]()
     
@@ -33,7 +35,7 @@ class ComicboardViewController: UIPageViewController {
         }
     }
     
-    func getComicFrame(currentFrameCount: Int) -> UIViewController{
+    func getComicFrame(currentFrameCount: Int) -> UIViewController {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         viewController.currentFrameCount = currentFrameCount

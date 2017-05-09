@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A705623EB2A5B844EFA9B2EF /* Pods_ComicStripApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */; };
+		AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */; };
+		AB2F04C61EC047E900B3BC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2F04C51EC047E900B3BC37 /* Assets.xcassets */; };
 		AB325B011EB1A38C0037C3BE /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; };
 		AB325B021EB1A3980037C3BE /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */; };
@@ -14,6 +17,7 @@
 		AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */; };
 		AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E850B1EA9AAE1003DDDD5 /* LaunchScreen.storyboard */; };
 		AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */; };
+		AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */; };
 		ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */; };
 		ABAA17041EB1CDDF00C96694 /* ComicStylingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */; };
 		ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */; };
@@ -84,6 +88,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ComicStripApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		593970CE05D7696B8DE3048C /* Pods-ComicStripApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialogBubble.swift; sourceTree = "<group>"; };
+		AB2F04C51EC047E900B3BC37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB325AEB1EB1A2FB0037C3BE /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +100,7 @@
 		AB8E850C1EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB8E850E1EA9AAE1003DDDD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB8E85171EA9AC49003DDDD5 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStylingToolbar.swift; sourceTree = "<group>"; };
 		ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicStylingToolbar.xib; sourceTree = "<group>"; };
 		ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThoughtBubble.swift; sourceTree = "<group>"; };
@@ -106,6 +115,7 @@
 		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
+		AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.release.xcconfig"; sourceTree = "<group>"; };
 		B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicboardViewController.swift; sourceTree = "<group>"; };
 		B37A1A421EBCFE64007C615F /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB325B011EB1A38C0037C3BE /* GPUImage.framework in Frameworks */,
+				A705623EB2A5B844EFA9B2EF /* Pods_ComicStripApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +150,8 @@
 				AB8E84FE1EA9AAE1003DDDD5 /* ComicStripApp */,
 				AB8E84FD1EA9AAE1003DDDD5 /* Products */,
 				AB325AEB1EB1A2FB0037C3BE /* GPUImage.xcodeproj */,
+				AF13FAC539268F9CA85B5372 /* Pods */,
+				ED29A7E32CDAE21181D50920 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,6 +201,7 @@
 				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
 				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
 				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
+				AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -202,6 +216,7 @@
 		ABAA17071EB1E73E00C96694 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				AB2F04C51EC047E900B3BC37 /* Assets.xcassets */,
 				ABAA17081EB1E75400C96694 /* Fonts */,
 			);
 			name = Assets;
@@ -223,6 +238,7 @@
 			children = (
 				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
 				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
+				AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -235,6 +251,23 @@
 			name = SoundEffects;
 			sourceTree = "<group>";
 		};
+		AF13FAC539268F9CA85B5372 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				593970CE05D7696B8DE3048C /* Pods-ComicStripApp.debug.xcconfig */,
+				AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		ED29A7E32CDAE21181D50920 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -242,10 +275,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB8E85111EA9AAE1003DDDD5 /* Build configuration list for PBXNativeTarget "ComicStripApp" */;
 			buildPhases = (
+				D018717E0471DF9B953DF1B1 /* [CP] Check Pods Manifest.lock */,
 				AB8E84F81EA9AAE0003DDDD5 /* Sources */,
 				AB8E84F91EA9AAE0003DDDD5 /* Frameworks */,
 				AB8E84FA1EA9AAE0003DDDD5 /* Resources */,
 				AB7C0D601EA9D42D0089A040 /* CopyFiles */,
+				AC3B220E7FF61314BB66091D /* [CP] Embed Pods Frameworks */,
+				4CDB24D73A3C836B7024EB85 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -269,7 +305,7 @@
 				TargetAttributes = {
 					AB8E84FB1EA9AAE0003DDDD5 = {
 						CreatedOnToolsVersion = 8.3.1;
-						DevelopmentTeam = Y6R7EDZYEP;
+						DevelopmentTeam = 77743F68A6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -341,22 +377,73 @@
 				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
 				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
+				AB2F04C61EC047E900B3BC37 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4CDB24D73A3C836B7024EB85 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC3B220E7FF61314BB66091D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D018717E0471DF9B953DF1B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AB8E84F81EA9AAE0003DDDD5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */,
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
+				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
 				B37A1A431EBCFE64007C615F /* Utils.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,
@@ -495,9 +582,10 @@
 		};
 		AB8E85121EA9AAE1003DDDD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 593970CE05D7696B8DE3048C /* Pods-ComicStripApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Y6R7EDZYEP;
+				DEVELOPMENT_TEAM = 77743F68A6;
 				INFOPLIST_FILE = ComicStripApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -509,9 +597,10 @@
 		};
 		AB8E85131EA9AAE1003DDDD5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Y6R7EDZYEP;
+				DEVELOPMENT_TEAM = 77743F68A6;
 				INFOPLIST_FILE = ComicStripApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

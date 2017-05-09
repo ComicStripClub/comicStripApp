@@ -17,87 +17,22 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
         comicFrame.addElement(self)
     }
+    var actions: [UIBarButtonItem]? { get { return (view as! BaseDialogBubble).actions } }
 }
 
-@IBDesignable class ClassicSpeechBubble : UITextView, UITextViewDelegate {
-    
-    private var sublayers: [CAShapeLayer] = []
-    private var bubbleHeight: CGFloat = 0
-    
-    required convenience init?(coder aDecoder: NSCoder) {
-        self.init(aDecoder)
+@IBDesignable class ClassicSpeechBubble : BaseDialogBubble {
+    override init?(_ coder: NSCoder? = nil) {
+        super.init(coder)
     }
     
-    init?(_ coder: NSCoder? = nil) {
-        if let coder = coder {
-            super.init(coder: coder)
-        }
-        else {
-            super.init(frame: CGRect.zero, textContainer: nil)
-        }
-        
-        delegate = self
-        font = UIFont(name: "BackIssuesBB-Italic", size: 14.0)
-        textAlignment = .center
-        showsVerticalScrollIndicator = false
-        showsHorizontalScrollIndicator = false
-        isScrollEnabled = false
-        adjustsFontForContentSizeCategory = true
-        backgroundColor = UIColor.clear
-        textContainer.lineBreakMode = .byWordWrapping
-        textContainer.widthTracksTextView = true
-        contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        clipsToBounds = false
-    }
-    
-    // Draws the thought bubble outline/fill in the background of the UITextView,
-    // and sets the exclusionPaths so that text flows within the boundaries of 
-    // the thought bubble
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let (shapes, bubbleHeight) = createShapes(width: bounds.width)
-        self.bubbleHeight = bubbleHeight
-        for existingLayer in sublayers {
-            existingLayer.removeFromSuperlayer()
-        }
-        
-        for (i, shape) in shapes.enumerated() {
-            layer.insertSublayer(shape, at: UInt32(i))
-            sublayers.append(shape)
-        }
-        verticallyCenter()
-    }
-    
-    override var contentSize: CGSize {
-        didSet {
-            verticallyCenter()
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        verticallyCenter()
-    }
-    
-    private func verticallyCenter(){
-        let sizeOfText = sizeThatFits(CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        var topCorrection = (bubbleHeight - sizeOfText.height * zoomScale) / 2.0
-        topCorrection = max(0, topCorrection)
-        textContainer.exclusionPaths = [
-            UIBezierPath(rect: CGRect(origin: CGPoint.zero, size: CGSize(width: bounds.width, height: topCorrection))),
-            getExclusionPath()
-        ]
-        if (bounds.height > bounds.width) {
-            textContainer.exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: bounds.width, width: bounds.width, height: bounds.height - bounds.width)))
-        }
-    }
-
-    private func getExclusionPath() -> UIBezierPath {
+    override func getExclusionPath(width: CGFloat) -> UIBezierPath {
         let lineHeight = font?.lineHeight ?? 0
-        return UIBezierPath(rect: CGRect(x: 0, y: bubbleHeight - lineHeight / 2, width: bounds.width, height: bounds.height - bubbleHeight))
+        let bubbleBottom = mainBubbleLayer.path!.boundingBox.maxY
+        let exclusionPathY = bubbleBottom - lineHeight / 2;
+        return UIBezierPath(rect: CGRect(x: 0, y: exclusionPathY, width: bounds.width, height: bounds.height - exclusionPathY))
     }
     
-    private func createShapes(width: CGFloat) -> (shapes:[CAShapeLayer], bubbleHeight: CGFloat) {
-        
+    override func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         let blackColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
@@ -106,7 +41,6 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         //// Bezier Drawing
         let whiteBackgroundShape = CAShapeLayer()
         let bezierPath = UIBezierPath()
-        let bottomOfBubble = (width * 0.4903)
         bezierPath.move(to: CGPoint(x: (width * 0.1843), y: (width * 0.4903)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.1487), y: (width * 0.7223)), controlPoint1: CGPoint(x: (width * 0.1632), y: (width * 0.5516)), controlPoint2: CGPoint(x: (width * 0.1514), y: (width * 0.6475)))
         bezierPath.addCurve(to: CGPoint(x: (width * 0.3280), y: (width * 0.4903)), controlPoint1: CGPoint(x: (width * 0.1917), y: (width * 0.6424)), controlPoint2: CGPoint(x: (width * 0.2759), y: (width * 0.5256)))
@@ -120,7 +54,18 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         whiteBackgroundShape.path = bezierPath.cgPath
         whiteBackgroundShape.fillColor = whiteColor.cgColor
         whiteBackgroundShape.fillRule = kCAFillRuleEvenOdd
-        
+
+        let mainBubble = CAShapeLayer()
+        let mainBubblePath = UIBezierPath()
+        mainBubblePath.move(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.4903)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.0075)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.0075)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
+        mainBubblePath.close()
+        mainBubble.path = mainBubblePath.cgPath
+        mainBubble.fillColor = UIColor.clear.cgColor
+        mainBubble.fillRule = kCAFillRuleEvenOdd
         
         //// Bezier 2 Drawing
         let speechBubbleBorderShape = CAShapeLayer()
@@ -148,7 +93,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         bezier2Path.usesEvenOddFillRule = true
         speechBubbleBorderShape.path = bezier2Path.cgPath
         speechBubbleBorderShape.fillColor = blackColor.cgColor
-        return (shapes: [whiteBackgroundShape, speechBubbleBorderShape], bubbleHeight: bottomOfBubble)
+        return (shapes: [whiteBackgroundShape, mainBubble, speechBubbleBorderShape], mainBubble: mainBubble)
     }
 
 }

@@ -40,4 +40,43 @@ import UIKit
             return layer.cornerRadius
         }
     }
+    
+    class func createCircle(diameter: CGFloat, centeredAt point: CGPoint) -> UIView
+    {
+        let circle = UIView()
+        circle.translatesAutoresizingMaskIntoConstraints = true
+        circle.frame.size = CGSize(width: diameter, height: diameter)
+        circle.layer.cornerRadius = diameter / 2.0
+        circle.center = point
+        return circle
+    }
+    
+    
+    // Using a function since `var image` might conflict with an existing variable
+    // (like on `UIImageView`)
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            self.drawHierarchy(in: bounds, afterScreenUpdates: false)
+        }
+    }
+    
+}
+
+extension UIView {
+    var currentFirstResponder: UIResponder? {
+        get {
+            if self.isFirstResponder {
+                return self
+            }
+            
+            for view in self.subviews {
+                if let responder = view.currentFirstResponder {
+                    return responder
+                }
+            }
+            
+            return nil
+        }
+    }
 }
