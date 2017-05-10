@@ -11,7 +11,15 @@ import UIKit
 import GPUImage
 import ISHHoverBar
 
+protocol ComicFrameDelegate {
+    func didTapCameraButton(_ sender: ComicFrame)
+    func didTapGalleryButton(_ sender: ComicFrame)
+}
+
 class ComicFrame: UIView {
+    var delegate: ComicFrameDelegate?
+    @IBOutlet weak var cameraButtonView: UIStackView!
+    @IBOutlet weak var galleryButtonView: UIStackView!
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
@@ -39,6 +47,13 @@ class ComicFrame: UIView {
         }
     }
     
+    var isActive: Bool = true {
+        didSet {
+            alpha = isActive ? 1.0 : 0.5
+        }
+    }
+    
+    
     func addProcessedFramePhoto() -> RenderView {
         if let currentPhoto = processedFramePhoto {
             currentPhoto.removeFromSuperview()
@@ -59,7 +74,7 @@ class ComicFrame: UIView {
         super.init(frame: frame)
         initSubviews()
     }
-        
+    
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
@@ -77,11 +92,24 @@ class ComicFrame: UIView {
         elementToolbar.isHidden = true
         addSubview(elementToolbar)
         
+        let cameraTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapCameraButton))
+        cameraButtonView.addGestureRecognizer(cameraTapRecognizer)
+        let galleryTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGalleryButton))
+        galleryButtonView.addGestureRecognizer(galleryTapRecognizer)
+        
     }
     
     @objc func didDeleteElement(_: UIBarButtonItem){
         removeElement(selectedElement!)
         selectedElement = nil
+    }
+    
+    @objc private func didTapCameraButton(_ tapRecognizer: UITapGestureRecognizer) {
+        delegate?.didTapCameraButton(self)
+    }
+    
+    @objc private func didTapGalleryButton(_ tapRecognizer: UITapGestureRecognizer) {
+        delegate?.didTapGalleryButton(self)
     }
     
     func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
