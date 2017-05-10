@@ -11,9 +11,11 @@ import UIKit
 import CoreText
 
 class ClassicSpeechBubbleElement: ComicFrameElement {
+    var name: String?
+
     var icon: UIImage = #imageLiteral(resourceName: "classicSpeechBubble")
     var type: ComicElementType = .dialogBubble
-    lazy var view: UIView = ClassicSpeechBubble(nil)!
+    lazy var view: UIView! = ClassicSpeechBubble(nil)!
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
         comicFrame.addElement(self)
     }

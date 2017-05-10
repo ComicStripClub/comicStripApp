@@ -20,6 +20,7 @@ protocol ComicStripToolbarDelegate {
 @IBDesignable class ComicStylingToolbar: UIView {
 
     enum ComicStylingToolbarMode {
+        case noActiveFrame
         case capture
         case editing
     }
@@ -28,10 +29,10 @@ protocol ComicStripToolbarDelegate {
     @IBOutlet weak var cameraModeToolbar: UIView!
     @IBOutlet weak var editingModeToolbar: UIView!
     
-    var mode: ComicStylingToolbarMode = .capture {
+    var mode: ComicStylingToolbarMode = .noActiveFrame {
         didSet {
-            cameraModeToolbar.isHidden = (mode == .editing)
-            editingModeToolbar.isHidden = (mode == .capture)
+            cameraModeToolbar.isHidden = (mode != .capture)
+            editingModeToolbar.isHidden = (mode != .editing)
         }
     }
     

@@ -11,8 +11,8 @@ import AVFoundation
 import GPUImage
 
 class MainViewController: UIViewController {
-    private let supportedFilters: [String: () -> ImageProcessingOperation] = [
-        "SmoothToonFilter" : {
+    let supportedFilters: [String: () -> ImageProcessingOperation] = [
+        "Cartoon" : {
             let toonFilter = SmoothToonFilter()
             toonFilter.blurRadiusInPixels = 5.0
             toonFilter.threshold = 0.2
@@ -36,7 +36,12 @@ class MainViewController: UIViewController {
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
     
-    var currentFilter: (key: String, value: () -> ImageProcessingOperation)?
+    var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
+        didSet {
+            comicStripContainer.currentFilter = currentFilter?.value
+        }
+    }
+    
     var currentCameraFilter: ImageProcessingOperation?
     
     let imagePicker = UIImagePickerController()
@@ -53,9 +58,12 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         comicStripContainer.comicStrip = comicStrip
+        comicStripContainer.delegate = self
         // comicStripContainer.comicStrip.comicFrames.first!
         
         comicStylingToolbar.delegate = self
+        updateToolbar()
+
         imagePicker.delegate = self
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
@@ -108,6 +116,9 @@ class MainViewController: UIViewController {
     
     func initializeCamera(){
         if let comicFrame = currentComicFrame {
+            guard (isCameraAvailable()) else {
+                return
+            }
             do {
                 camera = try Camera(sessionPreset: AVCaptureSessionPreset640x480, cameraDevice: nil, location: cameraLocation, captureAsYUV: true)
                 let filter = currentFilter!.value()
@@ -139,7 +150,13 @@ class MainViewController: UIViewController {
         }
     }
     
-
+    func updateToolbar() {
+        if let comicFrame = currentComicFrame {
+            comicStylingToolbar.mode = comicFrame.hasPhoto ? .editing : .capture
+        } else {
+            comicStylingToolbar.mode = .noActiveFrame
+        }
+    }
     
 }
 
@@ -185,9 +202,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         guard (imagePickerTargetFrame != nil) else {
             fatalError("image was selected, but no comic frame is active")
         }
-        defer {
-            imagePickerTargetFrame = nil
-        }
+
         var pickedImage: UIImage?
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             pickedImage = image
@@ -199,19 +214,12 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         }
         
         if let pickedImage = pickedImage {
-            if let filter = currentFilter?.value() {
-                deinitializeCamera()
-                let input = PictureInput(image: pickedImage/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
-                input.addTarget(filter)
-                let renderView = imagePickerTargetFrame!.addProcessedFramePhoto()
-                renderView.orientation = ImageOrientation.fromOrientation(pickedImage.imageOrientation)
-                filter.addTarget(renderView)
-                input.processImage(synchronously: true)
-                comicStylingToolbar.mode = .editing
-                comicStripContainer.selectComicFrame(imagePickerTargetFrame)
-            }
+            imagePickerTargetFrame!.selectedPhoto = pickedImage
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) { 
+            self.comicStripContainer.selectComicFrame(self.imagePickerTargetFrame)
+            self.imagePickerTargetFrame = nil
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -242,9 +250,33 @@ extension ImageOrientation {
     }
 }
 
+protocol ComicStripContainerDelegate {
+    func comicFrameBecameActive(_ comicFrame: ComicFrame)
+    func comicFrameBecameInactive(_ comicFrame: ComicFrame)
+}
+
+extension MainViewController: ComicStripContainerDelegate {
+    func comicFrameBecameActive(_ comicFrame: ComicFrame) {
+        updateToolbar()
+    }
+    
+    func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
+        
+    }
+}
+
 class ComicStripContainer: UIView {
+    var delegate: ComicStripContainerDelegate!
+    var currentFilter: (() -> ImageProcessingOperation)? {
+        didSet {
+            selectedFrame?.currentFilter = currentFilter
+        }
+    }
+    
     private var _selectedFrame: ComicFrame?
-    var selectedFrame: ComicFrame? { get { return _selectedFrame } }
+    var selectedFrame: ComicFrame? {
+        get { return _selectedFrame }
+    }
     
     var comicStrip: ComicStrip! {
         didSet {
@@ -312,8 +344,9 @@ class ComicStripContainer: UIView {
     }
     
     func selectComicFrame(_ comicFrame: ComicFrame?) {
+        _selectedFrame = comicFrame
+        _selectedFrame?.currentFilter = currentFilter
         if let comicFrame = comicFrame {
-            _selectedFrame = comicFrame
             var focusFrameTransform: CGAffineTransform
             let adjustedFrame = convert(comicFrame.frame, to: self)
             if (abs(adjustedFrame.width - bounds.width) < 1) {
@@ -334,6 +367,23 @@ class ComicStripContainer: UIView {
                 self.comicStrip.transform = CGAffineTransform.identity
             }, completion: nil)
         }
+    }
+}
+
+class FilterElement: ComicFrameElement {
+    var actions: [UIBarButtonItem]? = nil
+    lazy var effectFunc: (ComicFrame) -> Void = { (comicFrame) in
+        comicFrame.currentFilter = self.factory
+    }
+    var icon: UIImage
+    var type: ComicElementType = .style
+    var view: UIView!
+    var name: String?
+    var factory: () -> ImageProcessingOperation
+    init(name: String, filterIcon: UIImage, filterFactory: @escaping () -> ImageProcessingOperation) {
+        self.factory = filterFactory
+        self.icon = filterIcon
+        self.name = name
     }
 }
 
@@ -365,7 +415,11 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapStyleButton() {
-        
+        var filterElements: [ComicFrameElement] = []
+        for filter in supportedFilters {
+            filterElements.append(FilterElement(name: filter.key, filterIcon: #imageLiteral(resourceName: "handDrawnGalleryIcon"), filterFactory: filter.value))
+        }
+        presentSelectionController(withElements: filterElements)
     }
     
     func didTapGoToCaptureMode() {

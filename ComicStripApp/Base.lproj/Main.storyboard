@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="8" y="60" width="359" height="527"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="527"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
@@ -90,19 +91,34 @@
                                             <rect key="frame" x="0.0" y="0.0" width="152" height="143"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
-                                                    <rect key="frame" x="8" y="8" width="136" height="127"/>
-                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="UZI-69-yiB">
+                                                    <rect key="frame" x="8" y="8" width="176" height="167"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
+                                                            <rect key="frame" x="5" y="0.0" width="142" height="142"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="mJf-Qc-yO4" secondAttribute="height" multiplier="1:1" id="ahd-5X-ReN"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
+                                                            <rect key="frame" x="55" y="143" width="42" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="mJf-Qc-yO4" secondAttribute="trailing" constant="8" id="46M-Dg-jEc"/>
-                                            <constraint firstItem="mJf-Qc-yO4" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" constant="8" id="LM3-ze-4sF"/>
-                                            <constraint firstItem="mJf-Qc-yO4" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" constant="8" id="NBj-f9-KG7"/>
-                                            <constraint firstAttribute="bottom" secondItem="mJf-Qc-yO4" secondAttribute="bottom" constant="8" id="a77-hV-dJ9"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" id="Ypg-lW-hXm"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" id="fl6-Zq-IgP"/>
+                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" id="fsC-5k-AnB"/>
+                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" id="hEB-Uc-i5F"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="image" destination="mJf-Qc-yO4" id="WFw-gA-GkH"/>
+                                            <outlet property="nameLabel" destination="xCO-4z-4wx" id="zhX-0w-PG7"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

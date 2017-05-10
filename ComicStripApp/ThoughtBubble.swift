@@ -11,9 +11,11 @@ import UIKit
 import CoreText
 
 class ThoughtBubbleElement: ComicFrameElement {
+    var name: String?
+
     var icon: UIImage = #imageLiteral(resourceName: "thoughtBubble1")
     var type: ComicElementType = .dialogBubble
-    lazy var view: UIView = ThoughtBubble(nil)!
+    lazy var view: UIView! = ThoughtBubble(nil)!
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
         comicFrame.addElement(self)
     }

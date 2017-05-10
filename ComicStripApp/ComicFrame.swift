@@ -20,6 +20,7 @@ class ComicFrame: UIView {
     var delegate: ComicFrameDelegate?
     @IBOutlet weak var cameraButtonView: UIStackView!
     @IBOutlet weak var galleryButtonView: UIStackView!
+    @IBOutlet weak var imageSelectionStackView: UIStackView!
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
@@ -53,6 +54,28 @@ class ComicFrame: UIView {
         }
     }
     
+    var hasPhoto: Bool { get { return selectedPhoto != nil || processedFramePhoto != nil } }
+    
+    var currentFilter: (() -> ImageProcessingOperation)? {
+        didSet {
+            let photo = selectedPhoto
+            selectedPhoto = photo
+        }
+    }
+    
+    var selectedPhoto: UIImage? {
+        didSet {
+            imageSelectionStackView.isHidden = (selectedPhoto != nil)
+            if let filter = currentFilter?(), let photo = selectedPhoto {
+                let input = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
+                input.addTarget(filter)
+                let renderView = addProcessedFramePhoto()
+                renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
+                filter.addTarget(renderView)
+                input.processImage(synchronously: true)
+            }
+        }
+    }
     
     func addProcessedFramePhoto() -> RenderView {
         if let currentPhoto = processedFramePhoto {
@@ -99,6 +122,11 @@ class ComicFrame: UIView {
         
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = bounds
+    }
+    
     @objc func didDeleteElement(_: UIBarButtonItem){
         removeElement(selectedElement!)
         selectedElement = nil
@@ -120,7 +148,7 @@ class ComicFrame: UIView {
         } else {
             finalSize = size!
         }
-        let elementView = element.view
+        let elementView = element.view!
         let topOffset = (bounds.height - finalSize.height) / 2
         let leftOffset = (bounds.width - finalSize.width) / 2
         elementView.frame = CGRect(origin: CGPoint(x: leftOffset, y: topOffset), size: finalSize)

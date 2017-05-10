@@ -18,7 +18,8 @@ enum ComicElementType: Int {
 protocol ComicFrameElement {
     var type: ComicElementType { get }
     var icon: UIImage { get }
-    var view: UIView { get }
+    var name: String? { get }
+    var view: UIView! { get }
     var actions: [UIBarButtonItem]? { get }
     var effectFunc: (_ frame: ComicFrame) -> Void { get }
 }

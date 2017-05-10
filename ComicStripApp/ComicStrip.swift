@@ -16,7 +16,7 @@ class ComicStrip: UIView {
     var frameCoordinates: [CGRect] = [
         CGRect(x: 13, y: 11, width: 326, height: 407),
         CGRect(x: 367, y: 13, width: 331, height: 405),
-        CGRect(x: 15, y: 438, width: 683, height: 565)]
+        CGRect(x: 15, y: 438, width: 683, height: 665)]
         // [CGRect(x: 13, y:11, width: 682, height: 1092)]
     var comicFrames: [ComicFrame]
     var frameLayoutImageView: UIImageView!
