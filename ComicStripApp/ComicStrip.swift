@@ -10,50 +10,71 @@ import Foundation
 import UIKit
 
 class ComicStrip_1x3: ComicStrip {
-    override class var numberOfFrames: Int { get { return 3 } }
-    override class var frameLayoutBorders: (image: UIImage, size: CGSize) {
+    class var numberOfFrames: Int { get { return 3 } }
+    class var frameLayoutBorders: (image: UIImage, size: CGSize) {
         get {
             return (image: #imageLiteral(resourceName: "ComicStripLayout_3LanscapeStacked"), size: CGSize(width: 707, height: 1115))
         }
     }
     
-    override class var frameCoordinates: [CGRect] {
+    class var frameCoordinates: [CGRect] {
         get {
             return [
                 CGRect(x: 13, y: 11, width: 326, height: 407),
                 CGRect(x: 367, y: 13, width: 331, height: 405),
                 CGRect(x: 15, y: 438, width: 683, height: 665)]
         }
+    }
+    
+    override var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        return ComicStrip_1x3.frameLayoutBorders
+    }
+    override var numberOfFrames: Int {
+        return ComicStrip_1x3.numberOfFrames
+    }
+    override var frameCoordinates: [CGRect] {
+        return ComicStrip_1x3.frameCoordinates
     }
 }
 
 class ComicStrip_2Small1Big: ComicStrip {
-    override class var numberOfFrames: Int { get { return 3 } }
-    override class var frameLayoutBorders: (image: UIImage, size: CGSize) {
-        get {
-            return (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
-        }
-    }
-    
-    override class var frameCoordinates: [CGRect] {
-        get {
-            return [
-                CGRect(x: 13, y: 11, width: 326, height: 407),
-                CGRect(x: 367, y: 13, width: 331, height: 405),
-                CGRect(x: 15, y: 438, width: 683, height: 665)]
-        }
-    }
-}
-
-class ComicStrip: UIView {
+    class var numberOfFrames: Int { get { return 3 } }
     class var frameLayoutBorders: (image: UIImage, size: CGSize) {
         get {
             return (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
         }
     }
-        // (image: #imageLiteral(resourceName: "ComicStripFrame_SinglePortrait"), size: CGSize(width: 707, height: 1115))
-    class var numberOfFrames: Int { get { return 3 } }
+    
     class var frameCoordinates: [CGRect] {
+        get {
+            return [
+                CGRect(x: 13, y: 11, width: 326, height: 407),
+                CGRect(x: 367, y: 13, width: 331, height: 405),
+                CGRect(x: 15, y: 438, width: 683, height: 665)]
+        }
+    }
+    
+    
+    override var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        return ComicStrip_2Small1Big.frameLayoutBorders
+    }
+    override var numberOfFrames: Int {
+        return ComicStrip_2Small1Big.numberOfFrames
+    }
+    override var frameCoordinates: [CGRect] {
+        return ComicStrip_2Small1Big.frameCoordinates
+    }
+}
+
+class ComicStrip: UIView {
+    var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        get {
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
+        }
+    }
+        // (image: #imageLiteral(resourceName: "ComicStripFrame_SinglePortrait"), size: CGSize(width: 707, height: 1115))
+    var numberOfFrames: Int { get { return 3 } }
+    var frameCoordinates: [CGRect] {
         get {
             return [
                 CGRect(x: 13, y: 11, width: 326, height: 407),
@@ -70,15 +91,26 @@ class ComicStrip: UIView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    convenience required init?(coder aDecoder: NSCoder) {
+        self.init(coder)
+    }
+    
+    convenience init(frame: CGRect) {
+        self.init()
+        self.frame = frame
+    }
+    
+    required init(_ coder: NSCoder? = nil) {
         self.comicFrames = []
+        if (coder != nil){
+            super.init(coder: coder)
+        } else {
+            super.init()
+        }
         for _ in 0..<numberOfFrames {
-            let comicFrame = ComicFrame(coder: aDecoder)!
+            let comicFrame = ComicFrame()!
             comicFrame.translatesAutoresizingMaskIntoConstraints = false
             comicFrames.append(comicFrame)
-        }
-        super.init(coder: aDecoder)
-        for comicFrame in comicFrames {
             addSubview(comicFrame)
         }
         

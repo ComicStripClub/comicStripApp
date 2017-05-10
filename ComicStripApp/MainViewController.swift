@@ -38,7 +38,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     var currentComicFrame: ComicFrame? { get { return comicStripContainer.selectedFrame } }
     var imagePickerTargetFrame: ComicFrame?
-    var comicStrip: ComicStrip
+    var comicStrip: ComicStrip!
+    var comicStripFactory: (() -> ComicStrip)!
 
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
@@ -55,7 +56,6 @@ class MainViewController: UIViewController {
     let imagePicker = UIImagePickerController()
 
     required init?(coder aDecoder: NSCoder) {
-        comicStrip = ComicStrip(coder: aDecoder)!
         super.init(coder: aDecoder)
         for comicFrame in comicStrip.comicFrames {
             comicFrame.delegate = self
@@ -65,6 +65,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        comicStrip = comicStripFactory(comicStripContainer.bounds)
         comicStripContainer.comicStrip = comicStrip
         comicStripContainer.delegate = self
         // comicStripContainer.comicStrip.comicFrames.first!

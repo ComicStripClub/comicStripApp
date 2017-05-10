@@ -10,21 +10,30 @@ import UIKit
 
 class ComicStripLayoutSelectionViewController: UIViewController {
 
-    let comicStrips : [(image: UIImage, factory: (_ aCoder: NSCoder) -> ComicStrip)] = [
+    let comicStrips : [(image: UIImage, factory: () -> ComicStrip)] = [
         (
             image: ComicStrip_2Small1Big.frameLayoutBorders.image,
-            factory: {(aCoder) in return ComicStrip_2Small1Big(coder: aCoder)!}
+            factory: { return ComicStrip_2Small1Big()}
         ),
         (
             image: ComicStrip_1x3.frameLayoutBorders.image,
-            factory: {(aCoder) in return ComicStrip_1x3(coder: aCoder)!}
+            factory: { return ComicStrip_1x3()}
         )]
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let mainView = segue.destination as! MainViewController
+        let comicStripCell = sender as! ComicStripCell
+        let comicStrip = comicStripCell.comicStrip
+        mainView.comicStripFactory = comicStrip!.factory
+    }
 }
 
 extension ComicStripLayoutSelectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -33,6 +42,13 @@ extension ComicStripLayoutSelectionViewController: UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ComicStripCell", for: indexPath) as! ComicStripCell
+        cell.comicStrip = comicStrips[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let side = collectionView.bounds.midX - 20;
+        return CGSize(width: side, height: side)
     }
 }

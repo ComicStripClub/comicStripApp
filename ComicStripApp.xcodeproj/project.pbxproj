@@ -10,6 +10,7 @@
 		A705623EB2A5B844EFA9B2EF /* Pods_ComicStripApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */; };
 		AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */; };
 		AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */; };
+		AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */; };
 		AB2F04C61EC047E900B3BC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2F04C51EC047E900B3BC37 /* Assets.xcassets */; };
 		AB325B011EB1A38C0037C3BE /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; };
 		AB325B021EB1A3980037C3BE /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -94,6 +95,7 @@
 		593970CE05D7696B8DE3048C /* Pods-ComicStripApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialogBubble.swift; sourceTree = "<group>"; };
 		AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripLayoutSelectionViewController.swift; sourceTree = "<group>"; };
+		AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripCell.swift; sourceTree = "<group>"; };
 		AB2F04C51EC047E900B3BC37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB325AEB1EB1A2FB0037C3BE /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,7 @@
 				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
 				AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */,
 				ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */,
+				AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */,
 				AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
+				AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */,
 				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
 				B37A1A431EBCFE64007C615F /* Utils.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
