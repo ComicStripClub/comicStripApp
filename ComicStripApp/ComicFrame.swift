@@ -34,8 +34,12 @@ class ComicFrame: UIView {
     
     private var selectedElement: ComicFrameElement? {
         didSet {
-            if selectedElement?.view != nil {
+            if let oldElement = oldValue {
+                oldElement.view.layer.removeObserver(self, forKeyPath: "position")
+            }
+            if let selectedElementView = selectedElement?.view {
                 elementToolbar.isHidden = false
+                selectedElementView.layer.addObserver(self, forKeyPath: "position", options: .new, context: nil)
                 var items = commonActions!
                 if let contextualActions = selectedElement!.actions {
                     items.append(contentsOf: contextualActions)
@@ -122,10 +126,6 @@ class ComicFrame: UIView {
         nib.instantiate(withOwner: self, options: nil)
         addSubview(contentView)
         contentView.frame = bounds
-//        contentView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-//        contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-//        contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-//        contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true        
         
         renderView.fillMode = .preserveAspectRatioAndFill
         renderView.orientation = .portrait
@@ -147,13 +147,14 @@ class ComicFrame: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        contentView.updateConstraints()
-        
-        let myBounds = bounds
-        let myFrame = frame
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if (keyPath == "position" && (object as AnyObject).isEqual(selectedElement?.view.layer) == true) {
+            updateToolbarPosition()
+        }
+    }
+
     @objc func didDeleteElement(_: UIBarButtonItem){
         removeElement(selectedElement!)
         selectedElement = nil
