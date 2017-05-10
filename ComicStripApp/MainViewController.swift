@@ -14,20 +14,16 @@ class MainViewController: UIViewController {
     let supportedFilters: [String: () -> ImageProcessingOperation] = [
         "Cartoon" : {
             return SmoothToonFilter()
-//            let toonFilter = SmoothToonFilter()
-//            toonFilter.blurRadiusInPixels = 5.0
-//            toonFilter.threshold = 0.2
-//            toonFilter.quantizationLevels = 10.0
-//            return toonFilter
         },
         "Sketch" : {
             let sketchFilter = SketchFilter()
-            sketchFilter.edgeStrength = 3.0
+            sketchFilter.edgeStrength = 5.0
             return sketchFilter
         },
         "Pixelate" : { return Pixellate() },
         "Pop art" : { return PolkaDot() },
-        "Cross hatch" : { return Crosshatch()}
+        "Cross hatch" : { return Crosshatch()},
+        "Halftone" : { return Halftone() }
     ]
     
     override var shouldAutorotate: Bool {
@@ -47,7 +43,7 @@ class MainViewController: UIViewController {
     
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
         didSet {
-            comicStripContainer.currentFilter = currentFilter?.value
+            comicStripContainer.currentFilter = currentFilter
         }
     }
     
@@ -276,13 +272,13 @@ extension MainViewController: ComicStripContainerDelegate {
     }
     
     func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
-        
+        updateToolbar()
     }
 }
 
 class ComicStripContainer: UIView {
     var delegate: ComicStripContainerDelegate!
-    var currentFilter: (() -> ImageProcessingOperation)? {
+    var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
         didSet {
             selectedFrame?.currentFilter = currentFilter
         }
@@ -399,17 +395,17 @@ class ComicStripContainer: UIView {
 class FilterElement: ComicFrameElement {
     var actions: [UIBarButtonItem]? = nil
     lazy var effectFunc: (ComicFrame) -> Void = { (comicFrame) in
-        comicFrame.currentFilter = self.factory
+        comicFrame.currentFilter = self.filter
     }
     var icon: UIImage
     var type: ComicElementType = .style
     var view: UIView!
     var name: String?
-    var factory: () -> ImageProcessingOperation
-    init(name: String, filterIcon: UIImage, filterFactory: @escaping () -> ImageProcessingOperation) {
-        self.factory = filterFactory
+    var filter: (key: String, value: () -> ImageProcessingOperation)
+    init(filterIcon: UIImage, filter: (key: String, value: () -> ImageProcessingOperation)) {
+        self.filter = filter
         self.icon = filterIcon
-        self.name = name
+        self.name = filter.key
     }
 }
 
@@ -449,7 +445,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
         for filter in supportedFilters {
-            filterElements.append(FilterElement(name: filter.key, filterIcon: #imageLiteral(resourceName: "style_color"), filterFactory: filter.value))
+            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "style_color"), filter: filter))
         }
         presentSelectionController(withElements: filterElements)
     }

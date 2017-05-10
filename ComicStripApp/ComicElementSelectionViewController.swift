@@ -15,6 +15,7 @@ enum ComicElementType: Int {
     case style
 }
 
+
 protocol ComicFrameElement {
     var type: ComicElementType { get }
     var icon: UIImage { get }

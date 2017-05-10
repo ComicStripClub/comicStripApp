@@ -29,6 +29,7 @@ class ComicBubbleLayoutManager: NSLayoutManager {
         super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
     }
     
+    
     func verticallyCenter(){
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         let rect = usedRect(for: txtContainer)
@@ -85,6 +86,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         
         let customTextContainer = ComicBubbleTextContainer()
         customTextContainer.lineBreakMode = .byWordWrapping
+        customTextContainer.lineFragmentPadding = 0
         customTextContainer.widthTracksTextView = false
         customTextContainer.heightTracksTextView = false
         layoutMgr.addTextContainer(customTextContainer)

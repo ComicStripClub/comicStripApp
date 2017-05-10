@@ -62,24 +62,33 @@ class ComicFrame: UIView {
         }
     }
     
-    var currentFilter: (() -> ImageProcessingOperation)? {
-        didSet {
-            let photo = selectedPhoto
-            selectedPhoto = photo
+    private var _currentFilter: (key: String, value: () -> ImageProcessingOperation)?
+    var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
+        get { return _currentFilter }
+        set(newFilter) {
+            if (newFilter?.key != _currentFilter?.key){
+                _currentFilter = newFilter
+                updateImageWithCurrentFilter()
+            }
         }
     }
     
     var selectedPhoto: UIImage? {
         didSet {
             updateImageSelectionCommands()
-            if let filter = currentFilter?(), let photo = selectedPhoto {
-                let input = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
-                input.addTarget(filter)
-                let renderView = addProcessedFramePhoto()
-                renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
-                filter.addTarget(renderView)
-                input.processImage(synchronously: true)
-            }
+            updateImageWithCurrentFilter()
+        }
+    }
+    
+    private var pictureInput: PictureInput!
+    private func updateImageWithCurrentFilter() {
+        if let filter = currentFilter?.value(), let photo = selectedPhoto {
+            pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
+            pictureInput.addTarget(filter)
+            let renderView = addProcessedFramePhoto()
+            renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
+            filter.addTarget(renderView)
+            pictureInput.processImage(synchronously: false)
         }
     }
     
@@ -250,10 +259,12 @@ class ComicFrame: UIView {
                 x = max(contentView.frame.minX, selectedView.frame.minX - elementToolbar.intrinsicContentSize.width)
             }
             let y = min(max(0, selectedView.frame.origin.y), contentView.frame.maxY - elementToolbar.intrinsicContentSize.height)
+            let superviewTransform = superview!.transform
             let rect = CGRect(
                 origin: CGPoint(x: x, y: y),
-                size: elementToolbar.intrinsicContentSize).applying(transform)
+                size: elementToolbar.intrinsicContentSize.applying(superviewTransform.inverted())).applying(transform)
             elementToolbar.frame = rect
+            elementToolbar.transform = superviewTransform.inverted()
         }
     }
 }
