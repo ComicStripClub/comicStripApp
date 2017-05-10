@@ -244,6 +244,9 @@ class ComicStripContainer: UIView {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapComicStrip))
         self.addGestureRecognizer(tapRecognizer)
+        
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanComicStrip))
+        self.addGestureRecognizer(panRecognizer)
     }
     
     override func layoutSubviews() {
@@ -261,11 +264,40 @@ class ComicStripContainer: UIView {
         }
     }
     
+    private var originalTransform: CGAffineTransform!
+    @objc private func didPanComicStrip(_ gestureRecognizer: UIPanGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .began:
+            originalTransform = comicStrip.transform
+            break
+        case .changed:
+            let translation = gestureRecognizer.translation(in: self)
+            comicStrip.transform = originalTransform.translatedBy(x: translation.x, y: translation.y)
+            break
+        case .ended:
+            let comicFrame = comicStrip.comicFrames.min(by: { (f1, f2) -> Bool in
+                let f1Center = convert(f1.center.applying(comicStrip.transform), to: self)
+                let f2Center = convert(f2.center.applying(comicStrip.transform), to: self)
+                return f1Center.distanceToPoint(p: center) < f2Center.distanceToPoint(p: center)
+            })
+            selectComicFrame(comicFrame)
+            break
+        default:
+            // Handle cancellation or failure
+            break
+        }
+
+    }
+    
     func selectComicFrame(at point: CGPoint) {
-        if let comicFrame = comicStrip.getComicFrame(at: point) {
+        let comicFrame = comicStrip.getComicFrame(at: point)
+        selectComicFrame(comicFrame)
+    }
+    
+    func selectComicFrame(_ comicFrame: ComicFrame?) {
+        if let comicFrame = comicFrame {
             var focusFrameTransform: CGAffineTransform
             let adjustedFrame = convert(comicFrame.frame, to: self)
-            let myBounds = bounds
             if (abs(adjustedFrame.width - bounds.width) < 1) {
                 focusFrameTransform = CGAffineTransform.identity
             } else {
@@ -276,13 +308,13 @@ class ComicStripContainer: UIView {
                 let delta = CGPoint(x: center.x - adjustedFrame.midX, y: center.y - adjustedFrame.midY)
                 focusFrameTransform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: delta.x, y: delta.y)
             }
-            UIView.animate(withDuration: 0.250, animations: {
+            UIView.animate(withDuration: 0.250, delay: 0, options: [.curveEaseOut], animations: { 
                 self.comicStrip.transform = focusFrameTransform
-            })
+            }, completion: nil)
         } else {
-            UIView.animate(withDuration: 0.250, animations: {
+            UIView.animate(withDuration: 0.250, delay: 0, options: [.curveEaseOut], animations: {
                 self.comicStrip.transform = CGAffineTransform.identity
-            })
+            }, completion: nil)
         }
     }
 }
