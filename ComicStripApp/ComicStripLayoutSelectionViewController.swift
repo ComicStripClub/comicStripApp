@@ -12,12 +12,20 @@ class ComicStripLayoutSelectionViewController: UIViewController {
 
     let comicStrips : [(image: UIImage, factory: () -> ComicStrip)] = [
         (
+            image: ComicStrip_1Big.frameLayoutBorders.image,
+            factory: { return ComicStrip_1Big()!}
+        ),
+        (
+            image: ComicStrip_2Big.frameLayoutBorders.image,
+            factory: { return ComicStrip_2Big()!}
+        ),
+        (
             image: ComicStrip_2Small1Big.frameLayoutBorders.image,
-            factory: { return ComicStrip_2Small1Big()}
+            factory: { return ComicStrip_2Small1Big()!}
         ),
         (
             image: ComicStrip_1x3.frameLayoutBorders.image,
-            factory: { return ComicStrip_1x3()}
+            factory: { return ComicStrip_1x3()!}
         )]
     
     @IBOutlet weak var collectionView: UICollectionView!

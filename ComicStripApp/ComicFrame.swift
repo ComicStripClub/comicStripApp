@@ -50,7 +50,7 @@ class ComicFrame: UIView {
     
     var isActive: Bool = true {
         didSet {
-            alpha = isActive ? 1.0 : 0.5
+            isUserInteractionEnabled = isActive
         }
     }
     
@@ -111,8 +111,12 @@ class ComicFrame: UIView {
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
-        contentView.frame = bounds
         addSubview(contentView)
+        contentView.frame = bounds
+//        contentView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+//        contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+//        contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+//        contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true        
         
         renderView.fillMode = .preserveAspectRatioAndFill
         renderView.orientation = .portrait
@@ -134,7 +138,11 @@ class ComicFrame: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = bounds
+
+        contentView.updateConstraints()
+        
+        let myBounds = bounds
+        let myFrame = frame
     }
     
     @objc func didDeleteElement(_: UIBarButtonItem){
@@ -242,9 +250,10 @@ class ComicFrame: UIView {
                 x = max(contentView.frame.minX, selectedView.frame.minX - elementToolbar.intrinsicContentSize.width)
             }
             let y = min(max(0, selectedView.frame.origin.y), contentView.frame.maxY - elementToolbar.intrinsicContentSize.height)
-            elementToolbar.frame = CGRect(
+            let rect = CGRect(
                 origin: CGPoint(x: x, y: y),
-                size: elementToolbar.intrinsicContentSize)
+                size: elementToolbar.intrinsicContentSize).applying(transform)
+            elementToolbar.frame = rect
         }
     }
 }

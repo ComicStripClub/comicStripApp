@@ -57,18 +57,18 @@ class MainViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        for comicFrame in comicStrip.comicFrames {
-            comicFrame.delegate = self
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        comicStrip = comicStripFactory(comicStripContainer.bounds)
+        comicStrip = comicStripFactory()
         comicStripContainer.comicStrip = comicStrip
+        for comicFrame in comicStrip.comicFrames {
+            comicFrame.delegate = self
+        }
+
         comicStripContainer.delegate = self
-        // comicStripContainer.comicStrip.comicFrames.first!
         
         comicStylingToolbar.delegate = self
         updateToolbar()
@@ -299,13 +299,13 @@ class ComicStripContainer: UIView {
                 subview.removeFromSuperview()
             }
             addSubview(comicStrip)
-            comicStrip.translatesAutoresizingMaskIntoConstraints = false
+            // comicStrip.translatesAutoresizingMaskIntoConstraints = false
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        self.translatesAutoresizingMaskIntoConstraints = false
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapComicStrip))
         self.addGestureRecognizer(tapRecognizer)
         
@@ -315,15 +315,16 @@ class ComicStripContainer: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if (selectedFrame == nil) {
-            comicStrip.frame = bounds
-        } else {
+        let myBounds = bounds
+        comicStrip.frame = bounds
+        if (selectedFrame != nil) {
             selectComicFrame(at: selectedFrame!.center)
         }
     }
     
     @objc private func didTapComicStrip(_ gestureRecognizer: UITapGestureRecognizer){
         selectComicFrame(at: gestureRecognizer.location(in: comicStrip))
+        endEditing(true)
     }
     
     private var originalTransform: CGAffineTransform!
@@ -357,10 +358,15 @@ class ComicStripContainer: UIView {
     }
     
     func selectComicFrame(_ comicFrame: ComicFrame?) {
+        guard (comicFrame != _selectedFrame) else {
+            return
+        }
+        
         if let oldFrame = _selectedFrame {
             oldFrame.isActive = false
             delegate.comicFrameBecameInactive(oldFrame)
         }
+        
         _selectedFrame = comicFrame
         _selectedFrame?.currentFilter = currentFilter
         
