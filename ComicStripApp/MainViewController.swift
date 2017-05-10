@@ -13,14 +13,21 @@ import GPUImage
 class MainViewController: UIViewController {
     let supportedFilters: [String: () -> ImageProcessingOperation] = [
         "Cartoon" : {
-            let toonFilter = SmoothToonFilter()
-            toonFilter.blurRadiusInPixels = 5.0
-            toonFilter.threshold = 0.2
-            toonFilter.quantizationLevels = 10.0
-            return toonFilter
+            return SmoothToonFilter()
+//            let toonFilter = SmoothToonFilter()
+//            toonFilter.blurRadiusInPixels = 5.0
+//            toonFilter.threshold = 0.2
+//            toonFilter.quantizationLevels = 10.0
+//            return toonFilter
         },
-        "Posterize" : { return Posterize() },
-        "Pixelate" : { return Pixellate() }
+        "Sketch" : {
+            let sketchFilter = SketchFilter()
+            sketchFilter.edgeStrength = 3.0
+            return sketchFilter
+        },
+        "Pixelate" : { return Pixellate() },
+        "Pop art" : { return PolkaDot() },
+        "Cross hatch" : { return Crosshatch()}
     ]
     
     override var shouldAutorotate: Bool {
@@ -35,6 +42,7 @@ class MainViewController: UIViewController {
 
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
+    var nextPicture: PictureOutput!
     
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
         didSet {
@@ -69,7 +77,7 @@ class MainViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
         
-        currentFilter = supportedFilters.first
+        currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
 
         if (isCameraAvailable()){
             initializeCamera()
@@ -133,6 +141,7 @@ class MainViewController: UIViewController {
                     comicFrame.renderView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 }
                 camera.startCapture()
+                comicFrame.isCapturing = true
             } catch {
                 fatalError("Could not initialize rendering pipeline: \(error)")
             }
@@ -146,8 +155,12 @@ class MainViewController: UIViewController {
             if let filter = currentCameraFilter {
                 filter.removeAllTargets()
             }
-            currentComicFrame?.renderView.removeSourceAtIndex(0)
+            if let comicFrame = currentComicFrame {
+                comicFrame.renderView.removeSourceAtIndex(0)
+                comicFrame.isCapturing = false
+            }
         }
+        camera = nil
     }
     
     func updateToolbar() {
@@ -223,6 +236,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
         imagePickerTargetFrame = nil
     }
 }
@@ -294,8 +308,8 @@ class ComicStripContainer: UIView {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapComicStrip))
         self.addGestureRecognizer(tapRecognizer)
         
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanComicStrip))
-        self.addGestureRecognizer(panRecognizer)
+//        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanComicStrip))
+//        self.addGestureRecognizer(panRecognizer)
     }
     
     override func layoutSubviews() {
@@ -308,9 +322,7 @@ class ComicStripContainer: UIView {
     }
     
     @objc private func didTapComicStrip(_ gestureRecognizer: UITapGestureRecognizer){
-        if (selectedFrame == nil) {
-            selectComicFrame(at: gestureRecognizer.location(in: comicStrip))
-        }
+        selectComicFrame(at: gestureRecognizer.location(in: comicStrip))
     }
     
     private var originalTransform: CGAffineTransform!
@@ -344,9 +356,16 @@ class ComicStripContainer: UIView {
     }
     
     func selectComicFrame(_ comicFrame: ComicFrame?) {
+        if let oldFrame = _selectedFrame {
+            oldFrame.isActive = false
+            delegate.comicFrameBecameInactive(oldFrame)
+        }
         _selectedFrame = comicFrame
         _selectedFrame?.currentFilter = currentFilter
+        
         if let comicFrame = comicFrame {
+            comicFrame.isActive = true
+            delegate.comicFrameBecameActive(comicFrame)
             var focusFrameTransform: CGAffineTransform
             let adjustedFrame = convert(comicFrame.frame, to: self)
             if (abs(adjustedFrame.width - bounds.width) < 1) {
@@ -390,8 +409,14 @@ class FilterElement: ComicFrameElement {
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
-        self.camera.stopCapture()
-        self.comicStylingToolbar.mode = .editing
+        self.nextPicture = PictureOutput()
+        nextPicture.imageAvailableCallback = { (image) in
+            self.currentComicFrame!.selectedPhoto = image
+            self.updateToolbar()
+            self.camera.stopCapture()
+            self.nextPicture = nil
+        }
+        self.camera.addTarget(nextPicture)
     }
     
     func didTapSwitchCameraButton() {
@@ -417,7 +442,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
         for filter in supportedFilters {
-            filterElements.append(FilterElement(name: filter.key, filterIcon: #imageLiteral(resourceName: "handDrawnGalleryIcon"), filterFactory: filter.value))
+            filterElements.append(FilterElement(name: filter.key, filterIcon: #imageLiteral(resourceName: "style_color"), filterFactory: filter.value))
         }
         presentSelectionController(withElements: filterElements)
     }

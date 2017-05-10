@@ -9,14 +9,58 @@
 import Foundation
 import UIKit
 
+class ComicStrip_1x3: ComicStrip {
+    override class var numberOfFrames: Int { get { return 3 } }
+    override class var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        get {
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_3LanscapeStacked"), size: CGSize(width: 707, height: 1115))
+        }
+    }
+    
+    override class var frameCoordinates: [CGRect] {
+        get {
+            return [
+                CGRect(x: 13, y: 11, width: 326, height: 407),
+                CGRect(x: 367, y: 13, width: 331, height: 405),
+                CGRect(x: 15, y: 438, width: 683, height: 665)]
+        }
+    }
+}
+
+class ComicStrip_2Small1Big: ComicStrip {
+    override class var numberOfFrames: Int { get { return 3 } }
+    override class var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        get {
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
+        }
+    }
+    
+    override class var frameCoordinates: [CGRect] {
+        get {
+            return [
+                CGRect(x: 13, y: 11, width: 326, height: 407),
+                CGRect(x: 367, y: 13, width: 331, height: 405),
+                CGRect(x: 15, y: 438, width: 683, height: 665)]
+        }
+    }
+}
+
 class ComicStrip: UIView {
-    var frameLayoutBorders: (image: UIImage, size: CGSize) = (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
+    class var frameLayoutBorders: (image: UIImage, size: CGSize) {
+        get {
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_2Small1Big"), size: CGSize(width: 707, height: 1115))
+        }
+    }
         // (image: #imageLiteral(resourceName: "ComicStripFrame_SinglePortrait"), size: CGSize(width: 707, height: 1115))
-    var numberOfFrames: Int = 3
-    var frameCoordinates: [CGRect] = [
-        CGRect(x: 13, y: 11, width: 326, height: 407),
-        CGRect(x: 367, y: 13, width: 331, height: 405),
-        CGRect(x: 15, y: 438, width: 683, height: 665)]
+    class var numberOfFrames: Int { get { return 3 } }
+    class var frameCoordinates: [CGRect] {
+        get {
+            return [
+                CGRect(x: 13, y: 11, width: 326, height: 407),
+                CGRect(x: 367, y: 13, width: 331, height: 405),
+                CGRect(x: 15, y: 438, width: 683, height: 665)]
+        }
+    }
         // [CGRect(x: 13, y:11, width: 682, height: 1092)]
     var comicFrames: [ComicFrame]
     var frameLayoutImageView: UIImageView!

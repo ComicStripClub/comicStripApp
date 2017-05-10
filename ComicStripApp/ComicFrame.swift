@@ -56,6 +56,12 @@ class ComicFrame: UIView {
     
     var hasPhoto: Bool { get { return selectedPhoto != nil || processedFramePhoto != nil } }
     
+    var isCapturing: Bool = false {
+        didSet {
+            updateImageSelectionCommands()
+        }
+    }
+    
     var currentFilter: (() -> ImageProcessingOperation)? {
         didSet {
             let photo = selectedPhoto
@@ -65,7 +71,7 @@ class ComicFrame: UIView {
     
     var selectedPhoto: UIImage? {
         didSet {
-            imageSelectionStackView.isHidden = (selectedPhoto != nil)
+            updateImageSelectionCommands()
             if let filter = currentFilter?(), let photo = selectedPhoto {
                 let input = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
                 input.addTarget(filter)
@@ -75,6 +81,10 @@ class ComicFrame: UIView {
                 input.processImage(synchronously: true)
             }
         }
+    }
+    
+    func updateImageSelectionCommands() {
+        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing)
     }
     
     func addProcessedFramePhoto() -> RenderView {
