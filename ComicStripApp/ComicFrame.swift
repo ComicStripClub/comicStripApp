@@ -50,10 +50,6 @@ class ComicFrame: UIView {
         return processedFramePhoto!
     }
     
-    var onClickGalleryCallback: ((Void) -> Void)?
-    var onClickShareCallback: ((Void) -> Void)?
-
-    @IBOutlet weak var shareButton: UIButton!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -63,15 +59,7 @@ class ComicFrame: UIView {
         super.init(frame: frame)
         initSubviews()
     }
-    
-    @IBAction func onGalleryPick(_ sender: UIButton) {
-        onClickGalleryCallback?()
-    }
-    
-    @IBAction func onShareComic(_ sender: UIButton) {        
-        onClickShareCallback?()
-    }
-    
+        
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)

@@ -27,10 +27,11 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         get { return false }
     }
     var currentFrameCount = -1;
-    @IBOutlet weak var comicFrame: ComicFrame!
+    @IBOutlet weak var comicStripContainer: ComicStripContainer!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
-    private var currentComicFrame: ComicFrame?
-    
+    var currentComicFrame: ComicFrame?
+    var comicStrip: ComicStrip
+
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
     
@@ -39,8 +40,17 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     let imagePicker = UIImagePickerController()
 
+    required init?(coder aDecoder: NSCoder) {
+        comicStrip = ComicStrip(coder: aDecoder)!
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        comicStripContainer.comicStrip = comicStrip
+        currentComicFrame = comicStrip.comicFrames.first!
+        
         comicStylingToolbar.delegate = self
         imagePicker.delegate = self
         
@@ -57,21 +67,25 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func handleComicFrameEvents(){
-        comicFrame.onClickGalleryCallback = {
-            self.imagePicker.allowsEditing = false
-            self.imagePicker.sourceType = .photoLibrary
-            self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-            self.present(self.imagePicker, animated: true, completion: nil)
+        guard (currentComicFrame != nil) else {
+            return
         }
+//        var comicFrame = currentComicFrame!
+//        comicFrame.onClickGalleryCallback = {
+//            self.imagePicker.allowsEditing = false
+//            self.imagePicker.sourceType = .photoLibrary
+//            self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+//            self.present(self.imagePicker, animated: true, completion: nil)
+//        }
         
-        comicFrame.onClickShareCallback = {
-            let image = self.comicFrame.asImage()
-            let imageToShare = [ image ]
-            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-            getTopViewController()?.present(activityViewController, animated: true, completion: nil)
-        }
-        
+//        comicFrame.onClickShareCallback = {
+//            let image = self.comicFrame.asImage()
+//            let imageToShare = [ image ]
+//            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+//            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+//            getTopViewController()?.present(activityViewController, animated: true, completion: nil)
+//        }
+//        
         
         func getTopViewController() -> UIViewController?{
             if var topController = UIApplication.shared.keyWindow?.rootViewController
@@ -126,22 +140,24 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func initializeCamera(){
-        do {
-            camera = try Camera(sessionPreset: AVCaptureSessionPreset640x480, cameraDevice: nil, location: cameraLocation, captureAsYUV: true)
-            let filter = currentFilter!.value()
-            currentCameraFilter = filter
-            camera.addTarget(filter)
-            filter.addTarget(comicFrame.renderView)
-            if (cameraLocation == .backFacing) {
-                comicFrame.renderView.orientation = .portrait
-                comicFrame.renderView.transform = CGAffineTransform.identity
-            } else {
-                comicFrame.renderView.orientation = .portraitUpsideDown
-                comicFrame.renderView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        if let comicFrame = currentComicFrame {
+            do {
+                camera = try Camera(sessionPreset: AVCaptureSessionPreset640x480, cameraDevice: nil, location: cameraLocation, captureAsYUV: true)
+                let filter = currentFilter!.value()
+                currentCameraFilter = filter
+                camera.addTarget(filter)
+                filter.addTarget(comicFrame.renderView)
+                if (cameraLocation == .backFacing) {
+                    comicFrame.renderView.orientation = .portrait
+                    comicFrame.renderView.transform = CGAffineTransform.identity
+                } else {
+                    comicFrame.renderView.orientation = .portraitUpsideDown
+                    comicFrame.renderView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+                camera.startCapture()
+            } catch {
+                fatalError("Could not initialize rendering pipeline: \(error)")
             }
-            camera.startCapture()
-        } catch {
-            fatalError("Could not initialize rendering pipeline: \(error)")
         }
     }
     
@@ -152,11 +168,15 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             if let filter = currentCameraFilter {
                 filter.removeAllTargets()
             }
-            comicFrame.renderView.removeSourceAtIndex(0)
+            currentComicFrame?.renderView.removeSourceAtIndex(0)
         }
     }
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        guard (currentComicFrame != nil) else {
+            fatalError("image was selected, but no comic frame is active")
+            return
+        }
         var pickedImage: UIImage?
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             pickedImage = image
@@ -172,7 +192,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 deinitializeCamera()
                 let input = PictureInput(image: pickedImage/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
                 input.addTarget(filter)
-                let renderView = comicFrame.addProcessedFramePhoto()
+                let renderView = currentComicFrame!.addProcessedFramePhoto()
                 renderView.orientation = ImageOrientation.fromOrientation(pickedImage.imageOrientation)
                 filter.addTarget(renderView)
                 input.processImage(synchronously: true)
@@ -206,6 +226,67 @@ extension ImageOrientation {
         }
     }
 }
+
+class ComicStripContainer: UIView {
+    var selectedFrame: ComicFrame?
+    var comicStrip: ComicStrip! {
+        didSet {
+            for subview in subviews {
+                subview.removeFromSuperview()
+            }
+            addSubview(comicStrip)
+            comicStrip.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapComicStrip))
+        self.addGestureRecognizer(tapRecognizer)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if (selectedFrame == nil) {
+            comicStrip.frame = bounds
+        } else {
+            selectComicFrame(at: selectedFrame!.center)
+        }
+    }
+    
+    @objc private func didTapComicStrip(_ gestureRecognizer: UITapGestureRecognizer){
+        if (selectedFrame == nil) {
+            selectComicFrame(at: gestureRecognizer.location(in: comicStrip))
+        }
+    }
+    
+    func selectComicFrame(at point: CGPoint) {
+        if let comicFrame = comicStrip.getComicFrame(at: point) {
+            var focusFrameTransform: CGAffineTransform
+            let adjustedFrame = convert(comicFrame.frame, to: self)
+            let myBounds = bounds
+            if (abs(adjustedFrame.width - bounds.width) < 1) {
+                focusFrameTransform = CGAffineTransform.identity
+            } else {
+                let xRatio = adjustedFrame.width / (bounds.width - 20)
+                let yRatio = adjustedFrame.height / (bounds.height - 20)
+                let scale = xRatio > yRatio ? 1 / xRatio : 1 / yRatio
+                let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+                let delta = CGPoint(x: center.x - adjustedFrame.midX, y: center.y - adjustedFrame.midY)
+                focusFrameTransform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: delta.x, y: delta.y)
+            }
+            UIView.animate(withDuration: 0.250, animations: {
+                self.comicStrip.transform = focusFrameTransform
+            })
+        } else {
+            UIView.animate(withDuration: 0.250, animations: {
+                self.comicStrip.transform = CGAffineTransform.identity
+            })
+        }
+    }
+}
+
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
@@ -259,7 +340,10 @@ extension MainViewController: ComicElementSelectionDelegate {
     }
     
     func didChooseComicElement(_ element: ComicFrameElement) {
-        element.effectFunc(comicFrame)
+        guard (currentComicFrame != nil) else {
+            return
+        }
+        element.effectFunc(currentComicFrame!)
         presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }
