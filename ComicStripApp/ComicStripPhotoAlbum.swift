@@ -56,7 +56,7 @@ class ComicStripPhotoAlbum: NSObject {
             if success {
                 self.assetCollection = self.fetchAssetCollectionForAlbum()
             } else {
-                print("error \(error)")
+                print("error \(error!)")
             }
         }
     }
@@ -74,7 +74,7 @@ class ComicStripPhotoAlbum: NSObject {
     
     func save(image: UIImage) {
         if assetCollection == nil {
-            return                          // if there was an error upstream, skip the save
+            return // if there was an error upstream, skip the save
         }
         
         PHPhotoLibrary.shared().performChanges({

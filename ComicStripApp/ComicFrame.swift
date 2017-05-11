@@ -52,9 +52,13 @@ class ComicFrame: UIView {
         }
     }
     
-    var isActive: Bool = true {
+    var isActive: Bool = false {
         didSet {
             isUserInteractionEnabled = isActive
+            updateImageSelectionCommands()
+            if (!isActive) {
+                selectedElement = nil
+            }
         }
     }
     
@@ -97,7 +101,7 @@ class ComicFrame: UIView {
     }
     
     func updateImageSelectionCommands() {
-        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing)
+        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing || !isActive)
     }
     
     func addProcessedFramePhoto() -> RenderView {

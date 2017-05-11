@@ -11,6 +11,7 @@
 		AB046A691EC3E06900249542 /* ComicStripPhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB046A681EC3E06900249542 /* ComicStripPhotoAlbum.swift */; };
 		AB046A6E1EC3E82A00249542 /* ComicToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB046A6D1EC3E82A00249542 /* ComicToolbarButton.swift */; };
 		AB046A701EC3EC7500249542 /* ComicToolbarButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB046A6F1EC3EC7500249542 /* ComicToolbarButton.xib */; };
+		AB046A731EC41D5C00249542 /* ComicStripContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB046A721EC41D5C00249542 /* ComicStripContainer.swift */; };
 		AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */; };
 		AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */; };
 		AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */; };
@@ -99,6 +100,7 @@
 		AB046A681EC3E06900249542 /* ComicStripPhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripPhotoAlbum.swift; sourceTree = "<group>"; };
 		AB046A6D1EC3E82A00249542 /* ComicToolbarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicToolbarButton.swift; sourceTree = "<group>"; };
 		AB046A6F1EC3EC7500249542 /* ComicToolbarButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicToolbarButton.xib; sourceTree = "<group>"; };
+		AB046A721EC41D5C00249542 /* ComicStripContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripContainer.swift; sourceTree = "<group>"; };
 		AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialogBubble.swift; sourceTree = "<group>"; };
 		AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripLayoutSelectionViewController.swift; sourceTree = "<group>"; };
 		AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripCell.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */,
 				B37A1A421EBCFE64007C615F /* Utils.swift */,
 				AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */,
+				AB046A721EC41D5C00249542 /* ComicStripContainer.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
 				AB046A691EC3E06900249542 /* ComicStripPhotoAlbum.swift in Sources */,
+				AB046A731EC41D5C00249542 /* ComicStripContainer.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */,
