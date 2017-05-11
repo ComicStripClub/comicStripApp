@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A705623EB2A5B844EFA9B2EF /* Pods_ComicStripApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */; };
+		AB046A691EC3E06900249542 /* ComicStripPhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB046A681EC3E06900249542 /* ComicStripPhotoAlbum.swift */; };
+		AB046A6E1EC3E82A00249542 /* ComicToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB046A6D1EC3E82A00249542 /* ComicToolbarButton.swift */; };
+		AB046A701EC3EC7500249542 /* ComicToolbarButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB046A6F1EC3EC7500249542 /* ComicToolbarButton.xib */; };
 		AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */; };
 		AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */; };
 		AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */; };
@@ -93,6 +96,9 @@
 /* Begin PBXFileReference section */
 		53B8B5AD97A2BC52E71B4788 /* Pods_ComicStripApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ComicStripApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		593970CE05D7696B8DE3048C /* Pods-ComicStripApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AB046A681EC3E06900249542 /* ComicStripPhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripPhotoAlbum.swift; sourceTree = "<group>"; };
+		AB046A6D1EC3E82A00249542 /* ComicToolbarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicToolbarButton.swift; sourceTree = "<group>"; };
+		AB046A6F1EC3EC7500249542 /* ComicToolbarButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComicToolbarButton.xib; sourceTree = "<group>"; };
 		AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDialogBubble.swift; sourceTree = "<group>"; };
 		AB25F31A1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripLayoutSelectionViewController.swift; sourceTree = "<group>"; };
 		AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripCell.swift; sourceTree = "<group>"; };
@@ -139,6 +145,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB046A711EC3F08A00249542 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
+				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
+				AB046A6D1EC3E82A00249542 /* ComicToolbarButton.swift */,
+				AB046A6F1EC3EC7500249542 /* ComicToolbarButton.xib */,
+			);
+			name = Toolbar;
+			sourceTree = "<group>";
+		};
 		AB325AEC1EB1A2FB0037C3BE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,10 +217,9 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AB046A711EC3F08A00249542 /* Toolbar */,
 				ABAA171C1EB63CF800C96694 /* SoundEffects */,
 				ABAA171B1EB63CE700C96694 /* DialogBubbles */,
-				ABAA16FE1EB1CD5B00C96694 /* ComicStylingToolbar.swift */,
-				ABAA17031EB1CDDF00C96694 /* ComicStylingToolbar.xib */,
 				ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */,
 				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
 				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
@@ -218,6 +234,7 @@
 		AB8E85161EA9AB43003DDDD5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AB046A681EC3E06900249542 /* ComicStripPhotoAlbum.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -386,6 +403,7 @@
 				ABAA170E1EB1E77200C96694 /* BackIssuesBB_reg.ttf in Resources */,
 				ABAA170C1EB1E77200C96694 /* BackIssuesBB_boldital.ttf in Resources */,
 				AB8E850D1EA9AAE1003DDDD5 /* LaunchScreen.storyboard in Resources */,
+				AB046A701EC3EC7500249542 /* ComicToolbarButton.xib in Resources */,
 				AB2F04C61EC047E900B3BC37 /* Assets.xcassets in Resources */,
 				AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */,
 			);
@@ -449,6 +467,7 @@
 				AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */,
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
+				AB046A691EC3E06900249542 /* ComicStripPhotoAlbum.swift in Sources */,
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */,
@@ -462,6 +481,7 @@
 				ABAA17141EB4FE6F00C96694 /* ComicFrameElementCell.swift in Sources */,
 				AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */,
 				ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */,
+				AB046A6E1EC3E82A00249542 /* ComicToolbarButton.swift in Sources */,
 				ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
 			);

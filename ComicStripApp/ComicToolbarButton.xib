@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="BackIssuesBB_reg.ttf">
+            <string>BackIssuesBB</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicToolbarButton" customModule="ComicStripApp" customModuleProvider="target">
+            <connections>
+                <outlet property="commandNameLabel" destination="s3u-xS-awH" id="JSj-ir-CmH"/>
+                <outlet property="contentView" destination="0x4-JG-xuw" id="3y3-Oy-RfG"/>
+                <outlet property="iconImageView" destination="zcu-Py-BJY" id="3KN-iG-phx"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="0x4-JG-xuw">
+            <rect key="frame" x="0.0" y="0.0" width="186" height="231"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zcu-Py-BJY">
+                    <rect key="frame" x="0.0" y="0.0" width="186" height="186"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="zcu-Py-BJY" secondAttribute="height" multiplier="1:1" id="MyE-J6-AmQ"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3u-xS-awH">
+                    <rect key="frame" x="0.0" y="190" width="186" height="41"/>
+                    <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="zcu-Py-BJY" firstAttribute="top" secondItem="0x4-JG-xuw" secondAttribute="top" id="1lX-9Y-enU"/>
+                <constraint firstAttribute="bottom" secondItem="s3u-xS-awH" secondAttribute="bottom" id="E6B-1V-J0U"/>
+                <constraint firstAttribute="trailing" secondItem="s3u-xS-awH" secondAttribute="trailing" id="Ike-hd-qz3"/>
+                <constraint firstItem="s3u-xS-awH" firstAttribute="leading" secondItem="0x4-JG-xuw" secondAttribute="leading" id="Lk1-ud-6D4"/>
+                <constraint firstItem="s3u-xS-awH" firstAttribute="top" secondItem="zcu-Py-BJY" secondAttribute="bottom" constant="4" id="O2a-tC-L0e"/>
+                <constraint firstItem="zcu-Py-BJY" firstAttribute="leading" secondItem="0x4-JG-xuw" secondAttribute="leading" id="P7G-83-6O5"/>
+                <constraint firstAttribute="trailing" secondItem="zcu-Py-BJY" secondAttribute="trailing" id="lIw-E2-b3Y"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-12" y="-51.5"/>
+        </view>
+    </objects>
+</document>

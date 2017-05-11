@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -38,17 +39,18 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ude-r7-Nlk">
-                    <rect key="frame" x="127" y="250" width="120" height="167"/>
+                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ude-r7-Nlk">
+                    <rect key="frame" x="67.5" y="251" width="240" height="165"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yfx-1w-pxB">
-                            <rect key="frame" x="22" y="0.0" width="76.5" height="67"/>
+                            <rect key="frame" x="82" y="0.0" width="76.5" height="67"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="handDrawnCameraIcon" translatesAutoresizingMaskIntoConstraints="NO" id="a9p-n3-oaq">
                                     <rect key="frame" x="13" y="0.0" width="50" height="50"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="63c-ZI-PJf"/>
-                                        <constraint firstAttribute="width" constant="50" id="czF-Sn-T8m"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="63c-ZI-PJf"/>
+                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="CkS-f0-A4E"/>
+                                        <constraint firstAttribute="width" secondItem="a9p-n3-oaq" secondAttribute="height" multiplier="1:1" id="i41-2E-mkl"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scC-F1-NaK">
@@ -60,26 +62,41 @@
                             </subviews>
                             <gestureRecognizers/>
                         </stackView>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="NMz-eH-Iaq" userLabel="Spacer">
+                            <rect key="frame" x="0.0" y="67" width="240" height="16"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="lce-f2-dx1"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M83-eh-w6H">
-                            <rect key="frame" x="0.0" y="83" width="120" height="1"/>
+                            <rect key="frame" x="60" y="83" width="120" height="1"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="aso-As-cba"/>
                                 <constraint firstAttribute="width" constant="120" id="j5G-0z-xYT"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="kFZ-ZB-woH" userLabel="Spacer">
+                            <rect key="frame" x="0.0" y="84" width="240" height="16"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="Yq8-QJ-aIn"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ugy-vl-yvX">
-                            <rect key="frame" x="19.5" y="100" width="81" height="67"/>
+                            <rect key="frame" x="79.5" y="100" width="81" height="65"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="handDrawnGalleryIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ctn-2m-1Uw">
-                                    <rect key="frame" x="15.5" y="0.0" width="50" height="50"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folder_48" translatesAutoresizingMaskIntoConstraints="NO" id="Ctn-2m-1Uw">
+                                    <rect key="frame" x="16.5" y="0.0" width="48" height="48"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="7ax-sF-q5c"/>
-                                        <constraint firstAttribute="width" constant="50" id="LeN-MB-cev"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="7ax-sF-q5c"/>
+                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="Qi4-0Z-Xoh"/>
+                                        <constraint firstAttribute="width" secondItem="Ctn-2m-1Uw" secondAttribute="height" multiplier="1:1" id="boe-fw-K7M"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gallery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1G8-fY-pK1">
-                                    <rect key="frame" x="0.0" y="50" width="81" height="17"/>
+                                    <rect key="frame" x="0.0" y="48" width="81" height="17"/>
                                     <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -92,11 +109,15 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ude-r7-Nlk" secondAttribute="bottom" id="0AP-Yg-CiL"/>
                 <constraint firstAttribute="bottom" secondItem="viQ-FQ-fAr" secondAttribute="bottom" id="3Y8-bb-18S"/>
                 <constraint firstItem="Ude-r7-Nlk" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="LN3-NK-7LA"/>
                 <constraint firstAttribute="trailing" secondItem="viQ-FQ-fAr" secondAttribute="trailing" id="VmZ-b3-Cj5"/>
                 <constraint firstItem="viQ-FQ-fAr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YQ9-mA-iF8"/>
                 <constraint firstItem="viQ-FQ-fAr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b4G-qT-rij"/>
+                <constraint firstItem="Ude-r7-Nlk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" id="h7m-u6-7mD"/>
+                <constraint firstItem="Ude-r7-Nlk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" id="ovF-wC-g17"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ude-r7-Nlk" secondAttribute="trailing" id="qi2-F8-Px0"/>
                 <constraint firstItem="Ude-r7-Nlk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r63-aN-AN8"/>
             </constraints>
             <userDefinedRuntimeAttributes>
@@ -115,7 +136,7 @@
         </imageView>
     </objects>
     <resources>
+        <image name="folder_48" width="48" height="48"/>
         <image name="handDrawnCameraIcon" width="177" height="164"/>
-        <image name="handDrawnGalleryIcon" width="186" height="175"/>
     </resources>
 </document>

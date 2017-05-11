@@ -29,10 +29,13 @@ protocol ComicStripToolbarDelegate {
     @IBOutlet weak var cameraModeToolbar: UIView!
     @IBOutlet weak var editingModeToolbar: UIView!
     
+    @IBOutlet weak var noFramesActiveModeToolbar: UIView!
+    
     var mode: ComicStylingToolbarMode = .noActiveFrame {
         didSet {
             cameraModeToolbar.isHidden = (mode != .capture)
             editingModeToolbar.isHidden = (mode != .editing)
+            noFramesActiveModeToolbar.isHidden = (mode != .noActiveFrame)
         }
     }
     
