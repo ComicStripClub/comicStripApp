@@ -186,25 +186,6 @@ extension MainViewController: ComicFrameDelegate {
 
         
         //        comicFrame.onClickShareCallback = {
-        //            let image = self.comicFrame.asImage()
-        //            let imageToShare = [ image ]
-        //            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        //            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        //            getTopViewController()?.present(activityViewController, animated: true, completion: nil)
-        //        }
-        //
-        
-//    func getTopViewController() -> UIViewController?{
-//        if var topController = UIApplication.shared.keyWindow?.rootViewController
-//        {
-//            while (topController.presentedViewController != nil)
-//            {
-//                topController = topController.presentedViewController!
-//            }
-//            return topController
-//        }
-//        return nil
-//    }
 }
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -329,13 +310,15 @@ class ComicStripContainer: UIView {
             return
         }
         
-        if let oldFrame = _selectedFrame {
-            oldFrame.isActive = false
-            delegate.comicFrameBecameInactive(oldFrame)
-        }
+        let oldFrame = _selectedFrame
         
         _selectedFrame = comicFrame
         _selectedFrame?.currentFilter = currentFilter
+
+        if let oldFrame = oldFrame {
+            oldFrame.isActive = false
+            delegate.comicFrameBecameInactive(oldFrame)
+        }
         
         if let comicFrame = comicFrame {
             comicFrame.isActive = true
@@ -426,7 +409,34 @@ extension MainViewController: ComicStripToolbarDelegate {
         self.comicStylingToolbar.mode = .capture
     }
     
-    func presentSelectionController(withElements elements: [ComicFrameElement]){
+    func didTapSaveButton() {
+        let image = self.comicStrip.asImage()
+        ComicStripPhotoAlbum.sharedInstance.save(image: image)
+    }
+    
+    func didTapShareButton() {
+        func getTopViewController() -> UIViewController?{
+            if var topController = UIApplication.shared.keyWindow?.rootViewController
+            {
+                while (topController.presentedViewController != nil)
+                {
+                    topController = topController.presentedViewController!
+                }
+                return topController
+            }
+            return nil
+        }
+
+        let image = self.comicStrip.asImage()
+        let imageToShare = [ image ]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        getTopViewController()?.present(activityViewController, animated: true, completion: nil)
+
+    
+    }
+
+func presentSelectionController(withElements elements: [ComicFrameElement]){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let selectionNavController = storyboard.instantiateViewController(withIdentifier: "ComicElementSelectionNavController") as! UINavigationController
         let selectionViewController = selectionNavController.topViewController as! ComicElementSelectionViewController
