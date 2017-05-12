@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Der-we-Tyh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5gh-8r-5c9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -78,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N6h-ZM-o1e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1788" y="58.920539730134934"/>
+            <point key="canvasLocation" x="442" y="59"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -93,7 +93,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="104" width="375" height="483"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="523"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
@@ -122,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="58.920539730134934"/>
+            <point key="canvasLocation" x="1537" y="59"/>
         </scene>
         <!--Comicboard View Controller-->
         <scene sceneID="pBb-h4-ZuE">
@@ -130,7 +130,7 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="max" id="N1w-dK-N6A" customClass="ComicboardViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxK-iw-Bz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="33" y="59"/>
+            <point key="canvasLocation" x="-554" y="800"/>
         </scene>
         <!--Comic Element Selection View Controller-->
         <scene sceneID="ALT-Oc-cG4">
@@ -216,7 +216,73 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="in1-Ku-3Lq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="972" y="824.43778110944538"/>
+            <point key="canvasLocation" x="972" y="1418"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="A2T-W2-BTr">
+            <objects>
+                <viewController id="5gh-8r-5c9" customClass="SplashViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lyw-VI-02I"/>
+                        <viewControllerLayoutGuide type="bottom" id="fHi-zo-OZT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uSU-IG-vES">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dP8-rQ-htr">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </containerView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash_img" translatesAutoresizingMaskIntoConstraints="NO" id="voZ-6z-Dwj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klc-Lx-A1w">
+                                <rect key="frame" x="97" y="522" width="180" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="0.89054473458904104" colorSpace="calibratedRGB"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Get Started">
+                                            <attributes>
+                                                <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <font key="NSFont" size="22" name=".AppleSystemUIFont"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onGetStartedClick:" destination="5gh-8r-5c9" eventType="touchUpInside" id="da5-Fc-30i"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fHi-zo-OZT" firstAttribute="top" secondItem="voZ-6z-Dwj" secondAttribute="bottom" id="CnZ-uK-fAM"/>
+                            <constraint firstItem="dP8-rQ-htr" firstAttribute="leading" secondItem="uSU-IG-vES" secondAttribute="leading" id="H2y-un-sor"/>
+                            <constraint firstItem="fHi-zo-OZT" firstAttribute="top" secondItem="dP8-rQ-htr" secondAttribute="bottom" id="IKi-tZ-UxM"/>
+                            <constraint firstAttribute="trailing" secondItem="dP8-rQ-htr" secondAttribute="trailing" id="YDi-kA-b94"/>
+                            <constraint firstItem="voZ-6z-Dwj" firstAttribute="top" secondItem="uSU-IG-vES" secondAttribute="top" id="bMu-97-wrN"/>
+                            <constraint firstAttribute="trailing" secondItem="voZ-6z-Dwj" secondAttribute="trailing" id="efb-81-fdY"/>
+                            <constraint firstItem="dP8-rQ-htr" firstAttribute="top" secondItem="uSU-IG-vES" secondAttribute="top" id="iba-1j-HvH"/>
+                            <constraint firstItem="voZ-6z-Dwj" firstAttribute="leading" secondItem="uSU-IG-vES" secondAttribute="leading" id="jwq-0Z-ly1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="parentUIView" destination="dP8-rQ-htr" id="mms-FZ-bC5"/>
+                        <outlet property="splashImage" destination="voZ-6z-Dwj" id="pVy-Nt-Wen"/>
+                        <segue destination="CWc-Em-hwD" kind="show" identifier="mycreationsegue" id="SHs-LQ-H0L"/>
+                        <segue destination="Der-we-Tyh" kind="show" identifier="firsttimesegue" id="TFD-wx-NcZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tQN-bx-Zs2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-554" y="-782"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LV8-Wc-5NG">
@@ -234,7 +300,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJc-0u-4m9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="824.43778110944538"/>
+            <point key="canvasLocation" x="33" y="1419"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yzG-Da-FcE">
@@ -252,7 +318,95 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-fd-4fm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848.79999999999995" y="58.920539730134934"/>
+            <point key="canvasLocation" x="-554" y="59"/>
+        </scene>
+        <!--My Creation-->
+        <scene sceneID="zn5-6D-hpQ">
+            <objects>
+                <viewController id="lAG-wg-X4U" customClass="MyCreationViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fNW-oC-CTi"/>
+                        <viewControllerLayoutGuide type="bottom" id="IgH-Ts-HFg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Y1-jt-y7a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="i5h-tj-ZX0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9Zp-EW-jVF">
+                                    <size key="itemSize" width="168" height="248"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyCreationCell" id="ZoR-6t-S2G" customClass="MyCreationCell" customModule="ComicStripApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="168" height="248"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="168" height="248"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
+                                                    <rect key="frame" x="0.0" y="21" width="168" height="176"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comic title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3rk-tf-Bst">
+                                                    <rect key="frame" x="20" y="207" width="82" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="comicThumb" destination="P6X-8O-AB8" id="Ed4-2s-jja"/>
+                                            <outlet property="comicTitle" destination="3rk-tf-Bst" id="HFB-nt-i4z"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="i5h-tj-ZX0" firstAttribute="top" secondItem="9Y1-jt-y7a" secondAttribute="top" id="6vp-eF-srs"/>
+                            <constraint firstAttribute="bottom" secondItem="i5h-tj-ZX0" secondAttribute="bottom" id="7Fi-SP-wyj"/>
+                            <constraint firstAttribute="trailing" secondItem="i5h-tj-ZX0" secondAttribute="trailing" id="HZg-4L-y0N"/>
+                            <constraint firstItem="i5h-tj-ZX0" firstAttribute="leading" secondItem="9Y1-jt-y7a" secondAttribute="leading" id="NPD-zG-71w"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="My Creation" id="8ad-wH-QRI"/>
+                    <connections>
+                        <outlet property="comicCollectionView" destination="i5h-tj-ZX0" id="IRZ-EG-bod"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fn5-nj-qex" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1911.2" y="-742.5787106446777"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Buz-K4-Rkx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWc-Em-hwD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tjW-3y-ww4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lAG-wg-X4U" kind="relationship" relationship="rootViewController" id="hTN-4Q-ECI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ne3-VS-cC6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972" y="-742.5787106446777"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Splash_img" width="369" height="650"/>
+    </resources>
 </document>

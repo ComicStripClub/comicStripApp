@@ -72,6 +72,42 @@ class ComicStripPhotoAlbum: NSObject {
         return nil
     }
     
+    func getAllComicsFromAlbum() ->[UIImage] {
+        var imgArry = [UIImage]()
+        let imageManager = PHCachingImageManager()
+        if let result = fetchAssetCollectionForAlbum(){
+            let photoAssets = PHAsset.fetchAssets(in: result, options: nil)
+            photoAssets.enumerateObjects({ (object, count, stop) in
+                if object is PHAsset{
+                    let asset = object 
+                    print("Inside  If object is PHAsset, This is number 1")
+                    
+                    let imageSize = CGSize(width: asset.pixelWidth,
+                                           height: asset.pixelHeight)
+                    
+                    /* For faster performance, and maybe degraded image */
+                    let options = PHImageRequestOptions()
+                    options.deliveryMode = .fastFormat
+                    options.isSynchronous = true
+                    
+                    imageManager.requestImage(for: asset,
+                                                      targetSize: imageSize,
+                                                      contentMode: .aspectFill,
+                                                      options: options,
+                                                      resultHandler: {
+                                                        (image, info) -> Void in
+                                                        print("enum for image, This is number 2")
+                                                        print(info ?? "No info for photo")
+                                                       imgArry.append(image!)
+                                                        
+                    })
+                    
+                }
+            })
+        }
+        return imgArry
+    }
+    
     func save(image: UIImage) {
         if assetCollection == nil {
             return // if there was an error upstream, skip the save
