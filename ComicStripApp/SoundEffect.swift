@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 
 class SoundEffectElement: ComicFrameElement {
+    var name: String?
+
     var actions: [UIBarButtonItem]?
     var icon: UIImage
     var type: ComicElementType = .soundEffect
-    var view: UIView
+    var view: UIView!
     lazy var effectFunc: (ComicFrame) -> Void = {(comicFrame) in
         comicFrame.addElement(self)
     }			

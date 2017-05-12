@@ -61,9 +61,6 @@ import UIKit
         }
     }
     
-}
-
-extension UIView {
     var currentFirstResponder: UIResponder? {
         get {
             if self.isFirstResponder {
@@ -78,5 +75,11 @@ extension UIView {
             
             return nil
         }
+    }
+}
+
+extension CGPoint {
+    func distanceToPoint(p:CGPoint) -> CGFloat {
+        return sqrt(pow((p.x - x), 2) + pow((p.y - y), 2))
     }
 }

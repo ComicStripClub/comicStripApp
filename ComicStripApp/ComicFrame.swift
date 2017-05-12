@@ -11,7 +11,16 @@ import UIKit
 import GPUImage
 import ISHHoverBar
 
+protocol ComicFrameDelegate {
+    func didTapCameraButton(_ sender: ComicFrame)
+    func didTapGalleryButton(_ sender: ComicFrame)
+}
+
 class ComicFrame: UIView {
+    var delegate: ComicFrameDelegate?
+    @IBOutlet weak var cameraButtonView: UIStackView!
+    @IBOutlet weak var galleryButtonView: UIStackView!
+    @IBOutlet weak var imageSelectionStackView: UIStackView!
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
@@ -25,8 +34,12 @@ class ComicFrame: UIView {
     
     private var selectedElement: ComicFrameElement? {
         didSet {
-            if selectedElement?.view != nil {
+            if let oldElement = oldValue {
+                oldElement.view.layer.removeObserver(self, forKeyPath: "position")
+            }
+            if let selectedElementView = selectedElement?.view {
                 elementToolbar.isHidden = false
+                selectedElementView.layer.addObserver(self, forKeyPath: "position", options: .new, context: nil)
                 var items = commonActions!
                 if let contextualActions = selectedElement!.actions {
                     items.append(contentsOf: contextualActions)
@@ -37,6 +50,58 @@ class ComicFrame: UIView {
                 elementToolbar.isHidden = true
             }
         }
+    }
+    
+    var isActive: Bool = false {
+        didSet {
+            isUserInteractionEnabled = isActive
+            updateImageSelectionCommands()
+            if (!isActive) {
+                selectedElement = nil
+            }
+        }
+    }
+    
+    var hasPhoto: Bool { get { return selectedPhoto != nil || processedFramePhoto != nil } }
+    
+    var isCapturing: Bool = false {
+        didSet {
+            updateImageSelectionCommands()
+        }
+    }
+    
+    private var _currentFilter: (key: String, value: () -> ImageProcessingOperation)?
+    var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
+        get { return _currentFilter }
+        set(newFilter) {
+            if (newFilter?.key != _currentFilter?.key){
+                _currentFilter = newFilter
+                updateImageWithCurrentFilter()
+            }
+        }
+    }
+    
+    var selectedPhoto: UIImage? {
+        didSet {
+            updateImageSelectionCommands()
+            updateImageWithCurrentFilter()
+        }
+    }
+    
+    private var pictureInput: PictureInput!
+    private func updateImageWithCurrentFilter() {
+        if let filter = currentFilter?.value(), let photo = selectedPhoto {
+            pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
+            pictureInput.addTarget(filter)
+            let renderView = addProcessedFramePhoto()
+            renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
+            filter.addTarget(renderView)
+            pictureInput.processImage(synchronously: false)
+        }
+    }
+    
+    func updateImageSelectionCommands() {
+        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing || !isActive)
     }
     
     func addProcessedFramePhoto() -> RenderView {
@@ -50,10 +115,6 @@ class ComicFrame: UIView {
         return processedFramePhoto!
     }
     
-    var onClickGalleryCallback: ((Void) -> Void)?
-    var onClickShareCallback: ((Void) -> Void)?
-
-    @IBOutlet weak var shareButton: UIButton!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -64,19 +125,11 @@ class ComicFrame: UIView {
         initSubviews()
     }
     
-    @IBAction func onGalleryPick(_ sender: UIButton) {
-        onClickGalleryCallback?()
-    }
-    
-    @IBAction func onShareComic(_ sender: UIButton) {        
-        onClickShareCallback?()
-    }
-    
     private func initSubviews() {
         let nib = UINib(nibName: "ComicFrame", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
-        contentView.frame = bounds
         addSubview(contentView)
+        contentView.frame = bounds
         
         renderView.fillMode = .preserveAspectRatioAndFill
         renderView.orientation = .portrait
@@ -89,11 +142,34 @@ class ComicFrame: UIView {
         elementToolbar.isHidden = true
         addSubview(elementToolbar)
         
+        let cameraTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapCameraButton))
+        cameraButtonView.addGestureRecognizer(cameraTapRecognizer)
+        let galleryTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGalleryButton))
+        galleryButtonView.addGestureRecognizer(galleryTapRecognizer)
+        
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if (keyPath == "position" && (object as AnyObject).isEqual(selectedElement?.view.layer) == true) {
+            updateToolbarPosition()
+        }
+    }
+
     @objc func didDeleteElement(_: UIBarButtonItem){
         removeElement(selectedElement!)
         selectedElement = nil
+    }
+    
+    @objc private func didTapCameraButton(_ tapRecognizer: UITapGestureRecognizer) {
+        delegate?.didTapCameraButton(self)
+    }
+    
+    @objc private func didTapGalleryButton(_ tapRecognizer: UITapGestureRecognizer) {
+        delegate?.didTapGalleryButton(self)
     }
     
     func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
@@ -104,7 +180,7 @@ class ComicFrame: UIView {
         } else {
             finalSize = size!
         }
-        let elementView = element.view
+        let elementView = element.view!
         let topOffset = (bounds.height - finalSize.height) / 2
         let leftOffset = (bounds.width - finalSize.width) / 2
         elementView.frame = CGRect(origin: CGPoint(x: leftOffset, y: topOffset), size: finalSize)
@@ -188,9 +264,12 @@ class ComicFrame: UIView {
                 x = max(contentView.frame.minX, selectedView.frame.minX - elementToolbar.intrinsicContentSize.width)
             }
             let y = min(max(0, selectedView.frame.origin.y), contentView.frame.maxY - elementToolbar.intrinsicContentSize.height)
-            elementToolbar.frame = CGRect(
+            let superviewTransform = superview!.transform
+            let rect = CGRect(
                 origin: CGPoint(x: x, y: y),
-                size: elementToolbar.intrinsicContentSize)
+                size: elementToolbar.intrinsicContentSize.applying(superviewTransform.inverted())).applying(transform)
+            elementToolbar.frame = rect
+            elementToolbar.transform = superviewTransform.inverted()
         }
     }
 }

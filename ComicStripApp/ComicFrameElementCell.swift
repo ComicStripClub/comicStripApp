@@ -13,10 +13,17 @@ class ComicFrameElementCell: UICollectionViewCell {
     var comicFrameElement: ComicFrameElement? {
         didSet {
             image?.image = comicFrameElement?.icon
+            if let name = comicFrameElement?.name {
+                nameLabel.text = name
+                nameLabel.isHidden = false
+            } else {
+                nameLabel.isHidden = true
+            }
         }
     }
     
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
