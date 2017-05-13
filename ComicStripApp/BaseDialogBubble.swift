@@ -72,6 +72,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     var backgroundShapes: [CAShapeLayer] = []
     var mainBubbleLayer: CAShapeLayer!
     private var shouldAutoResize: Bool = true
+    var aspectRatio: CGFloat { get { return 1.0 } }
     
     required convenience init?(coder aDecoder: NSCoder) {
         self.init(aDecoder)
@@ -125,19 +126,19 @@ class ComicBubbleTextContainer: NSTextContainer {
         increaseTextContainerSize()
     }
     
-    private var originalWidth: CGFloat = 0
+    private var originalSize: CGSize = CGSize.zero
     @objc private func userDidPinchBubble(_ gestureRecognizer: UIPinchGestureRecognizer){
         switch gestureRecognizer.state {
         case .began:
             shouldAutoResize = false
-            originalWidth = bounds.width
+            originalSize = bounds.size
             break
         case .changed:
             let scale = gestureRecognizer.scale
             isResizing = true
             let oldCenter = center
-            let newWidth = originalWidth * scale
-            self.frame.size = CGSize(width: newWidth, height: newWidth)
+            let newSize = originalSize.applying(CGAffineTransform(scaleX: scale, y: scale))
+            self.frame.size = newSize
             self.center = oldCenter
             self.setNeedsLayout()
             self.updateExclusionPath()
@@ -256,14 +257,15 @@ class ComicBubbleTextContainer: NSTextContainer {
         isResizing = true
         let oldCenter = center
         let newWidth = bounds.width + pixels
-        let widthScale = newWidth / self.frame.size.width
+        let scale = newWidth / self.frame.size.width
+        let newHeight = bounds.height * scale
         let oldTransform = self.transform
         UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
-            self.transform = self.transform.scaledBy(x: widthScale, y: widthScale)
+            self.transform = self.transform.scaledBy(x: scale, y: scale)
             print("resizing: \(newWidth)")
         }, completion: { (b) in
             self.transform = oldTransform
-            self.frame.size = CGSize(width: newWidth, height: newWidth)
+            self.frame.size = CGSize(width: newWidth, height: newHeight)
             self.center = oldCenter
             self.setNeedsLayout()
             self.updateExclusionPath()

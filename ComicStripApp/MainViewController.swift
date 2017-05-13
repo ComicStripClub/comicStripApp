@@ -220,29 +220,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
 }
 
-extension ImageOrientation {
-    static func fromOrientation(_ orientation: UIImageOrientation) -> ImageOrientation {
-        switch orientation {
-        case .upMirrored:
-            fallthrough
-        case .down:
-            return .portraitUpsideDown
-        case .left:
-            fallthrough
-        case .leftMirrored:
-            return .landscapeRight
-        case .right:
-            fallthrough
-        case .rightMirrored:
-            return .landscapeLeft
-        case .downMirrored:
-            fallthrough
-        default:
-            return .portrait
-        }
-    }
-}
-
 protocol ComicStripContainerDelegate {
     func comicFrameBecameActive(_ comicFrame: ComicFrame)
     func comicFrameBecameInactive(_ comicFrame: ComicFrame)
@@ -255,25 +232,6 @@ extension MainViewController: ComicStripContainerDelegate {
     
     func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
         updateToolbar()
-    }
-}
-
-
-
-class FilterElement: ComicFrameElement {
-    var actions: [UIBarButtonItem]? = nil
-    lazy var effectFunc: (ComicFrame) -> Void = { (comicFrame) in
-        comicFrame.currentFilter = self.filter
-    }
-    var icon: UIImage
-    var type: ComicElementType = .style
-    var view: UIView!
-    var name: String?
-    var filter: (key: String, value: () -> ImageProcessingOperation)
-    init(filterIcon: UIImage, filter: (key: String, value: () -> ImageProcessingOperation)) {
-        self.filter = filter
-        self.icon = filterIcon
-        self.name = filter.key
     }
 }
 
@@ -302,6 +260,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapSpeechBubbleButton() {
         let speechBubbles: [ComicFrameElement] = [
+            HandDrawnBubble1Element(),
             ThoughtBubbleElement(),
             ClassicSpeechBubbleElement()]
         presentSelectionController(withElements: speechBubbles)

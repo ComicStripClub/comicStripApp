@@ -172,14 +172,12 @@ class ComicFrame: UIView {
         delegate?.didTapGalleryButton(self)
     }
     
-    func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
+    func addElement(_ element: ComicFrameElement, aspectRatio: CGFloat = 1.0) {
         var finalSize: CGSize
-        if (size == nil){
-            let minFrameSideLength = min(bounds.width, bounds.height)
-            finalSize = CGSize(width: minFrameSideLength / 3, height: minFrameSideLength / 3)
-        } else {
-            finalSize = size!
-        }
+        let minFrameSideLength = min(bounds.width, bounds.height)
+        let width = minFrameSideLength * 0.4
+        finalSize = CGSize(width: width, height: width / aspectRatio)
+
         let elementView = element.view!
         let topOffset = (bounds.height - finalSize.height) / 2
         let leftOffset = (bounds.width - finalSize.width) / 2

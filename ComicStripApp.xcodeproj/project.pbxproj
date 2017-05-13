@@ -44,6 +44,7 @@
 		ABF472421EC6D95C0011820B /* ComicStrip_1x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472411EC6D95C0011820B /* ComicStrip_1x3.swift */; };
 		ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */; };
 		ABF472471EC6E2500011820B /* HandDrawnBubble1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */; };
+		ABF4724A1EC6E7D10011820B /* FilterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472491EC6E7D10011820B /* FilterElement.swift */; };
 		ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */; };
 		B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */; };
 		B37A1A431EBCFE64007C615F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37A1A421EBCFE64007C615F /* Utils.swift */; };
@@ -140,6 +141,7 @@
 		ABF472411EC6D95C0011820B /* ComicStrip_1x3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_1x3.swift; sourceTree = "<group>"; };
 		ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_2Small1Big.swift; sourceTree = "<group>"; };
 		ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble1.swift; sourceTree = "<group>"; };
+		ABF472491EC6E7D10011820B /* FilterElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterElement.swift; sourceTree = "<group>"; };
 		ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip.swift; sourceTree = "<group>"; };
 		AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.release.xcconfig"; sourceTree = "<group>"; };
 		B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicboardViewController.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABF472481EC6E7BF0011820B /* StyleFilters */,
 				ABF472451EC6D9F30011820B /* Extensions */,
 				ABF4723C1EC6D83E0011820B /* ComicStripLayouts */,
 				AB046A711EC3F08A00249542 /* Toolbar */,
@@ -312,6 +315,14 @@
 				AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		ABF472481EC6E7BF0011820B /* StyleFilters */ = {
+			isa = PBXGroup;
+			children = (
+				ABF472491EC6E7D10011820B /* FilterElement.swift */,
+			);
+			name = StyleFilters;
 			sourceTree = "<group>";
 		};
 		AF13FAC539268F9CA85B5372 /* Pods */ = {
@@ -519,6 +530,7 @@
 				AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */,
 				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
 				ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */,
+				ABF4724A1EC6E7D10011820B /* FilterElement.swift in Sources */,
 				B37A1A431EBCFE64007C615F /* Utils.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,

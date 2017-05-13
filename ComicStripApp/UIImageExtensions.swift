@@ -79,3 +79,27 @@ extension UIImage{
         return UIImage(cgImage: ctx.makeImage()!)
     }
 }
+
+import GPUImage
+extension ImageOrientation {
+    static func fromOrientation(_ orientation: UIImageOrientation) -> ImageOrientation {
+        switch orientation {
+        case .upMirrored:
+            fallthrough
+        case .down:
+            return .portraitUpsideDown
+        case .left:
+            fallthrough
+        case .leftMirrored:
+            return .landscapeRight
+        case .right:
+            fallthrough
+        case .rightMirrored:
+            return .landscapeLeft
+        case .downMirrored:
+            fallthrough
+        default:
+            return .portrait
+        }
+    }
+}
