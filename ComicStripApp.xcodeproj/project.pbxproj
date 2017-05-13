@@ -38,6 +38,12 @@
 		ABAA171A1EB6344A00C96694 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */; };
 		ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171D1EB63D2100C96694 /* SoundEffect.swift */; };
 		ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */; };
+		ABF472381EC6D52F0011820B /* ComicFrameElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472371EC6D52F0011820B /* ComicFrameElement.swift */; };
+		ABF4723E1EC6D8680011820B /* ComicStrip_1Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4723D1EC6D8680011820B /* ComicStrip_1Big.swift */; };
+		ABF472401EC6D9310011820B /* ComicStrip_2Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4723F1EC6D9310011820B /* ComicStrip_2Big.swift */; };
+		ABF472421EC6D95C0011820B /* ComicStrip_1x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472411EC6D95C0011820B /* ComicStrip_1x3.swift */; };
+		ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */; };
+		ABF472471EC6E2500011820B /* HandDrawnBubble1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */; };
 		ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */; };
 		B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */; };
 		B37A1A431EBCFE64007C615F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37A1A421EBCFE64007C615F /* Utils.swift */; };
@@ -128,6 +134,12 @@
 		ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		ABAA171D1EB63D2100C96694 /* SoundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 		ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSpeechBubble.swift; sourceTree = "<group>"; };
+		ABF472371EC6D52F0011820B /* ComicFrameElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicFrameElement.swift; sourceTree = "<group>"; };
+		ABF4723D1EC6D8680011820B /* ComicStrip_1Big.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_1Big.swift; sourceTree = "<group>"; };
+		ABF4723F1EC6D9310011820B /* ComicStrip_2Big.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_2Big.swift; sourceTree = "<group>"; };
+		ABF472411EC6D95C0011820B /* ComicStrip_1x3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_1x3.swift; sourceTree = "<group>"; };
+		ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_2Small1Big.swift; sourceTree = "<group>"; };
+		ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble1.swift; sourceTree = "<group>"; };
 		ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip.swift; sourceTree = "<group>"; };
 		AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.release.xcconfig"; sourceTree = "<group>"; };
 		B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicboardViewController.swift; sourceTree = "<group>"; };
@@ -220,16 +232,17 @@
 		AB8E85151EA9AB38003DDDD5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ABF472451EC6D9F30011820B /* Extensions */,
+				ABF4723C1EC6D83E0011820B /* ComicStripLayouts */,
 				AB046A711EC3F08A00249542 /* Toolbar */,
 				ABAA171C1EB63CF800C96694 /* SoundEffects */,
 				ABAA171B1EB63CE700C96694 /* DialogBubbles */,
 				ABAA17131EB4FE6F00C96694 /* ComicFrameElementCell.swift */,
 				ABAA17151EB5135400C96694 /* ComicFrame.swift */,
 				ABAA17171EB513EF00C96694 /* ComicFrame.xib */,
-				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
-				AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */,
 				ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */,
 				AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */,
+				ABF472371EC6D52F0011820B /* ComicFrameElement.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -268,6 +281,7 @@
 				ABAA17051EB1DEBB00C96694 /* ThoughtBubble.swift */,
 				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
 				AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */,
+				ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -278,6 +292,26 @@
 				ABAA171D1EB63D2100C96694 /* SoundEffect.swift */,
 			);
 			name = SoundEffects;
+			sourceTree = "<group>";
+		};
+		ABF4723C1EC6D83E0011820B /* ComicStripLayouts */ = {
+			isa = PBXGroup;
+			children = (
+				ABF4723D1EC6D8680011820B /* ComicStrip_1Big.swift */,
+				ABF4723F1EC6D9310011820B /* ComicStrip_2Big.swift */,
+				ABF472411EC6D95C0011820B /* ComicStrip_1x3.swift */,
+				ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */,
+			);
+			name = ComicStripLayouts;
+			sourceTree = "<group>";
+		};
+		ABF472451EC6D9F30011820B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA17191EB6344A00C96694 /* UIViewExtensions.swift */,
+				AB9282CA1EBFCCF30039B55C /* UIImageExtensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		AF13FAC539268F9CA85B5372 /* Pods */ = {
@@ -467,6 +501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF472401EC6D9310011820B /* ComicStrip_2Big.swift in Sources */,
 				AB14F8911EBD8E2500B5FBBE /* BaseDialogBubble.swift in Sources */,
 				ABAA17121EB4F7F800C96694 /* ComicElementSelectionViewController.swift in Sources */,
 				ABAA17161EB5135400C96694 /* ComicFrame.swift in Sources */,
@@ -475,10 +510,15 @@
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */,
+				ABF472381EC6D52F0011820B /* ComicFrameElement.swift in Sources */,
 				AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */,
+				ABF472421EC6D95C0011820B /* ComicStrip_1x3.swift in Sources */,
 				ABAA16FF1EB1CD5B00C96694 /* ComicStylingToolbar.swift in Sources */,
+				ABF472471EC6E2500011820B /* HandDrawnBubble1.swift in Sources */,
+				ABF4723E1EC6D8680011820B /* ComicStrip_1Big.swift in Sources */,
 				AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */,
 				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
+				ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */,
 				B37A1A431EBCFE64007C615F /* Utils.swift in Sources */,
 				ABAA17061EB1DEBB00C96694 /* ThoughtBubble.swift in Sources */,
 				AB8E85181EA9AC49003DDDD5 /* MainViewController.swift in Sources */,

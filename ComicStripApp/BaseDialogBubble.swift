@@ -182,7 +182,7 @@ class ComicBubbleTextContainer: NSTextContainer {
             shape.removeFromSuperlayer()
         }
         var mainBubble: CAShapeLayer
-        (self.backgroundShapes, mainBubble) = drawBackgroundShapes(width: bounds.width)
+        (self.backgroundShapes, mainBubble) = drawBackgroundShapes(width: bounds.width, height: bounds.height)
         self.mainBubbleLayer = mainBubble
         for (i, shape) in backgroundShapes.enumerated() {
             layer.insertSublayer(shape, at: UInt32(i))
@@ -275,7 +275,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     private func updateExclusionPath(){
-        var exclusionPaths = [getTransformedExclusionPath(width: bounds.width)]
+        var exclusionPaths = [getTransformedExclusionPath(width: bounds.width, height: bounds.height)]
         if (frame.origin.x < 0){
             exclusionPaths.append(UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: -frame.origin.x, height: bounds.height))))
         }
@@ -296,8 +296,8 @@ class ComicBubbleTextContainer: NSTextContainer {
         textContainer.exclusionPaths = exclusionPaths
     }
     
-    func getTransformedExclusionPath(width: CGFloat) -> UIBezierPath {
-        let path = getExclusionPath(width: width)
+    func getTransformedExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
+        let path = getExclusionPath(width: width, height: height)
         switch bubbleOrientation {
         case .flippedHorizontally:
             let scale = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -320,11 +320,11 @@ class ComicBubbleTextContainer: NSTextContainer {
         return path
     }
     
-    func getExclusionPath(width: CGFloat) -> UIBezierPath {
+    func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
         return UIBezierPath()
     }
     
-    func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
+    func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
         return ([], CAShapeLayer())
     }
     

@@ -27,7 +27,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         super.init(coder)
     }
     
-    override func getExclusionPath(width: CGFloat) -> UIBezierPath {
+    override func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
         let bezier3Path = UIBezierPath()
         bezier3Path.move(to: CGPoint(x: (width * 0.8855), y: (width * 0.2620)))
         bezier3Path.addLine(to: CGPoint(x: (width * 0.9518), y: (width * 0.2620)))
@@ -61,7 +61,7 @@ class ThoughtBubbleElement: ComicFrameElement {
         return bezier3Path
     }
     
-    override func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
+    override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
         
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)

@@ -27,14 +27,14 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         super.init(coder)
     }
     
-    override func getExclusionPath(width: CGFloat) -> UIBezierPath {
+    override func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
         let lineHeight = font?.lineHeight ?? 0
         let bubbleBottom = mainBubbleLayer.path!.boundingBox.maxY
         let exclusionPathY = bubbleBottom - lineHeight / 2;
         return UIBezierPath(rect: CGRect(x: 0, y: exclusionPathY, width: bounds.width, height: bounds.height - exclusionPathY))
     }
     
-    override func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
+    override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         let blackColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
