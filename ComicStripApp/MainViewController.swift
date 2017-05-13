@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     var imagePickerTargetFrame: ComicFrame?
     var comicStrip: ComicStrip!
     var comicStripFactory: (() -> ComicStrip)!
-
+    var savedComicImage: UIImage?
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
     var nextPicture: PictureOutput!
@@ -91,6 +91,13 @@ class MainViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "savesegue"){
+            let detailViewNavController = segue.destination as! UINavigationController
+            let detailViewController = detailViewNavController.topViewController as! ComicDetailViewController
+            detailViewController.savedComicImage = self.savedComicImage
+        }
+    }
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if let firstResponder = view.currentFirstResponder as? UIView {
@@ -329,7 +336,14 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapSaveButton() {
         let image = self.comicStrip.asImage()
-        ComicStripPhotoAlbum.sharedInstance.save(image: image)
+        ComicStripPhotoAlbum.sharedInstance.save(image: image) { (isSaved) in
+            if isSaved{
+                self.savedComicImage = image
+                self.performSegue(withIdentifier: "savesegue", sender: self)
+            }else{
+                print("Error is saving comic")
+            }
+        }
     }
     
     func didTapShareButton() {

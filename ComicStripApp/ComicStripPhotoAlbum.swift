@@ -108,7 +108,7 @@ class ComicStripPhotoAlbum: NSObject {
         return imgArry
     }
     
-    func save(image: UIImage) {
+    func save(image: UIImage, sucess:@escaping (Bool) ->()) {
         if assetCollection == nil {
             return // if there was an error upstream, skip the save
         }
@@ -120,6 +120,13 @@ class ComicStripPhotoAlbum: NSObject {
             let enumeration: NSArray = [assetPlaceHolder!]
             albumChangeRequest!.addAssets(enumeration)
             
-        }, completionHandler: nil)
+        }){ success, error in
+            if success {
+                sucess(true)
+            } else {
+                print("error \(error!)")
+                sucess(false)
+            }
+        }
     }
 }
