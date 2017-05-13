@@ -52,7 +52,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="xrE-59-4pg" secondAttribute="height" multiplier="1:1" id="2iB-Q5-MDW"/>
                             </constraints>
-                            <state key="normal" title="Button" image="style_color"/>
+                            <state key="normal" title="Button" image="filters"/>
                             <connections>
                                 <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="nJT-fw-9Vc"/>
                             </connections>
@@ -156,7 +156,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="ypU-IM-2yV" firstAttribute="centerX" secondItem="agv-o6-ZEv" secondAttribute="centerX" id="YeX-sd-32g"/>
                         <constraint firstAttribute="bottom" secondItem="ypU-IM-2yV" secondAttribute="bottom" id="bqY-jD-C08"/>
@@ -190,9 +190,9 @@
         <image name="SpeechBubble-1" width="278" height="281"/>
         <image name="camera_capture_icon" width="100" height="100"/>
         <image name="camera_icon2" width="512" height="512"/>
+        <image name="filters" width="28" height="28"/>
         <image name="paper-plane_128" width="128" height="128"/>
         <image name="picture_128" width="128" height="128"/>
-        <image name="style_color" width="128" height="128"/>
         <image name="switchCameraFilled" width="50" height="50"/>
     </resources>
 </document>

@@ -9,12 +9,12 @@
 import UIKit
 import Social
 
-class ComicDetailViewController: UIViewController {
+class SavedComicViewController: UIViewController {
 
-    var comicImage: UIImage?
-    
+    @IBOutlet weak var comicImage: UIImageView!
     @IBOutlet weak var thumbContainerView: UIView!
-    @IBOutlet weak var comicImageView: UIImageView!
+    var savedComicImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         thumbContainerView.layer.shadowColor = UIColor.black.cgColor
@@ -23,9 +23,9 @@ class ComicDetailViewController: UIViewController {
         thumbContainerView.layer.shadowRadius = 7
         thumbContainerView.layer.cornerRadius = 5.0
         thumbContainerView.layer.borderWidth = 0.5
-        comicImageView.layer.cornerRadius = 5.0
-        comicImageView.clipsToBounds = true
-        comicImageView.image = comicImage
+        comicImage.layer.cornerRadius = 5.0
+        comicImage.clipsToBounds = true
+        comicImage.image = savedComicImage
         // Do any additional setup after loading the view.
     }
 
@@ -36,18 +36,18 @@ class ComicDetailViewController: UIViewController {
     
     @IBAction func shareToFacebook(_ sender: Any) {
         let facebookPostViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        facebookPostViewController?.add(comicImage)
+        facebookPostViewController?.add(savedComicImage)
         self.present(facebookPostViewController!, animated: true, completion: nil)
     }
 
     @IBAction func shareToTwitter(_ sender: Any) {
         let twitterPostViewController = SLComposeViewController(forServiceType:
             SLServiceTypeTwitter)
-        twitterPostViewController?.add(comicImage)
+        twitterPostViewController?.add(savedComicImage)
         self.present(twitterPostViewController!, animated:true, completion: nil)
     }
     
-    @IBAction func shareToOtherApp(_ sender: Any) {
+    @IBAction func shareToOtherApps(_ sender: Any) {
         func getTopViewController() -> UIViewController?{
             if var topController = UIApplication.shared.keyWindow?.rootViewController
             {
@@ -60,12 +60,11 @@ class ComicDetailViewController: UIViewController {
             return nil
         }
         
-        let imageToShare = [ comicImage ]
+        let imageToShare = [ savedComicImage ]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
         getTopViewController()?.present(activityViewController, animated: true, completion: nil)
     }
-    
     /*
     // MARK: - Navigation
 

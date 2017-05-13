@@ -36,6 +36,14 @@ class MyCreationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailsegue"{
+            let cell = sender as! MyCreationCell
+            let comicDetailController = segue.destination as! ComicDetailViewController
+            comicDetailController.comicImage = cell.comicThumb.image!
+        }
+    }
 
 }
 
@@ -44,10 +52,21 @@ extension MyCreationViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let collectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCreationCell", for: indexPath) as! MyCreationCell
         collectionCell.comicThumb.image = comicAlbum[indexPath.row]
+        
+        collectionCell.comicThumb.layer.shadowColor = UIColor.black.cgColor
+        collectionCell.comicThumb.layer.shadowOpacity = 0.5
+        collectionCell.comicThumb.layer.shadowOffset = CGSize.zero
+        collectionCell.comicThumb.layer.shadowRadius = 7
+        collectionCell.comicThumb.layer.cornerRadius = 5.0
+        collectionCell.comicThumb.layer.borderWidth = 0.5
+        collectionCell.comicThumb.layer.cornerRadius = 5.0
+        collectionCell.comicThumb.clipsToBounds = true
+        
         return collectionCell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return comicAlbum.count
     }
+
 }

@@ -94,7 +94,7 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "savesegue"){
             let detailViewNavController = segue.destination as! UINavigationController
-            let detailViewController = detailViewNavController.topViewController as! ComicDetailViewController
+            let detailViewController = detailViewNavController.topViewController as! SavedComicViewController
             detailViewController.savedComicImage = self.savedComicImage
         }
     }
@@ -324,7 +324,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
         for filter in supportedFilters {
-            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "style_color"), filter: filter))
+            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "filters"), filter: filter))
         }
         presentSelectionController(withElements: filterElements)
     }
