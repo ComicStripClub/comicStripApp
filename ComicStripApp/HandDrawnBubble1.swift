@@ -46,7 +46,7 @@ class HandDrawnBubble1: BaseDialogBubble {
         return bezier3Path
     }
     
-    override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
+    override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubblePath: UIBezierPath) {
         let whiteBackgroundLayer = CAShapeLayer()
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: (width * 0.9921), y: (height * 0.1895)))
@@ -83,7 +83,7 @@ class HandDrawnBubble1: BaseDialogBubble {
         bezierPath.addCurve(to: CGPoint(x: (width * 0.9921), y: (height * 0.1895)), controlPoint1: CGPoint(x: (width * 1.00), y: (height * 0.4753)), controlPoint2: CGPoint(x: (width * 0.9995), y: (height * 0.3318)))
         bezierPath.close()
         whiteBackgroundLayer.path = bezierPath.cgPath
-        whiteBackgroundLayer.fillColor = UIColor.white.cgColor
+        whiteBackgroundLayer.fillColor = UIColor(colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 0.60).cgColor
         
         let shapeLayer = CAShapeLayer()
         let bezier32Path = UIBezierPath()
@@ -466,6 +466,6 @@ class HandDrawnBubble1: BaseDialogBubble {
         bezier32Path.close()
         shapeLayer.path = bezier32Path.cgPath
         shapeLayer.fillColor = UIColor.black.cgColor
-        return (shapes: [whiteBackgroundLayer, shapeLayer], mainBubble: whiteBackgroundLayer)
+        return (shapes: [whiteBackgroundLayer, shapeLayer], mainBubblePath: bezier32Path)
     }
 }

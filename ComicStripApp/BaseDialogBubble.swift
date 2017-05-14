@@ -19,7 +19,7 @@ class ComicBubbleLayoutManager: NSLayoutManager {
         super.init(coder: coder)
     }
     
-    var mainBubbleLayer: CAShapeLayer!
+    var mainBubblePath: UIBezierPath!
     
     override func processEditing(for textStorage: NSTextStorage, edited editMask: NSTextStorageEditActions, range newCharRange: NSRange, changeInLength delta: Int, invalidatedRange invalidatedCharRange: NSRange) {
         if (editMask.contains(.editedCharacters)){
@@ -29,11 +29,11 @@ class ComicBubbleLayoutManager: NSLayoutManager {
         super.processEditing(for: textStorage, edited: editMask, range: newCharRange, changeInLength: delta, invalidatedRange: invalidatedCharRange)
     }
     
-    
     func verticallyCenter(){
+        return
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         let rect = usedRect(for: txtContainer)
-        let heightDelta = mainBubbleLayer.path!.boundingBox.height - rect.height;
+        let heightDelta = mainBubblePath.cgPath.boundingBox.height - rect.height;
         let lineHeight = lineFragmentRect(forGlyphAt: 0, effectiveRange: nil).size.height
         txtContainer.minLineFragmentY = heightDelta / 2.0 - lineHeight / 2.0
         invalidateLayout(forCharacterRange: NSRange(location: 0, length: textStorage!.length), actualCharacterRange: nil)
@@ -52,15 +52,61 @@ class ComicBubbleTextContainer: NSTextContainer {
         }
     }
 
+    private var userProvidedExclusionPaths: [UIBezierPath] = []
+    override var exclusionPaths: [UIBezierPath] {
+        get {
+            return super.exclusionPaths
+        }
+        set(exPaths) {
+            userProvidedExclusionPaths = exPaths
+            var exPaths = getCenteringExclusionPaths()
+            exPaths.append(contentsOf: userProvidedExclusionPaths)
+            super.exclusionPaths = exPaths
+        }
+    }
+    
+    var shape: UIBezierPath?
+    
+    private func getCenteringExclusionPaths() -> [UIBezierPath] {
+        return []
+    }
+    
     override var isSimpleRectangularTextContainer: Bool { get { return false } }
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
+        let lineHeight = proposedRect.height
+        let minRectWidth = lineHeight * 3
         var adjustedRect = proposedRect
-        adjustedRect.origin.y = max(proposedRect.origin.y, minLineFragmentY)
-        let rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+        
+        print("proposed: [\(proposedRect)], charIndex: [\(characterIndex)]")
+        
+        adjustedRect.origin.y = max(proposedRect.origin.y, 0 /*minLineFragmentY*/)
+        var rect = CGRect.zero
+        let numTries = 3 //proposedRect.origin.y < 0.01 ? 3 : 1
+        for i in 0..<numTries {
+            rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
+            print("lineFragmentRect: [\(rect)]")
+
+            if (rect.minY < proposedRect.minY){
+                rect = CGRect.zero
+                break
+            }
+            else if (rect.width > minRectWidth) {
+                break
+            } else if let rem = remainingRect?.pointee, rem.width > minRectWidth {
+                print("Retrying, shifting over [\(rem.minX)]")
+                adjustedRect.origin.x = rem.minX
+            } else {
+                print("Retrying, shifting down [\(adjustedRect.minY + lineHeight)]")
+                adjustedRect.origin = CGPoint(x: 0, y: rect.minY + lineHeight)
+            }
+        }
+        print("remaining: [\(remainingRect?.pointee)], return: [\(rect)]")
         // print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
-        if (rect.isEmpty){
-            delegate?.textContainerFull()
+        if let shape = shape {
+            if (rect.isEmpty && proposedRect.origin.y > shape.bounds.maxY - (lineHeight * 2)){
+                delegate?.textContainerFull()
+            }
         }
         return rect
     }
@@ -70,7 +116,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     private let MINIMUM_WIDTH: CGFloat = 100
     
     var backgroundShapes: [CAShapeLayer] = []
-    var mainBubbleLayer: CAShapeLayer!
+    var mainBubblePath: UIBezierPath!
     private var shouldAutoResize: Bool = true
     var aspectRatio: CGFloat { get { return 1.0 } }
     
@@ -83,6 +129,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     init?(_ coder: NSCoder? = nil) {
         let txtStorage = NSTextStorage()
         let layoutMgr = ComicBubbleLayoutManager()
+        layoutMgr.hyphenationFactor = CGFloat.greatestFiniteMagnitude
         txtStorage.addLayoutManager(layoutMgr)
         
         let customTextContainer = ComicBubbleTextContainer()
@@ -182,16 +229,18 @@ class ComicBubbleTextContainer: NSTextContainer {
         for shape in backgroundShapes {
             shape.removeFromSuperlayer()
         }
-        var mainBubble: CAShapeLayer
+        var mainBubble: UIBezierPath
         (self.backgroundShapes, mainBubble) = drawBackgroundShapes(width: bounds.width, height: bounds.height)
-        self.mainBubbleLayer = mainBubble
+        self.mainBubblePath = mainBubble
         for (i, shape) in backgroundShapes.enumerated() {
             layer.insertSublayer(shape, at: UInt32(i))
             adjustShapeForBubbleOrientation(shape)
         }
         updateExclusionPath()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
-        layoutMgr.mainBubbleLayer = self.mainBubbleLayer
+        layoutMgr.mainBubblePath = self.mainBubblePath
+        let comicTextContainer = textContainer as! ComicBubbleTextContainer
+        comicTextContainer.shape = mainBubblePath
     }
     
     private func adjustShapeForBubbleOrientation(_ shape: CAShapeLayer) {
@@ -250,7 +299,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     private var isResizing: Bool = false
 
-    private func increaseTextContainerSize(by pixels: CGFloat = 20){
+    private func increaseTextContainerSize(by pixels: CGFloat = 40){
         guard (!isResizing) else {
             return
         }
@@ -289,7 +338,7 @@ class ComicBubbleTextContainer: NSTextContainer {
                 let xOrigin = parentView.bounds.width - frame.minX
                 exclusionPaths.append(UIBezierPath(rect: CGRect(x: xOrigin, y: 0, width: frame.maxX - xOrigin, height: bounds.height)))
             }
-            let mainBubbleBounds = mainBubbleLayer.path!.boundingBox
+            let mainBubbleBounds = mainBubblePath.cgPath.boundingBox
             if (frame.minY + mainBubbleBounds.maxY > parentView.bounds.height){
                 let yOrigin = parentView.bounds.height - frame.minY
                 exclusionPaths.append(UIBezierPath(rect: CGRect(x: 0, y: yOrigin, width: bounds.width, height: (frame.minY + mainBubbleBounds.maxY) - yOrigin)))
@@ -323,11 +372,18 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
-        return UIBezierPath()
+        let exclusionPath = UIBezierPath(cgPath: mainBubblePath.cgPath)
+        exclusionPath.move(to: bounds.origin)
+        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
+        exclusionPath.close()
+        return exclusionPath
     }
     
-    func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
-        return ([], CAShapeLayer())
+    func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubblePath: UIBezierPath) {
+        return ([], UIBezierPath())
     }
     
 }
