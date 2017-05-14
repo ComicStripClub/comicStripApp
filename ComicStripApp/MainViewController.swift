@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import GPUImage
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIViewControllerTransitioningDelegate {
     let supportedFilters: [String: () -> ImageProcessingOperation] = [
         "Cartoon" : {
             return SmoothToonFilter()
@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
     var nextPicture: PictureOutput!
+    let customPresentAnimationController = ViewControllerAnimator()
     
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
         didSet {
@@ -95,6 +96,7 @@ class MainViewController: UIViewController {
         if(segue.identifier == "savesegue"){
             let detailViewNavController = segue.destination as! UINavigationController
             let detailViewController = detailViewNavController.topViewController as! SavedComicViewController
+            segue.destination.transitioningDelegate = self
             detailViewController.savedComicImage = self.savedComicImage
         }
     }
@@ -111,6 +113,12 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customPresentAnimationController
+    }
+    
+    
     
     func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.5, animations: {
