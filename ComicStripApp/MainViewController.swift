@@ -273,7 +273,31 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapSoundEffectsButton() {
         let soundEffects: [ComicFrameElement] = [
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham")),
-            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bam")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bang")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bloodyFist")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bomb")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "boom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "boom2")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "booomm")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "booooom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "crash")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "explosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kabooom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "krunch")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "no_no_no")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "questionMark")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "redExplosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "redSpikeyCloud")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "screeeaaawr")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "smokeExplosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "splash")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "whooshSmoke")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wow")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zaaap")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zap")),
+            ]
         presentSelectionController(withElements: soundEffects)
     }
     
