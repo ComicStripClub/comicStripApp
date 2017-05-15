@@ -45,6 +45,7 @@
 		ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */; };
 		ABF472471EC6E2500011820B /* HandDrawnBubble1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */; };
 		ABF4724A1EC6E7D10011820B /* FilterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF472491EC6E7D10011820B /* FilterElement.swift */; };
+		ABF4724C1EC98E190011820B /* HandDrawnBubble2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4724B1EC98E190011820B /* HandDrawnBubble2.swift */; };
 		ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */; };
 		B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */; };
 		B37A1A431EBCFE64007C615F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37A1A421EBCFE64007C615F /* Utils.swift */; };
@@ -142,6 +143,7 @@
 		ABF472431EC6D9960011820B /* ComicStrip_2Small1Big.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip_2Small1Big.swift; sourceTree = "<group>"; };
 		ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble1.swift; sourceTree = "<group>"; };
 		ABF472491EC6E7D10011820B /* FilterElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterElement.swift; sourceTree = "<group>"; };
+		ABF4724B1EC98E190011820B /* HandDrawnBubble2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble2.swift; sourceTree = "<group>"; };
 		ABFD5D6A1EC2F705006BB646 /* ComicStrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStrip.swift; sourceTree = "<group>"; };
 		AEDDE2EA28187AF0C7D8D4B7 /* Pods-ComicStripApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicStripApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ComicStripApp/Pods-ComicStripApp.release.xcconfig"; sourceTree = "<group>"; };
 		B339271C1EB8BD2800B452D9 /* ComicboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicboardViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				ABAA171F1EB6507300C96694 /* ClassicSpeechBubble.swift */,
 				AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */,
 				ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */,
+				ABF4724B1EC98E190011820B /* HandDrawnBubble2.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				AB046A6E1EC3E82A00249542 /* ComicToolbarButton.swift in Sources */,
 				ABAA17201EB6507300C96694 /* ClassicSpeechBubble.swift in Sources */,
 				AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */,
+				ABF4724C1EC98E190011820B /* HandDrawnBubble2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

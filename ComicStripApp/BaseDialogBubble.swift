@@ -97,7 +97,7 @@ class ComicBubbleTextContainer: NSTextContainer {
                 adjustedRect.origin.x = rem.minX
             } else {
                 print("Retrying, shifting down [\(adjustedRect.minY + lineHeight)]")
-                adjustedRect.origin = CGPoint(x: 0, y: rect.minY + lineHeight)
+                adjustedRect.origin = CGPoint(x: 0, y: adjustedRect.minY + lineHeight)
             }
         }
         print("remaining: [\(remainingRect?.pointee)], return: [\(rect)]")
@@ -202,7 +202,10 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     override var transform: CGAffineTransform {
         didSet {
-//            updateExclusionPath()
+            // If this element was moved (e.g. because the user dragged
+            // or panned the element), we need to recalculate the exclusionPaths
+            // in case the bubble is up against an edge of its superview
+            updateExclusionPath()
 //            print("Frame: \(frame)")
         }
     }
@@ -380,13 +383,14 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
-        let exclusionPath = UIBezierPath(cgPath: mainBubblePath.cgPath)
-        exclusionPath.move(to: bounds.origin)
-        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY))
-        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
-        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
-        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
-        exclusionPath.close()
+        let exclusionPath = UIBezierPath(rect: bounds)
+        exclusionPath.append(UIBezierPath(cgPath: mainBubblePath.cgPath))
+//        exclusionPath.move(to: bounds.origin)
+//        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY))
+//        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+//        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+//        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
+//        exclusionPath.close()
         return exclusionPath
     }
     

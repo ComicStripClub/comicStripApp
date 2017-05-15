@@ -27,25 +27,6 @@ class HandDrawnBubble1: BaseDialogBubble {
         super.init(coder)
     }
     
-    override func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
-        let bezier3Path = UIBezierPath()
-        bezier3Path.move(to: CGPoint(x: (width * 0.9171), y: (height * 0.0714)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.1529), y: (height * 0.1163)), controlPoint1: CGPoint(x: (width * 0.9171), y: (height * 0.0714)), controlPoint2: CGPoint(x: (width * 0.3538), y: (height * 0.1045)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 0.0829), y: (height * 0.1204)), controlPoint1: CGPoint(x: (width * 0.1094), y: (height * 0.1189)), controlPoint2: CGPoint(x: (width * 0.0829), y: (height * 0.1204)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.1081), y: (height * 0.7408)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.9368), y: (height * 0.7122)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.9171), y: (height * 0.0714)))
-        bezier3Path.close()
-        bezier3Path.move(to: CGPoint(x: (width * 1.0000), y: (height * 0.0000)))
-        bezier3Path.addCurve(to: CGPoint(x: (width * 1.0000), y: (height * 1.0000)), controlPoint1: CGPoint(x: (width * 1.0000), y: (height * 0.0000)), controlPoint2: CGPoint(x: (width * 1.0000), y: (height * 1.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.0000), y: (height * 1.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 0.0000), y: (height * 0.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 1.0000), y: (height * 0.0000)))
-        bezier3Path.addLine(to: CGPoint(x: (width * 1.0000), y: (height * 0.0000)))
-        bezier3Path.close()
-        return bezier3Path
-    }
-    
     override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubblePath: UIBezierPath) {
         let whiteBackgroundLayer = CAShapeLayer()
         let bezierPath = UIBezierPath()
@@ -466,6 +447,15 @@ class HandDrawnBubble1: BaseDialogBubble {
         bezier32Path.close()
         shapeLayer.path = bezier32Path.cgPath
         shapeLayer.fillColor = UIColor.black.cgColor
-        return (shapes: [whiteBackgroundLayer, shapeLayer], mainBubblePath: bezier32Path)
+        
+        let mainBubblePath = UIBezierPath()
+        mainBubblePath.move(to: CGPoint(x: (width * 0.0997), y: (height * 0.1327)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.1080), y: (height * 0.7405)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9230), y: (height * 0.6910)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9118), y: (height * 0.1327)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0997), y: (height * 0.1327)))
+        mainBubblePath.close()
+        
+        return (shapes: [whiteBackgroundLayer, shapeLayer], mainBubblePath: mainBubblePath)
     }
 }
