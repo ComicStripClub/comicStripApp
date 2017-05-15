@@ -18,6 +18,8 @@
 		AB2F04C61EC047E900B3BC37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB2F04C51EC047E900B3BC37 /* Assets.xcassets */; };
 		AB325B011EB1A38C0037C3BE /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; };
 		AB325B021EB1A3980037C3BE /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB325AF71EB1A2FB0037C3BE /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AB6077F11EC99F1B00B6A94B /* HandDrawnBubble3.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6077F01EC99F1B00B6A94B /* HandDrawnBubble3.swift */; };
+		AB6077F61EC9A75900B6A94B /* HandDrawnBubble4.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6077F51EC9A75800B6A94B /* HandDrawnBubble4.swift */; };
 		AB8E85001EA9AAE1003DDDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */; };
 		AB8E85051EA9AAE1003DDDD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E85031EA9AAE1003DDDD5 /* Main.storyboard */; };
 		AB8E85081EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB8E85061EA9AAE1003DDDD5 /* ComicStripApp.xcdatamodeld */; };
@@ -114,6 +116,8 @@
 		AB25F31F1EC3A74300BBD66D /* ComicStripCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicStripCell.swift; sourceTree = "<group>"; };
 		AB2F04C51EC047E900B3BC37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB325AEB1EB1A2FB0037C3BE /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
+		AB6077F01EC99F1B00B6A94B /* HandDrawnBubble3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble3.swift; sourceTree = "<group>"; };
+		AB6077F51EC9A75800B6A94B /* HandDrawnBubble4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandDrawnBubble4.swift; sourceTree = "<group>"; };
 		AB8E84FC1EA9AAE1003DDDD5 /* ComicStripApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicStripApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E84FF1EA9AAE1003DDDD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB8E85041EA9AAE1003DDDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -288,6 +292,8 @@
 				AB14F8901EBD8E2500B5FBBE /* BaseDialogBubble.swift */,
 				ABF472461EC6E2500011820B /* HandDrawnBubble1.swift */,
 				ABF4724B1EC98E190011820B /* HandDrawnBubble2.swift */,
+				AB6077F01EC99F1B00B6A94B /* HandDrawnBubble3.swift */,
+				AB6077F51EC9A75800B6A94B /* HandDrawnBubble4.swift */,
 			);
 			name = DialogBubbles;
 			sourceTree = "<group>";
@@ -524,6 +530,7 @@
 				ABAA171E1EB63D2100C96694 /* SoundEffect.swift in Sources */,
 				B339271D1EB8BD2800B452D9 /* ComicboardViewController.swift in Sources */,
 				ABFD5D6B1EC2F705006BB646 /* ComicStrip.swift in Sources */,
+				AB6077F61EC9A75900B6A94B /* HandDrawnBubble4.swift in Sources */,
 				ABF472381EC6D52F0011820B /* ComicFrameElement.swift in Sources */,
 				AB25F31B1EC3A31700BBD66D /* ComicStripLayoutSelectionViewController.swift in Sources */,
 				ABF472421EC6D95C0011820B /* ComicStrip_1x3.swift in Sources */,
@@ -532,6 +539,7 @@
 				ABF4723E1EC6D8680011820B /* ComicStrip_1Big.swift in Sources */,
 				AB25F3201EC3A74300BBD66D /* ComicStripCell.swift in Sources */,
 				AB9282CB1EBFCCF30039B55C /* UIImageExtensions.swift in Sources */,
+				AB6077F11EC99F1B00B6A94B /* HandDrawnBubble3.swift in Sources */,
 				ABF472441EC6D9960011820B /* ComicStrip_2Small1Big.swift in Sources */,
 				ABF4724A1EC6E7D10011820B /* FilterElement.swift in Sources */,
 				B37A1A431EBCFE64007C615F /* Utils.swift in Sources */,

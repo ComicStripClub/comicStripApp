@@ -50,26 +50,9 @@ class ComicBubbleTextContainer: NSTextContainer {
             print("minLineFragmentY: \(minLineFragmentY)")
         }
     }
-
-    private var userProvidedExclusionPaths: [UIBezierPath] = []
-    override var exclusionPaths: [UIBezierPath] {
-        get {
-            return super.exclusionPaths
-        }
-        set(exPaths) {
-            userProvidedExclusionPaths = exPaths
-            var exPaths = getCenteringExclusionPaths()
-            exPaths.append(contentsOf: userProvidedExclusionPaths)
-            super.exclusionPaths = exPaths
-        }
-    }
     
     var shape: UIBezierPath?
-    
-    private func getCenteringExclusionPaths() -> [UIBezierPath] {
-        return []
-    }
-    
+
     override var isSimpleRectangularTextContainer: Bool { get { return false } }
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
@@ -383,14 +366,14 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     func getExclusionPath(width: CGFloat, height: CGFloat) -> UIBezierPath {
-        let exclusionPath = UIBezierPath(rect: bounds)
-        exclusionPath.append(UIBezierPath(cgPath: mainBubblePath.cgPath))
-//        exclusionPath.move(to: bounds.origin)
-//        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY))
-//        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
-//        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
-//        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
-//        exclusionPath.close()
+        let exclusionPath = UIBezierPath(cgPath: mainBubblePath.cgPath)
+        exclusionPath.move(to: bounds.origin)
+        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+        exclusionPath.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
+        exclusionPath.close()
+        exclusionPath.usesEvenOddFillRule = true
         return exclusionPath
     }
     
