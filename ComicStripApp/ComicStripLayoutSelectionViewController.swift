@@ -57,6 +57,6 @@ extension ComicStripLayoutSelectionViewController: UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.bounds.midX - 20;
-        return CGSize(width: side, height: side)
+        return CGSize(width: side, height: side * 2)
     }
 }
