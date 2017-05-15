@@ -34,7 +34,7 @@ class ComicBubbleLayoutManager: NSLayoutManager {
         let rect = usedRect(for: txtContainer)
         let heightDelta = mainBubblePath.cgPath.boundingBox.height - rect.height;
         let lineHeight = lineFragmentRect(forGlyphAt: 0, effectiveRange: nil).size.height
-        txtContainer.minLineFragmentY = heightDelta / 2.0 - lineHeight / 2.0
+        txtContainer.minLineFragmentY = max(0, heightDelta / 2.0 - lineHeight / 2.0)
         invalidateLayout(forCharacterRange: NSRange(location: 0, length: textStorage!.length), actualCharacterRange: nil)
     }
 }
@@ -84,7 +84,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         let numTries = 3 //proposedRect.origin.y < 0.01 ? 3 : 1
         for i in 0..<numTries {
             rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
-            print("lineFragmentRect: [\(rect)]")
+            print("lineFragmentRect: proposed[\(adjustedRect)] returned[\(rect)]")
 
             if (rect.minY < proposedRect.minY){
                 rect = CGRect.zero
@@ -104,6 +104,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         // print("Proposed: [\(proposedRect)], Returned: [\(rect)]")
         if let shape = shape {
             if (rect.isEmpty && proposedRect.origin.y > shape.bounds.maxY - (lineHeight * 2)){
+                print("textContainerFull")
                 delegate?.textContainerFull()
             }
         }
@@ -166,7 +167,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     func textContainerFull() {
-        guard (shouldAutoResize) else {
+        guard (shouldAutoResize && bounds.size.width > 0 && bounds.size.height > 0) else {
             return
         }
         increaseTextContainerSize()
@@ -181,7 +182,7 @@ class ComicBubbleTextContainer: NSTextContainer {
             break
         case .changed:
             let scale = gestureRecognizer.scale
-            isResizing = true
+            // isResizing = true
             let oldCenter = center
             let newSize = originalSize.applying(CGAffineTransform(scaleX: scale, y: scale))
             self.frame.size = newSize
@@ -190,7 +191,6 @@ class ComicBubbleTextContainer: NSTextContainer {
             self.updateExclusionPath()
             let layoutMgr = self.layoutManager as! ComicBubbleLayoutManager
             layoutMgr.verticallyCenter()
-            self.isResizing = false
             break
         case .ended:
             break
@@ -202,8 +202,8 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     override var transform: CGAffineTransform {
         didSet {
-            updateExclusionPath()
-            print("Frame: \(frame)")
+//            updateExclusionPath()
+//            print("Frame: \(frame)")
         }
     }
     
@@ -220,11 +220,11 @@ class ComicBubbleTextContainer: NSTextContainer {
     // and sets the exclusionPaths so that text flows within the boundaries of
     // the thought bubble
     override func layoutSubviews() {
-        super.layoutSubviews()
         guard (!isResizing) else {
             return
         }
-        print("layoutSubviews (\(bounds.width))")
+        super.layoutSubviews()
+        print("layoutSubviews (\(bounds))")
         for shape in backgroundShapes {
             shape.removeFromSuperlayer()
         }
@@ -235,11 +235,13 @@ class ComicBubbleTextContainer: NSTextContainer {
             layer.insertSublayer(shape, at: UInt32(i))
             adjustShapeForBubbleOrientation(shape)
         }
-        updateExclusionPath()
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.mainBubblePath = self.mainBubblePath
         let comicTextContainer = textContainer as! ComicBubbleTextContainer
         comicTextContainer.shape = mainBubblePath
+        updateExclusionPath()
+        comicTextContainer.size = bounds.size
+        print("layoutSubviews - size[\(bounds.size)] tcSize[\(textContainer.size)]")
     }
     
     private func adjustShapeForBubbleOrientation(_ shape: CAShapeLayer) {
@@ -291,6 +293,9 @@ class ComicBubbleTextContainer: NSTextContainer {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        guard (!isResizing) else {
+            return
+        }
         print("textChanged: \(textView.text!)")
         let layoutMgr = layoutManager as! ComicBubbleLayoutManager
         layoutMgr.verticallyCenter()
@@ -308,19 +313,23 @@ class ComicBubbleTextContainer: NSTextContainer {
         let scale = newWidth / self.frame.size.width
         let newHeight = bounds.height * scale
         let oldTransform = self.transform
-        UIView.animate(withDuration: 0.15, delay: 0, options: .layoutSubviews, animations: {
+        UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
             self.transform = self.transform.scaledBy(x: scale, y: scale)
+            self.frame.size = CGSize(width: newWidth, height: newHeight)
+            self.center = oldCenter
+            self.layoutIfNeeded()
             print("resizing: \(newWidth)")
         }, completion: { (b) in
             self.transform = oldTransform
             self.frame.size = CGSize(width: newWidth, height: newHeight)
             self.center = oldCenter
-            self.setNeedsLayout()
-            self.updateExclusionPath()
-            let layoutMgr = self.layoutManager as! ComicBubbleLayoutManager
-            layoutMgr.verticallyCenter()
-            print("finishedResizing: \(newWidth)")
             self.isResizing = false
+            self.setNeedsLayout()
+//            self.updateExclusionPath()
+//            self.setNeedsLayout()
+//            let layoutMgr = self.layoutManager as! ComicBubbleLayoutManager
+//            layoutMgr.verticallyCenter()
+            print("finishedResizing: \(newWidth)")
         })
     }
     

@@ -179,11 +179,12 @@ class ComicFrame: UIView {
         finalSize = CGSize(width: width, height: width / aspectRatio)
 
         let elementView = element.view!
+        elementView.isUserInteractionEnabled = true
+        elementView.translatesAutoresizingMaskIntoConstraints = true
         let topOffset = (bounds.height - finalSize.height) / 2
         let leftOffset = (bounds.width - finalSize.width) / 2
         elementView.frame = CGRect(origin: CGPoint(x: leftOffset, y: topOffset), size: finalSize)
         contentView.addSubview(elementView)
-        elementView.isUserInteractionEnabled = true
         
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanElement))
         elementView.addGestureRecognizer(panRecognizer)

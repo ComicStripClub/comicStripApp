@@ -51,11 +51,11 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         whiteBackgroundShape.fillRule = kCAFillRuleEvenOdd
 
         let mainBubblePath = UIBezierPath()
-        mainBubblePath.move(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.4903)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.0075)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.0075)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
+        mainBubblePath.move(to: CGPoint(x: (width * 0.020), y: (width * 0.460)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.970), y: (width * 0.460)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.970), y: (width * 0.020)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.020), y: (width * 0.020)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.020), y: (width * 0.460)))
         mainBubblePath.close()
         
         //// Bezier 2 Drawing
