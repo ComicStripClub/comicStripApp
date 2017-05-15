@@ -30,7 +30,6 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     }
     
     func verticallyCenter(){
-        return
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         let rect = usedRect(for: txtContainer)
         let heightDelta = mainBubblePath.cgPath.boundingBox.height - rect.height;
@@ -80,7 +79,7 @@ class ComicBubbleTextContainer: NSTextContainer {
         
         print("proposed: [\(proposedRect)], charIndex: [\(characterIndex)]")
         
-        adjustedRect.origin.y = max(proposedRect.origin.y, 0 /*minLineFragmentY*/)
+        adjustedRect.origin.y = max(proposedRect.origin.y, minLineFragmentY)
         var rect = CGRect.zero
         let numTries = 3 //proposedRect.origin.y < 0.01 ? 3 : 1
         for i in 0..<numTries {
