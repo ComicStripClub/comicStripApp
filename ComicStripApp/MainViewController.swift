@@ -58,7 +58,8 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        handleNavigationBarItem()
         comicStrip = comicStripFactory()
         comicStripContainer.comicStrip = comicStrip
         for comicFrame in comicStrip.comicFrames {
@@ -130,6 +131,11 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
        view.endEditing(true)
     }
     
+    func handleNavigationBarItem (){
+        // Changing the navigation controller's title colour
+        self.navigationItem.title = "Create Fun"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
+    }
     private func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
