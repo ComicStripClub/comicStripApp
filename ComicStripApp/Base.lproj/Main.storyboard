@@ -93,7 +93,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="104" width="375" height="483"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="523"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
@@ -182,10 +182,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" id="Ypg-lW-hXm"/>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" id="fl6-Zq-IgP"/>
-                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" id="fsC-5k-AnB"/>
-                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" id="hEB-Uc-i5F"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" constant="8" id="Ypg-lW-hXm"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" constant="8" id="fl6-Zq-IgP"/>
+                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" constant="8" id="fsC-5k-AnB"/>
+                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" constant="8" id="hEB-Uc-i5F"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="image" destination="mJf-Qc-yO4" id="WFw-gA-GkH"/>
@@ -223,7 +223,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -241,7 +241,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Der-we-Tyh" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1aT-lH-ten">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1aT-lH-ten">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

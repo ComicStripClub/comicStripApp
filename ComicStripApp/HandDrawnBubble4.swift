@@ -448,7 +448,29 @@ class HandDrawnBubble4: BaseDialogBubble {
         shapeLayer.path = bezierPath.cgPath
         shapeLayer.fillColor = fillColor6.cgColor
         
-        return (shapes: [whiteBackground, shapeLayer], mainBubbleLayer: bezier38Path)
+        
+        
+        let bezier2Path = UIBezierPath()
+        bezier2Path.move(to: CGPoint(x: (width * 0.8999), y: (height * 0.2592)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.8735), y: (height * 0.1996)), controlPoint1: CGPoint(x: (width * 0.8933), y: (height * 0.2384)), controlPoint2: CGPoint(x: (width * 0.8849), y: (height * 0.2182)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.7778), y: (height * 0.1088)), controlPoint1: CGPoint(x: (width * 0.8498), y: (height * 0.1611)), controlPoint2: CGPoint(x: (width * 0.8146), y: (height * 0.1328)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.6476), y: (height * 0.0407)), controlPoint1: CGPoint(x: (width * 0.7368), y: (height * 0.0820)), controlPoint2: CGPoint(x: (width * 0.6937), y: (height * 0.0567)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.5955), y: (height * 0.0336)), controlPoint1: CGPoint(x: (width * 0.6007), y: (height * 0.0243)), controlPoint2: CGPoint(x: (width * 0.6446), y: (height * 0.0335)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.4323), y: (height * 0.0407)), controlPoint1: CGPoint(x: (width * 0.5410), y: (height * 0.0337)), controlPoint2: CGPoint(x: (width * 0.4866), y: (height * 0.0362)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.2791), y: (height * 0.0667)), controlPoint1: CGPoint(x: (width * 0.3809), y: (height * 0.0450)), controlPoint2: CGPoint(x: (width * 0.3283), y: (height * 0.0496)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.1770), y: (height * 0.1253)), controlPoint1: CGPoint(x: (width * 0.2419), y: (height * 0.0795)), controlPoint2: CGPoint(x: (width * 0.2075), y: (height * 0.0997)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.0463), y: (height * 0.3455)), controlPoint1: CGPoint(x: (width * 0.1108), y: (height * 0.1809)), controlPoint2: CGPoint(x: (width * 0.0661), y: (height * 0.2600)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.0632), y: (height * 0.6384)), controlPoint1: CGPoint(x: (width * 0.0248), y: (height * 0.4387)), controlPoint2: CGPoint(x: (width * 0.0269), y: (height * 0.5492)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.3262), y: (height * 0.8006)), controlPoint1: CGPoint(x: (width * 0.0814), y: (height * 0.6832)), controlPoint2: CGPoint(x: (width * 0.2061), y: (height * 0.7810)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.4627), y: (height * 0.8124)), controlPoint1: CGPoint(x: (width * 0.3699), y: (height * 0.8224)), controlPoint2: CGPoint(x: (width * 0.4153), y: (height * 0.8027)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.6135), y: (height * 0.8320)), controlPoint1: CGPoint(x: (width * 0.5124), y: (height * 0.8227)), controlPoint2: CGPoint(x: (width * 0.5629), y: (height * 0.8294)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.6663), y: (height * 0.8327)), controlPoint1: CGPoint(x: (width * 0.6311), y: (height * 0.8329)), controlPoint2: CGPoint(x: (width * 0.6487), y: (height * 0.8330)))
+        bezier2Path.addLine(to: CGPoint(x: (width * 0.7298), y: (height * 0.8006)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.9018), y: (height * 0.6718)), controlPoint1: CGPoint(x: (width * 0.8024), y: (height * 0.7900)), controlPoint2: CGPoint(x: (width * 0.8918), y: (height * 0.7057)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.9384), y: (height * 0.4671)), controlPoint1: CGPoint(x: (width * 0.9258), y: (height * 0.6069)), controlPoint2: CGPoint(x: (width * 0.9349), y: (height * 0.5349)))
+        bezier2Path.addCurve(to: CGPoint(x: (width * 0.8999), y: (height * 0.2592)), controlPoint1: CGPoint(x: (width * 0.9422), y: (height * 0.3937)), controlPoint2: CGPoint(x: (width * 0.9324), y: (height * 0.3216)))
+        bezier2Path.close()
+        return (shapes: [whiteBackground, shapeLayer], mainBubblePath: bezier2Path)
 
     }
 }

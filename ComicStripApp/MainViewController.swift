@@ -262,9 +262,10 @@ extension MainViewController: ComicStripToolbarDelegate {
         let speechBubbles: [ComicFrameElement] = [
             HandDrawnBubble1Element(),
             ThoughtBubbleElement(),
-            HandDrawnBubble2Element(),
             ClassicSpeechBubbleElement(),
+            HandDrawnBubble2Element(),
             HandDrawnBubble3Element(),
+            HandDrawnBubble5Element(),
             HandDrawnBubble4Element()]
         presentSelectionController(withElements: speechBubbles)
     }
