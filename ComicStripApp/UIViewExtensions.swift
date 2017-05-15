@@ -76,6 +76,20 @@ import UIKit
             return nil
         }
     }
+    
+    func startRotate() {
+        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.fromValue = 0
+        rotation.toValue = NSNumber(value: Double.pi*3)
+        rotation.duration = 2
+        rotation.isCumulative = true
+        rotation.repeatCount = Float.greatestFiniteMagnitude
+        self.layer.add(rotation, forKey: "rotationAnimation")
+    }
+    
+    func stopRotate() {
+        self.layer.removeAnimation(forKey: "rotationAnimation")
+    }
 }
 
 extension CGPoint {

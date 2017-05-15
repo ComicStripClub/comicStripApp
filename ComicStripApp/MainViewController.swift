@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import GPUImage
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIViewControllerTransitioningDelegate {
     let supportedFilters: [String: () -> ImageProcessingOperation] = [
         "Cartoon" : {
             return SmoothToonFilter()
@@ -36,10 +36,11 @@ class MainViewController: UIViewController {
     var imagePickerTargetFrame: ComicFrame?
     var comicStrip: ComicStrip!
     var comicStripFactory: (() -> ComicStrip)!
-
+    var savedComicImage: UIImage?
     var camera: Camera!
     var cameraLocation: PhysicalCameraLocation = .backFacing
     var nextPicture: PictureOutput!
+    let customPresentAnimationController = ViewControllerAnimator()
     
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
         didSet {
@@ -91,6 +92,14 @@ class MainViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "savesegue"){
+            let detailViewNavController = segue.destination as! UINavigationController
+            let detailViewController = detailViewNavController.topViewController as! SavedComicViewController
+            segue.destination.transitioningDelegate = self
+            detailViewController.savedComicImage = self.savedComicImage
+        }
+    }
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if let firstResponder = view.currentFirstResponder as? UIView {
@@ -104,6 +113,12 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customPresentAnimationController
+    }
+    
+    
     
     func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.5, animations: {
@@ -304,7 +319,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
         for filter in supportedFilters {
-            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "style_color"), filter: filter))
+            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "filters"), filter: filter))
         }
         presentSelectionController(withElements: filterElements)
     }
@@ -316,7 +331,14 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapSaveButton() {
         let image = self.comicStrip.asImage()
-        ComicStripPhotoAlbum.sharedInstance.save(image: image)
+        ComicStripPhotoAlbum.sharedInstance.save(image: image) { (isSaved) in
+            if isSaved{
+                self.savedComicImage = image
+                self.performSegue(withIdentifier: "savesegue", sender: self)
+            }else{
+                print("Error is saving comic")
+            }
+        }
     }
     
     func didTapShareButton() {
