@@ -732,7 +732,7 @@
         <image name="splash_screen_bg" width="375" height="375"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="SHs-LQ-H0L"/>
         <segue reference="xmj-cC-jht"/>
-        <segue reference="WjN-a8-fg4"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -6,7 +6,10 @@
 //  Copyright © 2017 comicStripClub. All rights reserved.
 //
 
+import AudioToolbox
+import Foundation
 import UIKit
+
 
 protocol ComicStripToolbarDelegate {
     func didTapSpeechBubbleButton()
@@ -76,6 +79,11 @@ protocol ComicStripToolbarDelegate {
     }
     
     @IBAction func didTapCaptureButton(_ sender: Any) {
+        if #available(iOS 9.0, *) {
+            AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(1108), nil)
+        } else {
+            AudioServicesPlaySystemSound(1108)
+        }
         delegate?.didTapCaptureButton()
     }
     
