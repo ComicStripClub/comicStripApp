@@ -17,7 +17,7 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imgParentView.startRotate()
+//        imgParentView.startRotate()
         showRotateAnimationWithZoomInOut()
         getStartedButton.isHidden = true
         getStartedButton.layer.cornerRadius = 5.0
@@ -46,15 +46,16 @@ class SplashViewController: UIViewController {
     }
     
     func showRotateAnimationWithZoomInOut(){
-        UIView.animate(withDuration: 1.5, animations: {
-            self.imgParentView.transform = CGAffineTransform(scaleX: 8, y: 8)
+        self.imgParentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.imgParentView.transform = CGAffineTransform(scaleX: 2, y: 2)
         }) { (isZoomOutDone) in
             if isZoomOutDone{
                 UIView.animate(withDuration: 0.5, animations: {
-                    self.imgParentView.transform = CGAffineTransform(scaleX: 6, y: 6)
+                    self.imgParentView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 }, completion: { (isComplete) in
                     if isComplete{
-                        self.imgParentView.stopRotate()
+//                        self.imgParentView.stopRotate()
                         self.handleButtonVisisblity()
                         
                     }
