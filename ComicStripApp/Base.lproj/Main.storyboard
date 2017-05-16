@@ -93,12 +93,12 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="320" height="424"/>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
+                                <rect key="frame" x="16" y="16" width="288" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="496" width="320" height="72"/>
+                                <rect key="frame" x="0.0" y="432" width="320" height="72"/>
                                 <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="eXG-P8-hN7"/>
@@ -107,12 +107,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" id="LZx-Mn-7Ao"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="NV4-ku-TR2"/>
+                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" constant="16" id="LZx-Mn-7Ao"/>
+                            <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="NV4-ku-TR2"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wnm-6H-rl4"/>
-                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="8" id="YvG-cu-6qd"/>
+                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="16" id="YvG-cu-6qd"/>
                             <constraint firstAttribute="trailing" secondItem="j94-Y9-5Wd" secondAttribute="trailing" id="ZST-iv-hqS"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mlY-xV-969"/>
+                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="mlY-xV-969"/>
                             <constraint firstAttribute="bottom" secondItem="j94-Y9-5Wd" secondAttribute="bottom" id="u2e-6l-t4p"/>
                         </constraints>
                     </view>
@@ -309,7 +309,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
-                                                            <rect key="frame" x="47" y="127" width="42" height="0.0"/>
+                                                            <rect key="frame" x="39" y="127" width="58" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>

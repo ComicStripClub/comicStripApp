@@ -39,6 +39,11 @@
                         <constraint firstAttribute="width" secondItem="wUJ-Ni-ZXw" secondAttribute="height" multiplier="1:1" id="zfX-T6-9Xx"/>
                     </constraints>
                     <state key="normal" title="Button" image="plus-circle-outline"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="opacity">
+                            <real key="value" value="0.59999999999999998"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="didTapAddPhotoButton:" destination="-1" eventType="touchUpInside" id="G5f-A3-Cf5"/>
                     </connections>

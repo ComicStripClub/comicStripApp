@@ -128,7 +128,8 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     }
     
     @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
-       view.endEditing(true)
+        view.endEditing(true)
+        comicStripContainer.selectComicFrame(nil)
     }
     
     func handleNavigationBarItem (){
@@ -208,6 +209,10 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
 extension MainViewController: ComicFrameDelegate {
 
     func didTapAddPhotoToFrame(_ sender: ComicFrame) {
+        if (comicStripContainer.selectedFrame != nil && sender != comicStripContainer.selectedFrame){
+            comicStripContainer.selectComicFrame(sender)
+            return
+        }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction(title: "Use camera", style: .default) { (action) in
             self.didTapCameraButton(sender)

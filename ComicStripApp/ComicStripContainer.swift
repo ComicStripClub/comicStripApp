@@ -29,6 +29,9 @@ class ComicStripContainer: UIView {
                 subview.removeFromSuperview()
             }
             addSubview(comicStrip)
+            if (comicStrip.comicFrames.count == 1){
+                selectComicFrame(comicStrip.comicFrames[0])
+            }
             // comicStrip.translatesAutoresizingMaskIntoConstraints = false
         }
     }
@@ -43,6 +46,8 @@ class ComicStripContainer: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         comicStrip.frame = bounds
+        //comicStrip.bounds.size = CGSize(width: bounds.width - 32, height: bounds.height)
+        //comicStrip.center = CGPoint(x: bounds.midX, y: bounds.midY)
         if (selectedFrame != nil) {
             selectComicFrame(at: selectedFrame!.center)
         }
