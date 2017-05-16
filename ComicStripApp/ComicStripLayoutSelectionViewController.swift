@@ -34,6 +34,8 @@ class ComicStripLayoutSelectionViewController: UIViewController {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: nil, action: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,8 +57,12 @@ extension ComicStripLayoutSelectionViewController: UICollectionViewDelegate, UIC
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = collectionView.bounds.midX - 20;
+        let side = collectionView.bounds.midX - 40;
         return CGSize(width: side, height: side * 2)
     }
 }

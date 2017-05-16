@@ -133,9 +133,20 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     func handleNavigationBarItem (){
         // Changing the navigation controller's title colour
-        self.navigationItem.title = "Create Fun"
+        self.navigationItem.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: #selector(didTapBackButton))
+//        let customBackButton = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: #selector(didTapBackButton))
+//        navigationItem.hidesBackButton = true
+//        
+//        navigationItem.leftBarButtonItem = customBackButton
     }
+    
+    @objc private func didTapBackButton(_ sender: UIBarButtonItem){
+        print("Tapped back")
+    }
+    
     private func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }

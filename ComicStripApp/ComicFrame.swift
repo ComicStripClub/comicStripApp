@@ -139,7 +139,15 @@ class ComicFrame: UIView {
         elementToolbar.orientation = .vertical
         elementToolbar.isHidden = true
         addSubview(elementToolbar)
-                
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(userDidTapComicFrame))
+        self.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc private func userDidTapComicFrame(_ sender: Any){
+        if (!addImageButton.isHidden){
+            delegate?.didTapAddPhotoToFrame(self)
+        }
     }
     
     override func layoutSubviews() {

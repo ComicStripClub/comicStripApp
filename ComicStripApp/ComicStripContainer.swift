@@ -88,11 +88,11 @@ class ComicStripContainer: UIView {
                 let delta = CGPoint(x: center.x - adjustedFrame.midX, y: center.y - adjustedFrame.midY)
                 focusFrameTransform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: delta.x, y: delta.y)
             }
-            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -20, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -5, options: [.curveEaseIn], animations: {
                 self.comicStrip.transform = focusFrameTransform
             }, completion: nil)
         } else {
-            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -20, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -5, options: [.curveEaseIn], animations: {
                 self.comicStrip.transform = CGAffineTransform.identity
             }, completion: nil)
         }

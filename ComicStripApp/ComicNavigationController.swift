@@ -14,10 +14,10 @@ class ComicNavigationController: UINavigationController {
         super.viewDidLoad()
         
         navigationBar.titleTextAttributes = [
-            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 17.0)!,
+            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 19.0)!,
             NSForegroundColorAttributeName: UIColor.white]
         UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 14.0)!,
+            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 13.0)!,
             NSForegroundColorAttributeName: UIColor.white], for: .normal)
     }
 

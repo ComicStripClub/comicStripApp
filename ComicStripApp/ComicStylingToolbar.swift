@@ -18,8 +18,6 @@ protocol ComicStripToolbarDelegate {
     func didTapCaptureButton()
     func didTapSwitchCameraButton()
     func didTapGoToCaptureMode()
-    func didTapShareButton()
-    func didTapSaveButton()
 }
 
 @IBDesignable class ComicStylingToolbar: UIView {
@@ -34,13 +32,10 @@ protocol ComicStripToolbarDelegate {
     @IBOutlet weak var cameraModeToolbar: UIView!
     @IBOutlet weak var editingModeToolbar: UIView!
     
-    @IBOutlet weak var noFramesActiveModeToolbar: UIView!
-    
     var mode: ComicStylingToolbarMode = .noActiveFrame {
         didSet {
             cameraModeToolbar.isHidden = (mode != .capture)
             editingModeToolbar.isHidden = (mode != .editing)
-            noFramesActiveModeToolbar.isHidden = (mode != .noActiveFrame)
         }
     }
     
@@ -63,21 +58,8 @@ protocol ComicStripToolbarDelegate {
         trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        
-        let buttons = [shareButton, saveButton]
-        for button in buttons {
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapButton))
-            button!.addGestureRecognizer(tapRecognizer)
-        }
     }
-    @objc private func didTapButton(_ sender: UITapGestureRecognizer){
-        if (sender.view!.isEqual(shareButton)){
-            delegate?.didTapShareButton()
-        } else if (sender.view!.isEqual(saveButton)){
-            delegate?.didTapSaveButton()
-        }
-    }
-    
+
     @IBAction func didTapCaptureButton(_ sender: Any) {
         if #available(iOS 9.0, *) {
             AudioServicesPlayAlertSoundWithCompletion(SystemSoundID(1108), nil)
@@ -105,17 +87,4 @@ protocol ComicStripToolbarDelegate {
     @IBAction func didTapStyleButton(_ sender: Any) {
         delegate?.didTapStyleButton()
     }
-    
-    @IBOutlet weak var shareButton: ComicToolbarButton!
-    @IBOutlet weak var saveButton: ComicToolbarButton!
-    
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }

@@ -18,7 +18,8 @@ class MyCreationViewController: UIViewController {
         comicCollectionView.delegate = self
         self.comicAlbum = ComicStripPhotoAlbum.sharedInstance.getAllComicsFromAlbum()
         self.comicCollectionView.reloadData()
-        // Do any additional setup after loading the view.
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override func didReceiveMemoryWarning() {

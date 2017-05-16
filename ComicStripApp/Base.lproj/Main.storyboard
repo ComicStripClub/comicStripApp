@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5gh-8r-5c9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5gh-8r-5c9">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -90,7 +90,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
@@ -116,6 +116,7 @@
                             <constraint firstAttribute="bottom" secondItem="j94-Y9-5Wd" secondAttribute="bottom" id="u2e-6l-t4p"/>
                         </constraints>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="comicStripContainer" destination="e8f-3c-5jF" id="IdJ-74-2bB"/>
                         <outlet property="comicStylingToolbar" destination="j94-Y9-5Wd" id="PEI-Rv-S06"/>
@@ -123,6 +124,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <navigationItem id="esN-n3-KuV">
+                    <barButtonItem key="backBarButtonItem" title="Start over" id="Gn1-jX-vfQ"/>
+                </navigationItem>
             </objects>
             <point key="canvasLocation" x="1537" y="59"/>
         </scene>
@@ -305,7 +309,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
-                                                            <rect key="frame" x="47" y="142" width="58" height="1"/>
+                                                            <rect key="frame" x="47" y="127" width="42" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -452,10 +456,10 @@
             </objects>
             <point key="canvasLocation" x="-554.39999999999998" y="-782.15892053973016"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="LV8-Wc-5NG">
             <objects>
-                <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -522,7 +526,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
                                                     <rect key="frame" x="10" y="10" width="160" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -590,10 +594,10 @@
             </objects>
             <point key="canvasLocation" x="972" y="-742.5787106446777"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="S9D-NB-wTI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="byo-qS-G4D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
