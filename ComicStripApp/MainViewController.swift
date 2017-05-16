@@ -196,6 +196,21 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
 
 extension MainViewController: ComicFrameDelegate {
 
+    func didTapAddPhotoToFrame(_ sender: ComicFrame) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Use camera", style: .default) { (action) in
+            self.didTapCameraButton(sender)
+        }
+        let galleryAction = UIAlertAction(title: "Use existing photo", style: .default) { (action) in
+            self.didTapGalleryButton(sender)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cameraAction)
+        alertController.addAction(galleryAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func didTapCameraButton(_ sender: ComicFrame) {
         comicStripContainer.selectComicFrame(sender)
         initializeCamera()

@@ -12,7 +12,17 @@ class ComicFrameElementCell: UICollectionViewCell {
 
     var comicFrameElement: ComicFrameElement? {
         didSet {
-            image?.image = comicFrameElement?.icon
+            let currentSize = self.bounds.size
+            // Move to a background thread to do some long running work
+//            DispatchQueue.global(qos: .default).async {
+//                let scaledImage = self.comicFrameElement?.icon.scaleImageToFitSize(size: currentSize, onlyScaleDown: true)
+//                // Bounce back to the main thread to update the UI
+//                DispatchQueue.main.async {
+//                    self.image?.image = scaledImage
+//                }
+//            }
+            self.image?.image = comicFrameElement?.icon
+
             if let name = comicFrameElement?.name {
                 nameLabel.text = name
                 nameLabel.isHidden = false

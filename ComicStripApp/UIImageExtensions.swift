@@ -42,6 +42,29 @@ extension UIImage{
         
     }
     
+    func scaleImageToSize(size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
+            return self
+        }
+        return image
+    }
+    
+    func scaleImageToFitSize(size: CGSize, onlyScaleDown: Bool = false) -> UIImage {
+        if (onlyScaleDown && (self.size.width < size.width || self.size.height < size.height)) {
+            return self
+        }
+        let aspect = self.size.width / self.size.height
+        if size.width / aspect <= size.height {
+            return scaleImageToSize(size: CGSize(width: size.width, height: size.width / aspect))
+        } else {
+            return scaleImageToSize(size: CGSize(width: size.height * aspect, height: size.height))
+        }
+    }
+
+    
     func fixedOrientation(currentOrientation: UIImageOrientation? = nil) -> UIImage {
         let currentOrientation: UIImageOrientation = currentOrientation ?? imageOrientation
         if currentOrientation == .up { return self }

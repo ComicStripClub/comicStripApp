@@ -12,15 +12,12 @@ import GPUImage
 import ISHHoverBar
 
 protocol ComicFrameDelegate {
-    func didTapCameraButton(_ sender: ComicFrame)
-    func didTapGalleryButton(_ sender: ComicFrame)
+    func didTapAddPhotoToFrame(_ sender: ComicFrame)
 }
 
 class ComicFrame: UIView {
     var delegate: ComicFrameDelegate?
-    @IBOutlet weak var cameraButtonView: UIStackView!
-    @IBOutlet weak var galleryButtonView: UIStackView!
-    @IBOutlet weak var imageSelectionStackView: UIStackView!
+    @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
@@ -55,7 +52,7 @@ class ComicFrame: UIView {
     var isActive: Bool = false {
         didSet {
             isUserInteractionEnabled = isActive
-            updateImageSelectionCommands()
+            updateAddImageButtonVisibility()
             if (!isActive) {
                 selectedElement = nil
             }
@@ -66,9 +63,14 @@ class ComicFrame: UIView {
     
     var isCapturing: Bool = false {
         didSet {
-            updateImageSelectionCommands()
+            updateAddImageButtonVisibility()
         }
     }
+    
+    private func updateAddImageButtonVisibility() {
+        addImageButton.isHidden = (hasPhoto || isCapturing || !isActive)
+    }
+    
     
     private var _currentFilter: (key: String, value: () -> ImageProcessingOperation)?
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
@@ -83,8 +85,8 @@ class ComicFrame: UIView {
     
     var selectedPhoto: UIImage? {
         didSet {
-            updateImageSelectionCommands()
             updateImageWithCurrentFilter()
+            updateAddImageButtonVisibility()
         }
     }
     
@@ -98,10 +100,6 @@ class ComicFrame: UIView {
             filter.addTarget(renderView)
             pictureInput.processImage(synchronously: false)
         }
-    }
-    
-    func updateImageSelectionCommands() {
-        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing || !isActive)
     }
     
     func addProcessedFramePhoto() -> RenderView {
@@ -141,12 +139,7 @@ class ComicFrame: UIView {
         elementToolbar.orientation = .vertical
         elementToolbar.isHidden = true
         addSubview(elementToolbar)
-        
-        let cameraTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapCameraButton))
-        cameraButtonView.addGestureRecognizer(cameraTapRecognizer)
-        let galleryTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGalleryButton))
-        galleryButtonView.addGestureRecognizer(galleryTapRecognizer)
-        
+                
     }
     
     override func layoutSubviews() {
@@ -164,12 +157,8 @@ class ComicFrame: UIView {
         selectedElement = nil
     }
     
-    @objc private func didTapCameraButton(_ tapRecognizer: UITapGestureRecognizer) {
-        delegate?.didTapCameraButton(self)
-    }
-    
-    @objc private func didTapGalleryButton(_ tapRecognizer: UITapGestureRecognizer) {
-        delegate?.didTapGalleryButton(self)
+    @IBAction func didTapAddPhotoButton(_ sender: Any) {
+        delegate?.didTapAddPhotoToFrame(self)
     }
     
     func addElement(_ element: ComicFrameElement, aspectRatio: CGFloat = 1.0) {
