@@ -295,11 +295,13 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
         imagePickerTargetFrame = nil
+    }
+}
 protocol ComicStripContainerDelegate {
     func comicFrameBecameActive(_ comicFrame: ComicFrame)
     func comicFrameBecameInactive(_ comicFrame: ComicFrame)
 }
-
+    
 extension MainViewController: ComicStripContainerDelegate {
     func comicFrameBecameActive(_ comicFrame: ComicFrame) {
         updateToolbar()
@@ -307,6 +309,8 @@ extension MainViewController: ComicStripContainerDelegate {
     
     func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
         updateToolbar()
+    }
+}
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
