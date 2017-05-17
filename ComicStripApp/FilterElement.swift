@@ -20,9 +20,9 @@ class FilterElement: ComicFrameElement {
     var view: UIView!
     var name: String?
     var filter: (key: String, value: () -> ImageProcessingOperation)
-    init(filterIcon: UIImage, filter: (key: String, value: () -> ImageProcessingOperation)) {
+    init(filterIconName: String, filter: (key: String, value: () -> ImageProcessingOperation)) {
         self.filter = filter
-        self.icon = filterIcon
+        self.icon = UIImage(named: filterIconName)!
         self.name = filter.key
     }
 }
