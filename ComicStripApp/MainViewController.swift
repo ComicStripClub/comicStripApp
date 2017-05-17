@@ -397,8 +397,10 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
+        var i=1
         for filter in supportedFilters {
-            filterElements.append(FilterElement(filterIcon: #imageLiteral(resourceName: "filters"), filter: filter))
+            filterElements.append(FilterElement(filterIconName:"filter"+String(i) , filter: filter))
+            i += 1
         }
         presentSelectionController(withElements: filterElements)
     }
