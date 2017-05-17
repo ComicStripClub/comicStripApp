@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Select a layout-->
+        <!--Pick a layout-->
         <scene sceneID="7Wi-Cc-xLY">
             <objects>
                 <viewController id="lkP-Sy-S4C" customClass="ComicStripLayoutSelectionViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,7 +72,7 @@
                             <constraint firstItem="d9K-cF-rqs" firstAttribute="top" secondItem="vXC-8t-gEI" secondAttribute="top" id="izj-D6-bGe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Select a layout" id="NTJ-zh-Rhj"/>
+                    <navigationItem key="navigationItem" title="Pick a layout" id="NTJ-zh-Rhj"/>
                     <connections>
                         <outlet property="collectionView" destination="d9K-cF-rqs" id="Kgs-An-c5b"/>
                     </connections>
@@ -90,15 +90,15 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="414" height="592"/>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="e8f-3c-5jF" customClass="ComicStripContainer" customModule="ComicStripApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="320" height="424"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="664" width="414" height="72"/>
+                                <rect key="frame" x="0.0" y="496" width="320" height="72"/>
                                 <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="eXG-P8-hN7"/>
@@ -107,15 +107,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" id="LZx-Mn-7Ao"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="NV4-ku-TR2"/>
+                            <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" constant="16" id="LZx-Mn-7Ao"/>
+                            <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="NV4-ku-TR2"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wnm-6H-rl4"/>
-                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="8" id="YvG-cu-6qd"/>
+                            <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="16" id="YvG-cu-6qd"/>
                             <constraint firstAttribute="trailing" secondItem="j94-Y9-5Wd" secondAttribute="trailing" id="ZST-iv-hqS"/>
-                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mlY-xV-969"/>
+                            <constraint firstItem="e8f-3c-5jF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="mlY-xV-969"/>
                             <constraint firstAttribute="bottom" secondItem="j94-Y9-5Wd" secondAttribute="bottom" id="u2e-6l-t4p"/>
                         </constraints>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="comicStripContainer" destination="e8f-3c-5jF" id="IdJ-74-2bB"/>
                         <outlet property="comicStylingToolbar" destination="j94-Y9-5Wd" id="PEI-Rv-S06"/>
@@ -123,6 +124,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <navigationItem id="esN-n3-KuV">
+                    <barButtonItem key="backBarButtonItem" title="Start over" id="Gn1-jX-vfQ"/>
+                </navigationItem>
             </objects>
             <point key="canvasLocation" x="1537" y="59"/>
         </scene>
@@ -298,14 +302,14 @@
                                                     <rect key="frame" x="8" y="8" width="176" height="167"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
-                                                            <rect key="frame" x="5" y="0.0" width="142" height="142"/>
+                                                            <rect key="frame" x="4.5" y="0.0" width="127" height="127"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="HLE-7e-zVZ"/>
                                                                 <constraint firstAttribute="width" secondItem="mJf-Qc-yO4" secondAttribute="height" multiplier="1:1" id="ahd-5X-ReN"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
-                                                            <rect key="frame" x="47" y="142" width="58" height="1"/>
+                                                            <rect key="frame" x="55" y="142" width="42" height="1"/>
                                                             <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -315,10 +319,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" id="Ypg-lW-hXm"/>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" id="fl6-Zq-IgP"/>
-                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" id="fsC-5k-AnB"/>
-                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" id="hEB-Uc-i5F"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" constant="8" id="Ypg-lW-hXm"/>
+                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" constant="8" id="fl6-Zq-IgP"/>
+                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" constant="8" id="fsC-5k-AnB"/>
+                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" constant="8" id="hEB-Uc-i5F"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="image" destination="mJf-Qc-yO4" id="WFw-gA-GkH"/>
@@ -452,10 +456,10 @@
             </objects>
             <point key="canvasLocation" x="-554.39999999999998" y="-782.15892053973016"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="LV8-Wc-5NG">
             <objects>
-                <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -470,14 +474,19 @@
             </objects>
             <point key="canvasLocation" x="-554" y="798"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="yzG-Da-FcE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Der-we-Tyh" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Der-we-Tyh" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1aT-lH-ten">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
+                            <color key="textColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -517,7 +526,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
                                                     <rect key="frame" x="10" y="10" width="160" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -561,15 +570,20 @@
             </objects>
             <point key="canvasLocation" x="1844" y="-743.47826086956525"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="Buz-K4-Rkx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWc-Em-hwD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWc-Em-hwD" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tjW-3y-ww4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.12549019607843137" green="0.70196078431372544" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
+                            <color key="textColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -580,10 +594,10 @@
             </objects>
             <point key="canvasLocation" x="972" y="-742.5787106446777"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comic Navigation Controller-->
         <scene sceneID="S9D-NB-wTI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="byo-qS-G4D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -728,7 +742,7 @@
         <image name="twitter" width="240" height="240"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="U3K-xX-Iws"/>
         <segue reference="xmj-cC-jht"/>
-        <segue reference="WjN-a8-fg4"/>
     </inferredMetricsTieBreakers>
 </document>

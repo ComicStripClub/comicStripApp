@@ -27,14 +27,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         super.init(coder)
     }
     
-    override func getExclusionPath(width: CGFloat) -> UIBezierPath {
-        let lineHeight = font?.lineHeight ?? 0
-        let bubbleBottom = mainBubbleLayer.path!.boundingBox.maxY
-        let exclusionPathY = bubbleBottom - lineHeight / 2;
-        return UIBezierPath(rect: CGRect(x: 0, y: exclusionPathY, width: bounds.width, height: bounds.height - exclusionPathY))
-    }
-    
-    override func drawBackgroundShapes(width: CGFloat) -> (shapes: [CAShapeLayer], mainBubble: CAShapeLayer) {
+    override func drawBackgroundShapes(width: CGFloat, height: CGFloat) -> (shapes: [CAShapeLayer], mainBubblePath: UIBezierPath) {
         //// Color Declarations
         let whiteColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
         let blackColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)
@@ -57,17 +50,13 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         whiteBackgroundShape.fillColor = whiteColor.cgColor
         whiteBackgroundShape.fillRule = kCAFillRuleEvenOdd
 
-        let mainBubble = CAShapeLayer()
         let mainBubblePath = UIBezierPath()
-        mainBubblePath.move(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.4903)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.9968), y: (width * 0.0075)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.0075)))
-        mainBubblePath.addLine(to: CGPoint(x: (width * 0.0000), y: (width * 0.4903)))
+        mainBubblePath.move(to: CGPoint(x: (width * 0.020), y: (width * 0.460)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.970), y: (width * 0.460)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.970), y: (width * 0.020)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.020), y: (width * 0.020)))
+        mainBubblePath.addLine(to: CGPoint(x: (width * 0.020), y: (width * 0.460)))
         mainBubblePath.close()
-        mainBubble.path = mainBubblePath.cgPath
-        mainBubble.fillColor = UIColor.clear.cgColor
-        mainBubble.fillRule = kCAFillRuleEvenOdd
         
         //// Bezier 2 Drawing
         let speechBubbleBorderShape = CAShapeLayer()
@@ -95,7 +84,7 @@ class ClassicSpeechBubbleElement: ComicFrameElement {
         bezier2Path.usesEvenOddFillRule = true
         speechBubbleBorderShape.path = bezier2Path.cgPath
         speechBubbleBorderShape.fillColor = blackColor.cgColor
-        return (shapes: [whiteBackgroundShape, mainBubble, speechBubbleBorderShape], mainBubble: mainBubble)
+        return (shapes: [whiteBackgroundShape, speechBubbleBorderShape], mainBubblePath: mainBubblePath)
     }
 
 }

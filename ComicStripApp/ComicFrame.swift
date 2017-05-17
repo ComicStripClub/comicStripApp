@@ -12,15 +12,12 @@ import GPUImage
 import ISHHoverBar
 
 protocol ComicFrameDelegate {
-    func didTapCameraButton(_ sender: ComicFrame)
-    func didTapGalleryButton(_ sender: ComicFrame)
+    func didTapAddPhotoToFrame(_ sender: ComicFrame)
 }
 
 class ComicFrame: UIView {
     var delegate: ComicFrameDelegate?
-    @IBOutlet weak var cameraButtonView: UIStackView!
-    @IBOutlet weak var galleryButtonView: UIStackView!
-    @IBOutlet weak var imageSelectionStackView: UIStackView!
+    @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var framePhoto: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var renderView: RenderView!
@@ -55,7 +52,7 @@ class ComicFrame: UIView {
     var isActive: Bool = false {
         didSet {
             isUserInteractionEnabled = isActive
-            updateImageSelectionCommands()
+            updateAddImageButtonVisibility()
             if (!isActive) {
                 selectedElement = nil
             }
@@ -66,9 +63,14 @@ class ComicFrame: UIView {
     
     var isCapturing: Bool = false {
         didSet {
-            updateImageSelectionCommands()
+            updateAddImageButtonVisibility()
         }
     }
+    
+    private func updateAddImageButtonVisibility() {
+        addImageButton.isHidden = (hasPhoto || isCapturing)
+    }
+    
     
     private var _currentFilter: (key: String, value: () -> ImageProcessingOperation)?
     var currentFilter: (key: String, value: () -> ImageProcessingOperation)? {
@@ -83,8 +85,8 @@ class ComicFrame: UIView {
     
     var selectedPhoto: UIImage? {
         didSet {
-            updateImageSelectionCommands()
             updateImageWithCurrentFilter()
+            updateAddImageButtonVisibility()
         }
     }
     
@@ -98,10 +100,6 @@ class ComicFrame: UIView {
             filter.addTarget(renderView)
             pictureInput.processImage(synchronously: false)
         }
-    }
-    
-    func updateImageSelectionCommands() {
-        imageSelectionStackView.isHidden = (selectedPhoto != nil || isCapturing || !isActive)
     }
     
     func addProcessedFramePhoto() -> RenderView {
@@ -142,11 +140,14 @@ class ComicFrame: UIView {
         elementToolbar.isHidden = true
         addSubview(elementToolbar)
         
-        let cameraTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapCameraButton))
-        cameraButtonView.addGestureRecognizer(cameraTapRecognizer)
-        let galleryTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGalleryButton))
-        galleryButtonView.addGestureRecognizer(galleryTapRecognizer)
-        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(userDidTapComicFrame))
+        self.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc private func userDidTapComicFrame(_ sender: Any){
+        if (!addImageButton.isHidden){
+            delegate?.didTapAddPhotoToFrame(self)
+        }
     }
     
     override func layoutSubviews() {
@@ -164,28 +165,23 @@ class ComicFrame: UIView {
         selectedElement = nil
     }
     
-    @objc private func didTapCameraButton(_ tapRecognizer: UITapGestureRecognizer) {
-        delegate?.didTapCameraButton(self)
+    @IBAction func didTapAddPhotoButton(_ sender: Any) {
+        delegate?.didTapAddPhotoToFrame(self)
     }
     
-    @objc private func didTapGalleryButton(_ tapRecognizer: UITapGestureRecognizer) {
-        delegate?.didTapGalleryButton(self)
-    }
-    
-    func addElement(_ element: ComicFrameElement, size: CGSize? = nil) {
+    func addElement(_ element: ComicFrameElement, aspectRatio: CGFloat = 1.0) {
         var finalSize: CGSize
-        if (size == nil){
-            let minFrameSideLength = min(bounds.width, bounds.height)
-            finalSize = CGSize(width: minFrameSideLength / 3, height: minFrameSideLength / 3)
-        } else {
-            finalSize = size!
-        }
+        let minFrameSideLength = min(bounds.width, bounds.height)
+        let width = minFrameSideLength * 0.4
+        finalSize = CGSize(width: width, height: width / aspectRatio)
+
         let elementView = element.view!
+        elementView.isUserInteractionEnabled = true
+        elementView.translatesAutoresizingMaskIntoConstraints = true
         let topOffset = (bounds.height - finalSize.height) / 2
         let leftOffset = (bounds.width - finalSize.width) / 2
         elementView.frame = CGRect(origin: CGPoint(x: leftOffset, y: topOffset), size: finalSize)
         contentView.addSubview(elementView)
-        elementView.isUserInteractionEnabled = true
         
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanElement))
         elementView.addGestureRecognizer(panRecognizer)

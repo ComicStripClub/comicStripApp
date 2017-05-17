@@ -14,9 +14,6 @@
             <connections>
                 <outlet property="cameraModeToolbar" destination="k1u-j7-888" id="2yB-da-K2c"/>
                 <outlet property="editingModeToolbar" destination="ulp-q8-cGb" id="Shf-oX-0fp"/>
-                <outlet property="noFramesActiveModeToolbar" destination="agv-o6-ZEv" id="WW0-jY-GGy"/>
-                <outlet property="saveButton" destination="zp3-KD-9ON" id="LVx-nU-guX"/>
-                <outlet property="shareButton" destination="y6r-7v-U2b" id="4Zj-oI-zIl"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,69 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
-                    <rect key="frame" x="17" y="8" width="341" height="49"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
-                            <rect key="frame" x="-0.5" y="0.0" width="49" height="49"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="7AO-Th-tLd" secondAttribute="height" multiplier="1:1" id="vPA-mN-pCJ"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="SpeechBubble-1"/>
-                            <connections>
-                                <action selector="didTapSpeechBubbleButton:" destination="-1" eventType="touchUpInside" id="cVv-i2-rS5"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KLu-Tl-PUs">
-                            <rect key="frame" x="89.5" y="0.0" width="65" height="49"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="KLu-Tl-PUs" secondAttribute="height" multiplier="4:3" id="RXR-z0-AqJ"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="Bang"/>
-                            <connections>
-                                <action selector="didTapSoundEffectsButton:" destination="-1" eventType="touchUpInside" id="XRb-2A-eN4"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrE-59-4pg">
-                            <rect key="frame" x="199" y="0.0" width="49" height="49"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="xrE-59-4pg" secondAttribute="height" multiplier="1:1" id="2iB-Q5-MDW"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="filters"/>
-                            <connections>
-                                <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="nJT-fw-9Vc"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khm-1o-zTR">
-                            <rect key="frame" x="292" y="0.0" width="49" height="49"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="kg8-Ef-Rbu"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="camera_icon2"/>
-                            <connections>
-                                <action selector="didTapGoToCaptureMode:" destination="-1" eventType="touchUpInside" id="iOQ-Tf-kIV"/>
-                                <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="cSq-jm-auT"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstItem="KLu-Tl-PUs" firstAttribute="leading" secondItem="7AO-Th-tLd" secondAttribute="trailing" constant="41" id="8pI-GQ-3cv"/>
-                        <constraint firstItem="7AO-Th-tLd" firstAttribute="height" secondItem="ulp-q8-cGb" secondAttribute="height" id="Jiu-ak-Js3"/>
-                        <constraint firstItem="Khm-1o-zTR" firstAttribute="centerY" secondItem="xrE-59-4pg" secondAttribute="centerY" id="Kwk-nM-7GZ"/>
-                        <constraint firstItem="7AO-Th-tLd" firstAttribute="leading" secondItem="ulp-q8-cGb" secondAttribute="leading" id="L3G-4m-hXP"/>
-                        <constraint firstItem="Khm-1o-zTR" firstAttribute="leading" secondItem="xrE-59-4pg" secondAttribute="trailing" constant="44" id="PJe-PL-Xne"/>
-                        <constraint firstItem="Khm-1o-zTR" firstAttribute="height" secondItem="xrE-59-4pg" secondAttribute="height" id="S5n-vq-Dwk"/>
-                        <constraint firstAttribute="trailing" secondItem="Khm-1o-zTR" secondAttribute="trailing" id="XgQ-p1-n8m"/>
-                        <constraint firstItem="7AO-Th-tLd" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="amb-dj-3Gn"/>
-                        <constraint firstItem="xrE-59-4pg" firstAttribute="height" secondItem="KLu-Tl-PUs" secondAttribute="height" id="c6j-VF-NO9"/>
-                        <constraint firstItem="KLu-Tl-PUs" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="cOX-mD-uWp"/>
-                        <constraint firstItem="xrE-59-4pg" firstAttribute="leading" secondItem="KLu-Tl-PUs" secondAttribute="trailing" constant="44" id="cZw-Fg-gZY"/>
-                        <constraint firstItem="xrE-59-4pg" firstAttribute="centerY" secondItem="ulp-q8-cGb" secondAttribute="centerY" id="l2H-5U-lNY"/>
-                        <constraint firstItem="Khm-1o-zTR" firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="mGd-cW-eBt"/>
-                        <constraint firstItem="KLu-Tl-PUs" firstAttribute="height" secondItem="7AO-Th-tLd" secondAttribute="height" id="uya-EO-rPQ"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1u-j7-888" userLabel="Camera mode toolbar">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                     <subviews>
@@ -121,63 +55,75 @@
                         <constraint firstItem="PTg-NT-fRx" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="xGh-fI-kwJ"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agv-o6-ZEv" userLabel="Global command toolbar">
-                    <rect key="frame" x="0.0" y="8" width="375" height="72"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
+                    <rect key="frame" x="0.0" y="8" width="375" height="49"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="ypU-IM-2yV">
-                            <rect key="frame" x="104" y="0.0" width="167" height="72"/>
+                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="equalCentering" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="vX5-2W-sve">
+                            <rect key="frame" x="127" y="0.0" width="121" height="49"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zp3-KD-9ON" customClass="ComicToolbarButton" customModule="ComicStripApp" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
                                     <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="zp3-KD-9ON" secondAttribute="height" multiplier="1:1" id="B0W-FM-X9e"/>
+                                        <constraint firstAttribute="width" secondItem="7AO-Th-tLd" secondAttribute="height" multiplier="1:1" id="vPA-mN-pCJ"/>
                                     </constraints>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="commandName" value="Save"/>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="commandIcon" value="picture_128"/>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6r-7v-U2b" customClass="ComicToolbarButton" customModule="ComicStripApp" customModuleProvider="target">
-                                    <rect key="frame" x="95" y="0.0" width="72" height="72"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Button" image="SpeechBubble-1"/>
+                                    <connections>
+                                        <action selector="didTapSpeechBubbleButton:" destination="-1" eventType="touchUpInside" id="cVv-i2-rS5"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KLu-Tl-PUs">
+                                    <rect key="frame" x="72" y="0.0" width="49" height="49"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="y6r-7v-U2b" secondAttribute="height" multiplier="1:1" id="1nB-fe-qxH"/>
+                                        <constraint firstAttribute="width" secondItem="KLu-Tl-PUs" secondAttribute="height" multiplier="4:3" id="RXR-z0-AqJ"/>
                                     </constraints>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="commandName" value="Share"/>
-                                        <userDefinedRuntimeAttribute type="image" keyPath="commandIcon" value="paper-plane_128"/>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
+                                    <state key="normal" title="Button" image="Bang"/>
+                                    <connections>
+                                        <action selector="didTapSoundEffectsButton:" destination="-1" eventType="touchUpInside" id="XRb-2A-eN4"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrE-59-4pg">
+                                    <rect key="frame" x="196.5" y="0.0" width="49" height="49"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="xrE-59-4pg" secondAttribute="height" multiplier="1:1" id="2iB-Q5-MDW"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="filters"/>
+                                    <connections>
+                                        <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="nJT-fw-9Vc"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khm-1o-zTR">
+                                    <rect key="frame" x="294.5" y="0.0" width="49" height="49"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="kg8-Ef-Rbu"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="camera_icon2"/>
+                                    <connections>
+                                        <action selector="didTapGoToCaptureMode:" destination="-1" eventType="touchUpInside" id="iOQ-Tf-kIV"/>
+                                        <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="cSq-jm-auT"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="y6r-7v-U2b" firstAttribute="height" secondItem="ypU-IM-2yV" secondAttribute="height" id="dvk-Mn-euG"/>
-                                <constraint firstItem="zp3-KD-9ON" firstAttribute="height" secondItem="ypU-IM-2yV" secondAttribute="height" id="mQz-ah-i7m"/>
-                            </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="72" id="NwN-08-Heo"/>
-                        <constraint firstItem="ypU-IM-2yV" firstAttribute="centerX" secondItem="agv-o6-ZEv" secondAttribute="centerX" id="YeX-sd-32g"/>
-                        <constraint firstAttribute="bottom" secondItem="ypU-IM-2yV" secondAttribute="bottom" id="bqY-jD-C08"/>
-                        <constraint firstItem="ypU-IM-2yV" firstAttribute="top" secondItem="agv-o6-ZEv" secondAttribute="top" id="g9r-W4-A7g"/>
+                        <constraint firstItem="vX5-2W-sve" firstAttribute="top" secondItem="ulp-q8-cGb" secondAttribute="top" id="Bdk-Zc-Gyz"/>
+                        <constraint firstAttribute="trailing" secondItem="vX5-2W-sve" secondAttribute="trailing" id="OyD-pA-Bny"/>
+                        <constraint firstAttribute="bottom" secondItem="vX5-2W-sve" secondAttribute="bottom" id="SRM-0y-BZn"/>
+                        <constraint firstItem="vX5-2W-sve" firstAttribute="leading" secondItem="ulp-q8-cGb" secondAttribute="leading" id="mQw-2v-oLa"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.96470588235294119" green="0.84705882352941175" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="centerX" secondItem="b3I-SQ-Hh9" secondAttribute="centerX" id="0LW-Dl-mul"/>
                 <constraint firstAttribute="trailing" secondItem="k1u-j7-888" secondAttribute="trailing" id="Ncf-GJ-UYN"/>
-                <constraint firstAttribute="bottom" secondItem="agv-o6-ZEv" secondAttribute="bottom" constant="8" id="RbZ-VZ-yS3"/>
-                <constraint firstItem="agv-o6-ZEv" firstAttribute="leading" secondItem="b3I-SQ-Hh9" secondAttribute="leading" id="UJA-ln-i9j"/>
-                <constraint firstAttribute="trailing" secondItem="agv-o6-ZEv" secondAttribute="trailing" id="XGh-wn-d7j"/>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" constant="8" id="Zep-O5-p5j"/>
                 <constraint firstItem="k1u-j7-888" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" id="i9N-Nc-4DO"/>
                 <constraint firstItem="k1u-j7-888" firstAttribute="leading" secondItem="b3I-SQ-Hh9" secondAttribute="leading" id="iRr-vv-8nW"/>
                 <constraint firstAttribute="bottom" secondItem="ulp-q8-cGb" secondAttribute="bottom" constant="8" id="iyV-rk-zYc"/>
+                <constraint firstItem="ulp-q8-cGb" firstAttribute="width" secondItem="b3I-SQ-Hh9" secondAttribute="width" constant="-32" id="njX-yQ-KPU"/>
                 <constraint firstAttribute="bottom" secondItem="k1u-j7-888" secondAttribute="bottom" id="oef-gV-Voe"/>
-                <constraint firstItem="agv-o6-ZEv" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" constant="8" id="rFo-3X-NK2"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -192,8 +138,6 @@
         <image name="camera_capture_icon" width="100" height="100"/>
         <image name="camera_icon2" width="240" height="240"/>
         <image name="filters" width="120" height="120"/>
-        <image name="paper-plane_128" width="128" height="128"/>
-        <image name="picture_128" width="128" height="128"/>
         <image name="switchCameraFilled" width="50" height="50"/>
     </resources>
 </document>
