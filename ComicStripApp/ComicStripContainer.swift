@@ -30,6 +30,18 @@ class ComicStripContainer: UIView {
             }
             addSubview(comicStrip)
             // comicStrip.translatesAutoresizingMaskIntoConstraints = false
+            
+            // If there's only one frame, activate it and leave it active.
+            // We don't allow the inactive state with only one frame,
+            // since the difference between 'active' and 'inactive' doesn't
+            // make sense in this context
+            if (comicStrip.comicFrames.count == 1){
+                let comicFrame = comicStrip.comicFrames[0]
+                comicFrame.isActive = true
+                _selectedFrame = comicFrame
+                delegate.comicFrameBecameActive(comicFrame)
+            }
+
         }
     }
     
@@ -43,6 +55,8 @@ class ComicStripContainer: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         comicStrip.frame = bounds
+        //comicStrip.bounds.size = CGSize(width: bounds.width - 32, height: bounds.height)
+        //comicStrip.center = CGPoint(x: bounds.midX, y: bounds.midY)
         if (selectedFrame != nil) {
             selectComicFrame(at: selectedFrame!.center)
         }
@@ -59,7 +73,7 @@ class ComicStripContainer: UIView {
     }
     
     func selectComicFrame(_ comicFrame: ComicFrame?) {
-        guard (comicFrame != _selectedFrame) else {
+        guard (comicStrip.comicFrames.count > 1 && comicFrame != _selectedFrame) else {
             return
         }
         
@@ -88,11 +102,11 @@ class ComicStripContainer: UIView {
                 let delta = CGPoint(x: center.x - adjustedFrame.midX, y: center.y - adjustedFrame.midY)
                 focusFrameTransform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: delta.x, y: delta.y)
             }
-            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -20, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -5, options: [.curveEaseIn], animations: {
                 self.comicStrip.transform = focusFrameTransform
             }, completion: nil)
         } else {
-            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -20, options: [.curveEaseIn], animations: {
+            UIView.animate(withDuration: 1.00, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: -5, options: [.curveEaseIn], animations: {
                 self.comicStrip.transform = CGAffineTransform.identity
             }, completion: nil)
         }

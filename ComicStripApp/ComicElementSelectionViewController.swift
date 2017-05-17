@@ -15,16 +15,6 @@ enum ComicElementType: Int {
     case style
 }
 
-
-protocol ComicFrameElement {
-    var type: ComicElementType { get }
-    var icon: UIImage { get }
-    var name: String? { get }
-    var view: UIView! { get }
-    var actions: [UIBarButtonItem]? { get }
-    var effectFunc: (_ frame: ComicFrame) -> Void { get }
-}
-
 protocol ComicElementSelectionDelegate {
     func didChooseComicElement(_ element: ComicFrameElement)
     func didCancel()

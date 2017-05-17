@@ -58,6 +58,9 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        comicStripContainer.delegate = self
+        comicStylingToolbar.delegate = self
+        imagePicker.delegate = self
 
         handleNavigationBarItem()
         comicStrip = comicStripFactory()
@@ -66,12 +69,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             comicFrame.delegate = self
         }
 
-        comicStripContainer.delegate = self
-        
-        comicStylingToolbar.delegate = self
         updateToolbar()
-
-        imagePicker.delegate = self
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -128,14 +126,19 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     }
     
     @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
-       view.endEditing(true)
+        view.endEditing(true)
+        comicStripContainer.selectComicFrame(nil)
     }
     
     func handleNavigationBarItem (){
         // Changing the navigation controller's title colour
-        self.navigationItem.title = "Create Fun"
+        self.navigationItem.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: nil)
+
     }
+    
     private func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
@@ -196,6 +199,25 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
 
 extension MainViewController: ComicFrameDelegate {
 
+    func didTapAddPhotoToFrame(_ sender: ComicFrame) {
+        if (comicStripContainer.selectedFrame != nil && sender != comicStripContainer.selectedFrame){
+            comicStripContainer.selectComicFrame(sender)
+            return
+        }
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Use camera", style: .default) { (action) in
+            self.didTapCameraButton(sender)
+        }
+        let galleryAction = UIAlertAction(title: "Use existing photo", style: .default) { (action) in
+            self.didTapGalleryButton(sender)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cameraAction)
+        alertController.addAction(galleryAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func didTapCameraButton(_ sender: ComicFrame) {
         comicStripContainer.selectComicFrame(sender)
         initializeCamera()
@@ -241,29 +263,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
 }
 
-extension ImageOrientation {
-    static func fromOrientation(_ orientation: UIImageOrientation) -> ImageOrientation {
-        switch orientation {
-        case .upMirrored:
-            fallthrough
-        case .down:
-            return .portraitUpsideDown
-        case .left:
-            fallthrough
-        case .leftMirrored:
-            return .landscapeRight
-        case .right:
-            fallthrough
-        case .rightMirrored:
-            return .landscapeLeft
-        case .downMirrored:
-            fallthrough
-        default:
-            return .portrait
-        }
-    }
-}
-
 protocol ComicStripContainerDelegate {
     func comicFrameBecameActive(_ comicFrame: ComicFrame)
     func comicFrameBecameInactive(_ comicFrame: ComicFrame)
@@ -276,25 +275,6 @@ extension MainViewController: ComicStripContainerDelegate {
     
     func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
         updateToolbar()
-    }
-}
-
-
-
-class FilterElement: ComicFrameElement {
-    var actions: [UIBarButtonItem]? = nil
-    lazy var effectFunc: (ComicFrame) -> Void = { (comicFrame) in
-        comicFrame.currentFilter = self.filter
-    }
-    var icon: UIImage
-    var type: ComicElementType = .style
-    var view: UIView!
-    var name: String?
-    var filter: (key: String, value: () -> ImageProcessingOperation)
-    init(filterIcon: UIImage, filter: (key: String, value: () -> ImageProcessingOperation)) {
-        self.filter = filter
-        self.icon = filterIcon
-        self.name = filter.key
     }
 }
 
@@ -323,15 +303,44 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapSpeechBubbleButton() {
         let speechBubbles: [ComicFrameElement] = [
+            HandDrawnBubble1Element(),
             ThoughtBubbleElement(),
-            ClassicSpeechBubbleElement()]
+            ClassicSpeechBubbleElement(),
+            HandDrawnBubble2Element(),
+            HandDrawnBubble3Element(),
+            HandDrawnBubble5Element(),
+            HandDrawnBubble4Element()]
         presentSelectionController(withElements: speechBubbles)
     }
     
     func didTapSoundEffectsButton() {
         let soundEffects: [ComicFrameElement] = [
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wham")),
-            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom"))]
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kaboom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bam")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bang")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bloodyFist")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "bomb")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "boom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "boom2")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "booomm")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "booooom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "crash")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "explosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "kabooom")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "krunch")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "no_no_no")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "questionMark")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "redExplosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "redSpikeyCloud")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "screeeaaawr")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "smokeExplosion")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "splash")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "whooshSmoke")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "wow")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zaaap")),
+            SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zap")),
+            ]
         presentSelectionController(withElements: soundEffects)
     }
     
