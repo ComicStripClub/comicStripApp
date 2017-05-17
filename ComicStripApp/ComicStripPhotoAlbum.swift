@@ -64,6 +64,7 @@ class ComicStripPhotoAlbum: NSObject {
     func fetchAssetCollectionForAlbum() -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", ComicStripPhotoAlbum.albumName)
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
         
         if let _: AnyObject = collection.firstObject {
