@@ -135,7 +135,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         self.navigationItem.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: nil)
 
     }
     
