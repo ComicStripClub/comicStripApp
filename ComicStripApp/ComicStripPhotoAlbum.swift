@@ -64,7 +64,6 @@ class ComicStripPhotoAlbum: NSObject {
     func fetchAssetCollectionForAlbum() -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", ComicStripPhotoAlbum.albumName)
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
         
         if let _: AnyObject = collection.firstObject {
@@ -77,7 +76,10 @@ class ComicStripPhotoAlbum: NSObject {
         var imgArry = [UIImage]()
         let imageManager = PHCachingImageManager()
         if let result = fetchAssetCollectionForAlbum(){
-            let photoAssets = PHAsset.fetchAssets(in: result, options: nil)
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+
+            let photoAssets = PHAsset.fetchAssets(in: result, options: fetchOptions)
             photoAssets.enumerateObjects({ (object, count, stop) in
                 if object is PHAsset{
                     let asset = object 
