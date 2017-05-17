@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5gh-8r-5c9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5gh-8r-5c9">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -198,7 +198,7 @@
                                     <constraint firstAttribute="width" constant="52" id="Gtw-3Q-llc"/>
                                     <constraint firstAttribute="height" constant="52" id="ziT-Jx-7rk"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="camera_icon2"/>
+                                <state key="normal" title="Button" image="twitter"/>
                                 <connections>
                                     <action selector="shareToTwitter:" destination="n7g-M7-o68" eventType="touchUpInside" id="mRx-iX-2oU"/>
                                 </connections>
@@ -209,7 +209,7 @@
                                     <constraint firstAttribute="width" constant="52" id="7Ph-BP-l7d"/>
                                     <constraint firstAttribute="height" constant="52" id="VQN-Pt-ilE"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="camera_icon2"/>
+                                <state key="normal" title="Button" image="facebook"/>
                                 <connections>
                                     <action selector="shareToFacebook:" destination="n7g-M7-o68" eventType="touchUpInside" id="nzQ-eB-x3O"/>
                                 </connections>
@@ -220,7 +220,7 @@
                                     <constraint firstAttribute="height" constant="52" id="ZaG-l9-4ug"/>
                                     <constraint firstAttribute="width" constant="52" id="q6y-ul-aZn"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="camera_icon2"/>
+                                <state key="normal" title="Button" image="share"/>
                                 <connections>
                                     <action selector="shareToOtherApps:" destination="n7g-M7-o68" eventType="touchUpInside" id="clL-9W-C71"/>
                                 </connections>
@@ -569,7 +569,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tjW-3y-ww4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.12577137351036072" green="0.70138055086135864" blue="0.79845911264419556" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.12549019607843137" green="0.70196078431372544" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -719,13 +719,16 @@
     </scenes>
     <resources>
         <image name="Splash_img" width="369" height="650"/>
-        <image name="add_ic" width="32" height="32"/>
-        <image name="camera_icon2" width="512" height="512"/>
+        <image name="add_ic" width="240" height="240"/>
+        <image name="camera_icon2" width="240" height="240"/>
+        <image name="facebook" width="240" height="240"/>
         <image name="save" width="60" height="60"/>
+        <image name="share" width="240" height="240"/>
         <image name="splash_screen_bg" width="375" height="375"/>
+        <image name="twitter" width="240" height="240"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xmj-cC-jht"/>
-        <segue reference="SHs-LQ-H0L"/>
+        <segue reference="WjN-a8-fg4"/>
     </inferredMetricsTieBreakers>
 </document>
