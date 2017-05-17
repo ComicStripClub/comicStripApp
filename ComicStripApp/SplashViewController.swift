@@ -32,7 +32,14 @@ class SplashViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        animateTitleLable()
+        let defaults = UserDefaults.standard
+        let isFirstTime = defaults.bool(forKey: "firstTime")
+        if(isFirstTime){
+            self.performSegue(withIdentifier: "firsttimesegue", sender: nil)
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            animateTitleLable()
+        }
     }
     @IBAction func onGetStartedClick(_ sender: UIButton) {
         let imgArray = ComicStripPhotoAlbum.sharedInstance.getAllComicsFromAlbum ()
@@ -43,6 +50,10 @@ class SplashViewController: UIViewController {
         if isComicCreated{
             performSegue(withIdentifier: "mycreationsegue", sender: nil)
         }else{
+            
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: "firstTime")
+
             let firstPage = OnboardingContentViewController(title: "Page Title", body: "Page body goes here.", image: UIImage(named: "facebook"), buttonText: "looks cool page 1") { () -> Void in
                 // do something here when users press the button, like ask for location services permissions, register for push notifications, connect to social media, or finish the onboarding process
             }
@@ -63,7 +74,6 @@ class SplashViewController: UIViewController {
     
     func performSequeFirstTime(){
         self.dismiss(animated: true, completion: nil)
-        self.parent?.performSegue(withIdentifier: "firsttimesegue", sender: nil)
     }
 
     
