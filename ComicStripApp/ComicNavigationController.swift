@@ -17,7 +17,7 @@ class ComicNavigationController: UINavigationController {
             NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 19.0)!,
             NSForegroundColorAttributeName: UIColor.white]
         UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 13.0)!,
+            NSFontAttributeName: UIFont(name: "BackIssuesBB", size: 15.0)!,
             NSForegroundColorAttributeName: UIColor.white], for: .normal)
     }
 

@@ -147,6 +147,8 @@ class ComicFrame: UIView {
     @objc private func userDidTapComicFrame(_ sender: Any){
         if (!addImageButton.isHidden){
             delegate?.didTapAddPhotoToFrame(self)
+        } else {
+            endEditing(true)
         }
     }
     
