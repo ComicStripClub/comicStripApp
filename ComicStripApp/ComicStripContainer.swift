@@ -30,6 +30,18 @@ class ComicStripContainer: UIView {
             }
             addSubview(comicStrip)
             // comicStrip.translatesAutoresizingMaskIntoConstraints = false
+            
+            // If there's only one frame, activate it and leave it active.
+            // We don't allow the inactive state with only one frame,
+            // since the difference between 'active' and 'inactive' doesn't
+            // make sense in this context
+            if (comicStrip.comicFrames.count == 1){
+                let comicFrame = comicStrip.comicFrames[0]
+                comicFrame.isActive = true
+                _selectedFrame = comicFrame
+                delegate.comicFrameBecameActive(comicFrame)
+            }
+
         }
     }
     
@@ -61,7 +73,7 @@ class ComicStripContainer: UIView {
     }
     
     func selectComicFrame(_ comicFrame: ComicFrame?) {
-        guard (comicFrame != _selectedFrame) else {
+        guard (comicStrip.comicFrames.count > 1 && comicFrame != _selectedFrame) else {
             return
         }
         

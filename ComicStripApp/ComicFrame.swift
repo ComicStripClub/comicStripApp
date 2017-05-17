@@ -68,7 +68,7 @@ class ComicFrame: UIView {
     }
     
     private func updateAddImageButtonVisibility() {
-        addImageButton.isHidden = (hasPhoto || isCapturing || !isActive)
+        addImageButton.isHidden = (hasPhoto || isCapturing)
     }
     
     
