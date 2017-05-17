@@ -63,6 +63,11 @@ class ComicFrame: UIView {
     
     var isCapturing: Bool = false {
         didSet {
+            if (isCapturing){
+                if let currentPhoto = processedFramePhoto {
+                    currentPhoto.removeFromSuperview()
+                }
+            }
             updateAddImageButtonVisibility()
         }
     }
