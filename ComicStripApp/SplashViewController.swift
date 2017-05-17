@@ -47,8 +47,8 @@ class SplashViewController: UIViewController {
     
     func showRotateAnimationWithZoomInOut(){
         self.imgParentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.imgParentView.transform = CGAffineTransform(scaleX: 2, y: 2)
+        UIView.animate(withDuration: 1.0, animations: {
+            self.imgParentView.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
         }) { (isZoomOutDone) in
             if isZoomOutDone{
                 UIView.animate(withDuration: 0.5, animations: {
