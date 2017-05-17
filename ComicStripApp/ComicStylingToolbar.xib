@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -56,47 +56,55 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
-                    <rect key="frame" x="0.0" y="8" width="375" height="49"/>
+                    <rect key="frame" x="16" y="8" width="343" height="49"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleAspectFit" distribution="equalCentering" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="vX5-2W-sve">
-                            <rect key="frame" x="127" y="0.0" width="121" height="49"/>
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="49"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
-                                    <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="7AO-Th-tLd" secondAttribute="height" multiplier="1:1" id="vPA-mN-pCJ"/>
                                     </constraints>
                                     <state key="normal" title="Button" image="SpeechBubble-1"/>
+                                    <state key="selected" image="red_SpeechBubble-1"/>
+                                    <state key="highlighted" image="red_SpeechBubble-1"/>
                                     <connections>
                                         <action selector="didTapSpeechBubbleButton:" destination="-1" eventType="touchUpInside" id="cVv-i2-rS5"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KLu-Tl-PUs">
-                                    <rect key="frame" x="72" y="0.0" width="49" height="49"/>
+                                    <rect key="frame" x="90" y="0.0" width="65" height="49"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="KLu-Tl-PUs" secondAttribute="height" multiplier="4:3" id="RXR-z0-AqJ"/>
                                     </constraints>
                                     <state key="normal" title="Button" image="Bang"/>
+                                    <state key="selected" image="red_bang_bang"/>
+                                    <state key="highlighted" image="red_bang_bang"/>
                                     <connections>
                                         <action selector="didTapSoundEffectsButton:" destination="-1" eventType="touchUpInside" id="XRb-2A-eN4"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrE-59-4pg">
-                                    <rect key="frame" x="196.5" y="0.0" width="49" height="49"/>
+                                    <rect key="frame" x="196" y="0.0" width="49" height="49"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="xrE-59-4pg" secondAttribute="height" multiplier="1:1" id="2iB-Q5-MDW"/>
                                     </constraints>
                                     <state key="normal" title="Button" image="filters"/>
+                                    <state key="selected" image="red_filters"/>
+                                    <state key="highlighted" image="red_filters"/>
                                     <connections>
                                         <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="nJT-fw-9Vc"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khm-1o-zTR">
-                                    <rect key="frame" x="294.5" y="0.0" width="49" height="49"/>
+                                    <rect key="frame" x="294" y="0.0" width="49" height="49"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="Khm-1o-zTR" secondAttribute="height" multiplier="1:1" id="kg8-Ef-Rbu"/>
                                     </constraints>
                                     <state key="normal" title="Button" image="camera_icon2"/>
+                                    <state key="selected" image="red_camera"/>
+                                    <state key="highlighted" image="red_camera"/>
                                     <connections>
                                         <action selector="didTapGoToCaptureMode:" destination="-1" eventType="touchUpInside" id="iOQ-Tf-kIV"/>
                                         <action selector="didTapStyleButton:" destination="-1" eventType="touchUpInside" id="cSq-jm-auT"/>
@@ -136,8 +144,12 @@
         <image name="Bang" width="138" height="129"/>
         <image name="SpeechBubble-1" width="133" height="139"/>
         <image name="camera_capture_icon" width="100" height="100"/>
-        <image name="camera_icon2" width="240" height="240"/>
-        <image name="filters" width="100" height="100"/>
+        <image name="camera_icon2" width="100" height="100"/>
+        <image name="filters" width="200" height="200"/>
+        <image name="red_SpeechBubble-1" width="133" height="139"/>
+        <image name="red_bang_bang" width="138" height="129"/>
+        <image name="red_camera" width="200" height="200"/>
+        <image name="red_filters" width="200" height="200"/>
         <image name="switchCameraFilled" width="50" height="50"/>
     </resources>
 </document>
