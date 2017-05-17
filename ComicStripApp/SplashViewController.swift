@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Onboard
 
 class SplashViewController: UIViewController {
 
@@ -22,7 +23,8 @@ class SplashViewController: UIViewController {
         getStartedButton.isHidden = true
         getStartedButton.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
-    }
+        
+           }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,9 +43,29 @@ class SplashViewController: UIViewController {
         if isComicCreated{
             performSegue(withIdentifier: "mycreationsegue", sender: nil)
         }else{
-            performSegue(withIdentifier: "firsttimesegue", sender: nil)
+            let firstPage = OnboardingContentViewController(title: "Page Title", body: "Page body goes here.", image: UIImage(named: "facebook"), buttonText: "looks cool page 1") { () -> Void in
+                // do something here when users press the button, like ask for location services permissions, register for push notifications, connect to social media, or finish the onboarding process
+            }
+            
+            firstPage.titleLabel.textColor = UIColor.blue
+            
+            let secondPage = OnboardingContentViewController(title: "Page Title 2", body: "Page body goes here.", image: UIImage(named: "twitter"), buttonText: "looks cool page 2") { () -> Void in
+                self.performSequeFirstTime()
+            }
+            
+            // Image
+            let onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "background_onboarding"), contents: [firstPage, secondPage])
+            
+            // Setting the rootViewController to your onboardingVC
+            self.present(onboardingVC!, animated: true, completion: nil)
         }
     }
+    
+    func performSequeFirstTime(){
+        self.dismiss(animated: true, completion: nil)
+        self.parent?.performSegue(withIdentifier: "firsttimesegue", sender: nil)
+    }
+
     
     func showRotateAnimationWithZoomInOut(){
         self.imgParentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)

@@ -58,6 +58,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         comicStripContainer.delegate = self
         comicStylingToolbar.delegate = self
         imagePicker.delegate = self
