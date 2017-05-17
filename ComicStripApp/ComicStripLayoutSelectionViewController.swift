@@ -12,19 +12,19 @@ class ComicStripLayoutSelectionViewController: UIViewController {
 
     let comicStrips : [(image: UIImage, factory: () -> ComicStrip)] = [
         (
-            image: ComicStrip_1Big.frameLayoutBorders.image,
+            image: ComicStrip_1Big.icon,
             factory: { return ComicStrip_1Big()!}
         ),
         (
-            image: ComicStrip_2Big.frameLayoutBorders.image,
+            image: ComicStrip_2Big.icon,
             factory: { return ComicStrip_2Big()!}
         ),
         (
-            image: ComicStrip_2Small1Big.frameLayoutBorders.image,
+            image: ComicStrip_2Small1Big.icon,
             factory: { return ComicStrip_2Small1Big()!}
         ),
         (
-            image: ComicStrip_1x3.frameLayoutBorders.image,
+            image: ComicStrip_1x3.icon,
             factory: { return ComicStrip_1x3()!}
         )]
     
@@ -63,6 +63,6 @@ extension ComicStripLayoutSelectionViewController: UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = collectionView.bounds.midX - 40;
-        return CGSize(width: side, height: side * 2)
+        return CGSize(width: side, height: side * 1.6)
     }
 }

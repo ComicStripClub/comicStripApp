@@ -394,6 +394,11 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapSaveButton() {
+        view.endEditing(true)
+        for cf in comicStrip.comicFrames {
+            cf.isActive = false
+        }
+        // TODO: Fix bug where toolbar for active ComicFrameElement shows up in the saved output
         let image = self.comicStrip.asImage()
         ComicStripPhotoAlbum.sharedInstance.save(image: image) { (isSaved) in
             if isSaved{

@@ -14,10 +14,11 @@ class ComicStrip_1x3: ComicStrip {
     class var numberOfFrames: Int { get { return 3 } }
     class var frameLayoutBorders: (image: UIImage, size: CGSize) {
         get {
-            return (image: #imageLiteral(resourceName: "ComicStripLayout_3LanscapeStacked"), size: CGSize(width: 707, height: 1115))
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_3x1"), size: CGSize(width: 707, height: 1115))
         }
     }
-    
+    class var icon: UIImage { get { return #imageLiteral(resourceName: "3x1") } }
+
     class var frameCoordinates: [CGRect] {
         get {
             return [

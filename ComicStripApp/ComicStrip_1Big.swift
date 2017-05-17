@@ -13,9 +13,11 @@ class ComicStrip_1Big: ComicStrip {
     class var numberOfFrames: Int { get { return 1 } }
     class var frameLayoutBorders: (image: UIImage, size: CGSize) {
         get {
-            return (image: #imageLiteral(resourceName: "ComicStripFrame_SinglePortrait"), size: CGSize(width: 707, height: 1115))
+            return (image: #imageLiteral(resourceName: "ComicStripLayout_1x1"), size: CGSize(width: 707, height: 1115))
         }
     }
+    
+    class var icon: UIImage { get { return #imageLiteral(resourceName: "1x1") } }
     
     class var frameCoordinates: [CGRect] {
         get {

@@ -62,7 +62,9 @@ class ComicElementSelectionViewController: UIViewController, UICollectionViewDel
 
 extension ComicElementSelectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let element = comicFrameElements![indexPath.row]
         let width = collectionView.bounds.width / 2 - 10
-        return CGSize(width: width, height: width)
+        let itemAspectRatio = element.icon.size.width / element.icon.size.height
+        return CGSize(width: width, height: width / itemAspectRatio)
     }
 }

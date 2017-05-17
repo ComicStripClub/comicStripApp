@@ -58,7 +58,7 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         let lineHeight = proposedRect.height
-        let minRectWidth = lineHeight * 3
+        let minRectWidth = min(48, lineHeight * 3)
         var adjustedRect = proposedRect
         
         print("proposed: [\(proposedRect)], charIndex: [\(characterIndex)]")
@@ -81,7 +81,8 @@ class ComicBubbleTextContainer: NSTextContainer {
                 adjustedRect.origin.x = rem.minX
             } else {
                 print("Retrying, shifting down [\(adjustedRect.minY + lineHeight)]")
-                adjustedRect.origin = CGPoint(x: 0, y: adjustedRect.minY + lineHeight)
+                let stepSize = proposedRect.origin.y == 0 ? lineHeight / 3 : lineHeight
+                adjustedRect.origin = CGPoint(x: 0, y: adjustedRect.minY + stepSize)
             }
         }
         print("remaining: [\(remainingRect?.pointee)], return: [\(rect)]")
