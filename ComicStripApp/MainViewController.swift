@@ -76,9 +76,6 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         
         currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
 
-        if (isCameraAvailable()){
-            initializeCamera()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -316,15 +313,17 @@ extension MainViewController: ComicStripToolbarDelegate {
     func didTapCaptureButton() {
         self.nextPicture = PictureOutput()
         nextPicture.imageAvailableCallback = { (image) in
-            var newImage = image //.fixedOrientation()
-            if (self.cameraLocation == .frontFacing) {
-                newImage = image.fixedOrientation()
+            DispatchQueue.main.async {
+                var newImage = image //.fixedOrientation()
+                if (self.cameraLocation == .frontFacing) {
+                    newImage = image.fixedOrientation()
+                }
+                self.currentComicFrame!.selectedPhoto = newImage
+                self.updateToolbar()
+                self.updateSaveButton()
+                self.camera.stopCapture()
+                self.nextPicture = nil
             }
-            self.currentComicFrame!.selectedPhoto = newImage
-            self.updateToolbar()
-            self.updateSaveButton()
-            self.camera.stopCapture()
-            self.nextPicture = nil
         }
         self.camera.addTarget(nextPicture)
     }

@@ -298,12 +298,12 @@ class ComicBubbleTextContainer: NSTextContainer {
         return false
     }
     
-    override var contentSize: CGSize {
-        didSet {
-            print("contentSizeChanged: [\(contentSize.width), \(contentSize.height)]")
-            // verticallyCenter()
-        }
-    }
+//    override var contentSize: CGSize {
+//        didSet {
+//            print("contentSizeChanged: [\(contentSize.width), \(contentSize.height)]")
+//            // verticallyCenter()
+//        }
+//    }
     
     func textViewDidChange(_ textView: UITextView) {
         guard (!isResizing) else {
