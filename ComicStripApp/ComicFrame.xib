@@ -41,7 +41,7 @@
                     <state key="normal" title="Button" image="plus-circle-outline"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="opacity">
-                            <real key="value" value="0.59999999999999998"/>
+                            <real key="value" value="0.20000000000000001"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>

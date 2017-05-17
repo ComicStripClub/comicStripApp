@@ -58,6 +58,9 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        comicStripContainer.delegate = self
+        comicStylingToolbar.delegate = self
+        imagePicker.delegate = self
 
         handleNavigationBarItem()
         comicStrip = comicStripFactory()
@@ -66,12 +69,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             comicFrame.delegate = self
         }
 
-        comicStripContainer.delegate = self
-        
-        comicStylingToolbar.delegate = self
         updateToolbar()
-
-        imagePicker.delegate = self
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)

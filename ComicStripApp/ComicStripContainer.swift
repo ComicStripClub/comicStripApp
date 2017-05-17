@@ -29,9 +29,6 @@ class ComicStripContainer: UIView {
                 subview.removeFromSuperview()
             }
             addSubview(comicStrip)
-            if (comicStrip.comicFrames.count == 1){
-                selectComicFrame(comicStrip.comicFrames[0])
-            }
             // comicStrip.translatesAutoresizingMaskIntoConstraints = false
         }
     }
