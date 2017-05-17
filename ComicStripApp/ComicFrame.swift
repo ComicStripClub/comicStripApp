@@ -13,6 +13,7 @@ import ISHHoverBar
 
 protocol ComicFrameDelegate {
     func didTapAddPhotoToFrame(_ sender: ComicFrame)
+    func didChangeCurrentFilter(_ sender: ComicFrame)
 }
 
 class ComicFrame: UIView {
@@ -84,6 +85,7 @@ class ComicFrame: UIView {
             if (newFilter?.key != _currentFilter?.key){
                 _currentFilter = newFilter
                 updateImageWithCurrentFilter()
+                delegate?.didChangeCurrentFilter(self)
             }
         }
     }

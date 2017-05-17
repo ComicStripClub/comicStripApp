@@ -260,6 +260,14 @@ extension MainViewController: ComicFrameDelegate {
         imagePickerTargetFrame = sender
         self.present(self.imagePicker, animated: true, completion: nil)
     }
+    
+    func didChangeCurrentFilter(_ sender: ComicFrame) {
+        if (sender.isCapturing){
+            currentFilter = sender.currentFilter
+            deinitializeCamera()
+            initializeCamera()
+        }
+    }
 }
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -321,7 +329,7 @@ extension MainViewController: ComicStripToolbarDelegate {
                 self.currentComicFrame!.selectedPhoto = newImage
                 self.updateToolbar()
                 self.updateSaveButton()
-                self.camera.stopCapture()
+                self.deinitializeCamera()
                 self.nextPicture = nil
             }
         }
