@@ -14,6 +14,7 @@ import ISHHoverBar
 protocol ComicFrameDelegate {
     func didTapAddPhotoToFrame(_ sender: ComicFrame)
     func didChangeCurrentFilter(_ sender: ComicFrame)
+    func frameStateChanged(_ sender: ComicFrame)
 }
 
 class ComicFrame: UIView {
@@ -70,6 +71,7 @@ class ComicFrame: UIView {
                 }
             }
             updateAddImageButtonVisibility()
+            delegate?.frameStateChanged(self)
         }
     }
     
@@ -94,6 +96,7 @@ class ComicFrame: UIView {
         didSet {
             updateImageWithCurrentFilter()
             updateAddImageButtonVisibility()
+            delegate?.frameStateChanged(self)
         }
     }
     
@@ -106,6 +109,7 @@ class ComicFrame: UIView {
             renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
             filter.addTarget(renderView)
             pictureInput.processImage(synchronously: false)
+            delegate?.frameStateChanged(self)
         }
     }
     

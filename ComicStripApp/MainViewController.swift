@@ -74,7 +74,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
         
-        currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
+        //currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
 
     }
     
@@ -146,10 +146,13 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             }
             do {
                 camera = try Camera(sessionPreset: AVCaptureSessionPreset640x480, cameraDevice: nil, location: cameraLocation, captureAsYUV: true)
-                let filter = currentFilter!.value()
-                currentCameraFilter = filter
-                camera.addTarget(filter)
-                filter.addTarget(comicFrame.renderView)
+                if let filter = currentFilter?.value() {
+                    currentCameraFilter = filter
+                    camera.addTarget(filter)
+                    filter.addTarget(comicFrame.renderView)
+                } else {
+                    camera.addTarget(comicFrame.renderView)
+                }
                 if (cameraLocation == .backFacing) {
                     comicFrame.renderView.orientation = .portrait
                     comicFrame.renderView.transform = CGAffineTransform.identity
@@ -159,6 +162,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
                 }
                 camera.startCapture()
                 comicFrame.isCapturing = true
+                updateToolbar()
             } catch {
                 fatalError("Could not initialize rendering pipeline: \(error)")
             }
@@ -200,10 +204,10 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     func updateToolbar() {
         var mode = ComicStylingToolbar.ComicStylingToolbarMode.noActiveFrame
         if let comicFrame = currentComicFrame {
-            if (comicFrame.hasPhoto) {
-                mode = .editing
-            } else if (comicFrame.isCapturing) {
+            if (comicFrame.isCapturing) {
                 mode = .capture
+            } else if (comicFrame.hasPhoto) {
+                mode = .editing
             }
         }
 
@@ -266,6 +270,12 @@ extension MainViewController: ComicFrameDelegate {
             currentFilter = sender.currentFilter
             deinitializeCamera()
             initializeCamera()
+        }
+    }
+    
+    func frameStateChanged(_ sender: ComicFrame) {
+        if (sender == currentComicFrame){
+            updateToolbar()
         }
     }
 }
@@ -394,6 +404,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapGoToCaptureMode() {
+        currentComicFrame!.selectedPhoto = nil
         self.didTapAddPhotoToFrame(currentComicFrame!)
     }
     
@@ -436,7 +447,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     }
 
-func presentSelectionController(withElements elements: [ComicFrameElement]){
+    func presentSelectionController(withElements elements: [ComicFrameElement]){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let selectionNavController = storyboard.instantiateViewController(withIdentifier: "ComicElementSelectionNavController") as! UINavigationController
         let selectionViewController = selectionNavController.topViewController as! ComicElementSelectionViewController

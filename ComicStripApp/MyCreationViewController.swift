@@ -54,14 +54,13 @@ extension MyCreationViewController: UICollectionViewDelegate, UICollectionViewDa
         let collectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCreationCell", for: indexPath) as! MyCreationCell
         collectionCell.comicThumb.image = comicAlbum[indexPath.row]
         
-        collectionCell.comicThumb.layer.shadowColor = UIColor.black.cgColor
-        collectionCell.comicThumb.layer.shadowOpacity = 0.5
-        collectionCell.comicThumb.layer.shadowOffset = CGSize.zero
-        collectionCell.comicThumb.layer.shadowRadius = 7
-        collectionCell.comicThumb.layer.cornerRadius = 5.0
-        collectionCell.comicThumb.layer.borderWidth = 0.5
-        collectionCell.comicThumb.layer.cornerRadius = 5.0
-        collectionCell.comicThumb.clipsToBounds = true
+        collectionCell.layer.shadowColor = UIColor.black.cgColor
+        collectionCell.layer.shadowOpacity = 0.4
+        collectionCell.layer.shadowOffset = CGSize.zero
+        collectionCell.layer.shadowRadius = 5
+        //collectionCell.comicThumb.layer.cornerRadius = 5.0
+        //collectionCell.comicThumb.layer.borderWidth = 0.5
+        //collectionCell.comicThumb.clipsToBounds = true
         
         return collectionCell
     }
@@ -70,4 +69,13 @@ extension MyCreationViewController: UICollectionViewDelegate, UICollectionViewDa
         return comicAlbum.count
     }
 
+}
+
+extension MyCreationViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width / 2 - 30
+        let comic = comicAlbum[indexPath.row]
+        let comicAspectRatio = comic.size.width / comic.size.height
+        return CGSize(width: width, height: width / comicAspectRatio)
+    }
 }

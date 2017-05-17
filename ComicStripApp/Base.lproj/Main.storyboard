@@ -302,14 +302,14 @@
                                                     <rect key="frame" x="8" y="8" width="176" height="167"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
-                                                            <rect key="frame" x="4.6666666666666643" y="0.0" width="127" height="127"/>
+                                                            <rect key="frame" x="13" y="0.0" width="110" height="110"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="HLE-7e-zVZ"/>
                                                                 <constraint firstAttribute="width" secondItem="mJf-Qc-yO4" secondAttribute="height" multiplier="1:1" id="ahd-5X-ReN"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
-                                                            <rect key="frame" x="39" y="127" width="58" height="0.0"/>
+                                                            <rect key="frame" x="39" y="110" width="58" height="17"/>
                                                             <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -462,7 +462,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Viw-L4-G2d">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -480,7 +480,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Der-we-Tyh" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1aT-lH-ten">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1aT-lH-ten">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -527,12 +527,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-8O-AB8">
                                                     <rect key="frame" x="10" y="10" width="160" height="180"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="P6X-8O-AB8" firstAttribute="top" secondItem="ZoR-6t-S2G" secondAttribute="topMargin" constant="8" id="3hQ-Hh-MJI"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="P6X-8O-AB8" secondAttribute="trailing" constant="8" id="9Hr-en-93k"/>
+                                            <constraint firstItem="P6X-8O-AB8" firstAttribute="leading" secondItem="ZoR-6t-S2G" secondAttribute="leadingMargin" constant="8" id="GlB-10-BM7"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="P6X-8O-AB8" secondAttribute="bottom" constant="8" id="LKw-sI-Xfp"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="comicThumb" destination="P6X-8O-AB8" id="Ed4-2s-jja"/>
                                             <segue destination="Qfw-lg-M2l" kind="show" identifier="detailsegue" id="fSK-Cv-tV2"/>
@@ -576,7 +581,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWc-Em-hwD" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tjW-3y-ww4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tjW-3y-ww4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.12549019607843137" green="0.70196078431372544" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -600,7 +605,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="byo-qS-G4D">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="byo-qS-G4D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
