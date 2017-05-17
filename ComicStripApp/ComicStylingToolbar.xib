@@ -187,11 +187,11 @@
         </view>
     </objects>
     <resources>
-        <image name="Bang" width="536" height="425"/>
-        <image name="SpeechBubble-1" width="120" height="120"/>
+        <image name="Bang" width="138" height="129"/>
+        <image name="SpeechBubble-1" width="133" height="139"/>
         <image name="camera_capture_icon" width="100" height="100"/>
         <image name="camera_icon2" width="240" height="240"/>
-        <image name="filters" width="120" height="120"/>
+        <image name="filters" width="100" height="100"/>
         <image name="paper-plane_128" width="128" height="128"/>
         <image name="picture_128" width="128" height="128"/>
         <image name="switchCameraFilled" width="50" height="50"/>
