@@ -174,7 +174,7 @@ class ComicFrame: UIView {
     func addElement(_ element: ComicFrameElement, aspectRatio: CGFloat = 1.0) {
         var finalSize: CGSize
         let minFrameSideLength = min(bounds.width, bounds.height)
-        let width = minFrameSideLength * 0.4
+        let width = minFrameSideLength * 0.6
         finalSize = CGSize(width: width, height: width / aspectRatio)
 
         let elementView = element.view!
