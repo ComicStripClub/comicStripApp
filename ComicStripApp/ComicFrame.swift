@@ -13,6 +13,8 @@ import ISHHoverBar
 
 protocol ComicFrameDelegate {
     func didTapAddPhotoToFrame(_ sender: ComicFrame)
+    func didChangeCurrentFilter(_ sender: ComicFrame)
+    func frameStateChanged(_ sender: ComicFrame)
 }
 
 class ComicFrame: UIView {
@@ -63,7 +65,13 @@ class ComicFrame: UIView {
     
     var isCapturing: Bool = false {
         didSet {
+            if (isCapturing){
+                if let currentPhoto = processedFramePhoto {
+                    currentPhoto.removeFromSuperview()
+                }
+            }
             updateAddImageButtonVisibility()
+            delegate?.frameStateChanged(self)
         }
     }
     
@@ -79,6 +87,7 @@ class ComicFrame: UIView {
             if (newFilter?.key != _currentFilter?.key){
                 _currentFilter = newFilter
                 updateImageWithCurrentFilter()
+                delegate?.didChangeCurrentFilter(self)
             }
         }
     }
@@ -87,18 +96,25 @@ class ComicFrame: UIView {
         didSet {
             updateImageWithCurrentFilter()
             updateAddImageButtonVisibility()
+            delegate?.frameStateChanged(self)
         }
     }
     
     private var pictureInput: PictureInput!
     private func updateImageWithCurrentFilter() {
-        if let filter = currentFilter?.value(), let photo = selectedPhoto {
+        if let photo = selectedPhoto {
             pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
-            pictureInput.addTarget(filter)
             let renderView = addProcessedFramePhoto()
             renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
-            filter.addTarget(renderView)
+
+            if let filter = currentFilter?.value() {
+                pictureInput.addTarget(filter)
+                filter.addTarget(renderView)
+            } else {
+                pictureInput.addTarget(renderView)
+            }
             pictureInput.processImage(synchronously: false)
+            delegate?.frameStateChanged(self)
         }
     }
     

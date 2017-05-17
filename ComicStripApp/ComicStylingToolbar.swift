@@ -84,6 +84,10 @@ protocol ComicStripToolbarDelegate {
         delegate?.didTapSoundEffectsButton()
     }
     
+    @IBAction func didTapFilterButtonInCapture(_ sender: Any) {
+    delegate?.didTapStyleButton()
+    }
+    
     @IBAction func didTapStyleButton(_ sender: Any) {
         delegate?.didTapStyleButton()
     }
