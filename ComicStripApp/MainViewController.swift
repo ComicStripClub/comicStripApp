@@ -386,8 +386,7 @@ extension MainViewController: ComicStripToolbarDelegate {
     }
     
     func didTapGoToCaptureMode() {
-        self.camera.startCapture()
-        self.updateToolbar()
+        self.didTapAddPhotoToFrame(currentComicFrame!)
     }
     
     func didTapSaveButton() {
