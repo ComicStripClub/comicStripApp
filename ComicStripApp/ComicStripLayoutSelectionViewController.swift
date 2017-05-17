@@ -26,6 +26,14 @@ class ComicStripLayoutSelectionViewController: UIViewController {
         (
             image: ComicStrip_1x3.icon,
             factory: { return ComicStrip_1x3()!}
+        ),
+        (
+            image: ComicStrip_2x2.icon,
+            factory: { return ComicStrip_2x2()!}
+        ),
+        (
+            image: ComicStrip_1Big1Small.icon,
+            factory: { return ComicStrip_1Big1Small()!}
         )]
     
     @IBOutlet weak var collectionView: UICollectionView!
