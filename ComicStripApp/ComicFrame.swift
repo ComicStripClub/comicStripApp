@@ -102,12 +102,17 @@ class ComicFrame: UIView {
     
     private var pictureInput: PictureInput!
     private func updateImageWithCurrentFilter() {
-        if let filter = currentFilter?.value(), let photo = selectedPhoto {
+        if let photo = selectedPhoto {
             pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
-            pictureInput.addTarget(filter)
             let renderView = addProcessedFramePhoto()
             renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
-            filter.addTarget(renderView)
+
+            if let filter = currentFilter?.value() {
+                pictureInput.addTarget(filter)
+                filter.addTarget(renderView)
+            } else {
+                pictureInput.addTarget(renderView)
+            }
             pictureInput.processImage(synchronously: false)
             delegate?.frameStateChanged(self)
         }
