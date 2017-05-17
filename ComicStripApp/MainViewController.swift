@@ -69,7 +69,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             comicFrame.delegate = self
         }
 
-        updateToolbar()
+        comicStylingToolbar.transform = CGAffineTransform(translationX: 0, y: comicStylingToolbar.bounds.height)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -133,7 +133,6 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     func handleNavigationBarItem (){
         // Changing the navigation controller's title colour
         self.navigationItem.title = ""
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Start over", style: .plain, target: self, action: nil)
 
@@ -169,6 +168,23 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         }
     }
     
+    // Only show the save button if all the frames in the comic
+    // strip have background photos.  I.e. no empty frames allowed
+    // in final output
+    func updateSaveButton(){
+        var allFramesFull = true
+        for comicFrame in comicStrip.comicFrames {
+            if (!comicFrame.hasPhoto){
+                allFramesFull = false
+                break
+            }
+        }
+        
+        if (allFramesFull) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapSaveButton))
+        }
+    }
+    
     func deinitializeCamera(){
         if let cam = camera {
             cam.stopCapture()
@@ -192,6 +208,23 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             } else if (comicFrame.isCapturing) {
                 mode = .capture
             }
+        }
+
+        if (mode == comicStylingToolbar.mode){
+            return
+        }
+        
+        if (comicStylingToolbar.mode == .noActiveFrame){
+            // animate in
+            UIView.animate(withDuration: 0.333, delay: 0, options: .curveEaseOut, animations: {
+                self.comicStylingToolbar.transform = CGAffineTransform.identity
+                self.comicStripContainer.needsUpdateConstraints()
+            }, completion: nil)
+        } else if (mode == .noActiveFrame){
+            UIView.animate(withDuration: 0.333, delay: 0, options: .curveEaseOut, animations: {
+                self.comicStylingToolbar.transform = CGAffineTransform(translationX: 0, y: self.comicStylingToolbar.bounds.height)
+                self.comicStripContainer.needsUpdateConstraints()
+            }, completion: nil)
         }
         comicStylingToolbar.mode = mode
     }
@@ -253,6 +286,8 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         }
         self.dismiss(animated: true) { 
             self.comicStripContainer.selectComicFrame(self.imagePickerTargetFrame)
+            self.updateToolbar()
+            self.updateSaveButton()
             self.imagePickerTargetFrame = nil
         }
     }
@@ -260,9 +295,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
         imagePickerTargetFrame = nil
-    }
-}
-
 protocol ComicStripContainerDelegate {
     func comicFrameBecameActive(_ comicFrame: ComicFrame)
     func comicFrameBecameInactive(_ comicFrame: ComicFrame)
@@ -275,9 +307,6 @@ extension MainViewController: ComicStripContainerDelegate {
     
     func comicFrameBecameInactive(_ comicFrame: ComicFrame) {
         updateToolbar()
-    }
-}
-
 extension MainViewController: ComicStripToolbarDelegate {
   
     func didTapCaptureButton() {
@@ -289,6 +318,7 @@ extension MainViewController: ComicStripToolbarDelegate {
             }
             self.currentComicFrame!.selectedPhoto = newImage
             self.updateToolbar()
+            self.updateSaveButton()
             self.camera.stopCapture()
             self.nextPicture = nil
         }
@@ -354,10 +384,15 @@ extension MainViewController: ComicStripToolbarDelegate {
     
     func didTapGoToCaptureMode() {
         self.camera.startCapture()
-        self.comicStylingToolbar.mode = .capture
+        self.updateToolbar()
     }
     
     func didTapSaveButton() {
+        view.endEditing(true)
+        for cf in comicStrip.comicFrames {
+            cf.isActive = false
+        }
+        // TODO: Fix bug where toolbar for active ComicFrameElement shows up in the saved output
         let image = self.comicStrip.asImage()
         ComicStripPhotoAlbum.sharedInstance.save(image: image) { (isSaved) in
             if isSaved{

@@ -30,6 +30,7 @@ class ComicBubbleLayoutManager: NSLayoutManager {
     }
     
     func verticallyCenter(){
+        return
         let txtContainer = textContainers[0] as! ComicBubbleTextContainer
         let rect = usedRect(for: txtContainer)
         let heightDelta = mainBubblePath.cgPath.boundingBox.height - rect.height;
@@ -57,14 +58,14 @@ class ComicBubbleTextContainer: NSTextContainer {
     
     override func lineFragmentRect(forProposedRect proposedRect: CGRect, at characterIndex: Int, writingDirection baseWritingDirection: NSWritingDirection, remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         let lineHeight = proposedRect.height
-        let minRectWidth = lineHeight * 3
+        let minRectWidth = min(48, lineHeight * 3)
         var adjustedRect = proposedRect
         
         print("proposed: [\(proposedRect)], charIndex: [\(characterIndex)]")
         
         adjustedRect.origin.y = max(proposedRect.origin.y, minLineFragmentY)
         var rect = CGRect.zero
-        let numTries = 3 //proposedRect.origin.y < 0.01 ? 3 : 1
+        let numTries = 7 //proposedRect.origin.y < 0.01 ? 3 : 1
         for i in 0..<numTries {
             rect = super.lineFragmentRect(forProposedRect: adjustedRect, at: characterIndex, writingDirection: baseWritingDirection, remaining: remainingRect)
             print("lineFragmentRect: proposed[\(adjustedRect)] returned[\(rect)]")
@@ -80,7 +81,8 @@ class ComicBubbleTextContainer: NSTextContainer {
                 adjustedRect.origin.x = rem.minX
             } else {
                 print("Retrying, shifting down [\(adjustedRect.minY + lineHeight)]")
-                adjustedRect.origin = CGPoint(x: 0, y: adjustedRect.minY + lineHeight)
+                let stepSize = proposedRect.origin.y == 0 ? lineHeight / 3 : lineHeight
+                adjustedRect.origin = CGPoint(x: 0, y: adjustedRect.minY + stepSize)
             }
         }
         print("remaining: [\(remainingRect?.pointee)], return: [\(rect)]")
@@ -135,7 +137,9 @@ class ComicBubbleTextContainer: NSTextContainer {
         clipsToBounds = false
 
         let rotateAction = UIBarButtonItem(image: UIImage.imageFromSystemBarButton(.reply), style: .plain, target: self, action: #selector(didRotateBubble))
-        actions = [rotateAction]
+        let increaseTextSizeAction = UIBarButtonItem(image: #imageLiteral(resourceName: "increase_text_size"), style: .plain, target: self, action: #selector(didIncreaseTextSize))
+        let decreaseTextSizeAction = UIBarButtonItem(image: #imageLiteral(resourceName: "decrease_font_size"), style: .plain, target: self, action: #selector(didDecreaseTextSize))
+        actions = [rotateAction, increaseTextSizeAction, decreaseTextSizeAction]
 
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinchBubble))
         addGestureRecognizer(pinchRecognizer)
@@ -143,6 +147,29 @@ class ComicBubbleTextContainer: NSTextContainer {
 
     @objc private func didRotateBubble(_: UIBarButtonItem){
         changeOrientation()
+    }
+    @objc private func didIncreaseTextSize(_: UIBarButtonItem){
+        changeFontSizeBy(2.0)
+    }
+    
+    @objc private func didDecreaseTextSize(_: UIBarButtonItem){
+        changeFontSizeBy(-2.0)
+    }
+    
+    private func changeFontSizeBy(_ amount: CGFloat){
+        let currentSize = font!.pointSize
+        let newSize = currentSize + amount
+        guard (newSize > 2.0) else {
+            return
+        }
+        if let selection = selectedTextRange, selection.isEmpty {
+            selectAll(self)
+            font = font!.withSize(newSize)
+            selectedTextRange = textRange(from: endOfDocument, to: endOfDocument)
+        } else {
+            font = font!.withSize(newSize)
+        }
+
     }
     
     @objc private func didTapFlipButton(_: UITapGestureRecognizer){
@@ -168,7 +195,7 @@ class ComicBubbleTextContainer: NSTextContainer {
             // isResizing = true
             let oldCenter = center
             let newSize = originalSize.applying(CGAffineTransform(scaleX: scale, y: scale))
-            self.frame.size = newSize
+            self.bounds.size = newSize
             self.center = oldCenter
             self.setNeedsLayout()
             self.updateExclusionPath()
@@ -296,18 +323,21 @@ class ComicBubbleTextContainer: NSTextContainer {
         isResizing = true
         let oldCenter = center
         let newWidth = bounds.width + pixels
-        let scale = newWidth / self.frame.size.width
+        let scale = newWidth / bounds.width
         let newHeight = bounds.height * scale
         let oldTransform = self.transform
+        let oldOrigin = self.bounds.origin
+        let oldSize = self.bounds.size
         UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
-            self.transform = self.transform.scaledBy(x: scale, y: scale)
+            //self.transform = self.transform.scaledBy(x: scale, y: scale)
             self.frame.size = CGSize(width: newWidth, height: newHeight)
-            self.center = oldCenter
-            self.layoutIfNeeded()
+            self.updateExclusionPath()
+            //self.center = oldCenter
+            self.superview!.layoutIfNeeded()
             print("resizing: \(newWidth)")
         }, completion: { (b) in
             self.transform = oldTransform
-            self.frame.size = CGSize(width: newWidth, height: newHeight)
+            self.bounds.size = CGSize(width: newWidth, height: newHeight)
             self.center = oldCenter
             self.isResizing = false
             self.setNeedsLayout()
