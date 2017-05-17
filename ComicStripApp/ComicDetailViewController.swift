@@ -13,6 +13,9 @@ class ComicDetailViewController: UIViewController {
 
     var comicImage: UIImage?
     
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var twitterButton: UIButton!
+    @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var thumbContainerView: UIView!
     @IBOutlet weak var comicImageView: UIImageView!
     override func viewDidLoad() {
@@ -26,6 +29,7 @@ class ComicDetailViewController: UIViewController {
         comicImageView.layer.cornerRadius = 5.0
         comicImageView.clipsToBounds = true
         comicImageView.image = comicImage
+        animationButton()
         // Do any additional setup after loading the view.
     }
 
@@ -66,6 +70,20 @@ class ComicDetailViewController: UIViewController {
         getTopViewController()?.present(activityViewController, animated: true, completion: nil)
     }
     
+    func animationButton(){
+        facebookButton.center.y += view.bounds.height
+        UIView.animate(withDuration: 1.0) { 
+            self.facebookButton.center.y -= (self.view.bounds.width)
+        }
+        twitterButton.center.y += view.bounds.height
+        UIView.animate(withDuration: 1.0) {
+            self.twitterButton.center.y -= (self.view.bounds.width)
+        }
+        shareButton.center.y += view.bounds.height
+        UIView.animate(withDuration: 1.0) {
+            self.shareButton.center.y -= (self.view.bounds.width)
+        }
+    }
     /*
     // MARK: - Navigation
 
