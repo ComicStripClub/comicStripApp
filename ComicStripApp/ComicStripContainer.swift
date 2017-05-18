@@ -80,7 +80,6 @@ class ComicStripContainer: UIView {
         let oldFrame = _selectedFrame
         
         _selectedFrame = comicFrame
-        _selectedFrame?.currentFilter = currentFilter
         
         if let oldFrame = oldFrame {
             oldFrame.isActive = false
@@ -89,6 +88,9 @@ class ComicStripContainer: UIView {
         
         if let comicFrame = comicFrame {
             comicFrame.isActive = true
+            if (!comicFrame.hasPhoto){
+                comicFrame.currentFilter = self.currentFilter
+            }
             delegate.comicFrameBecameActive(comicFrame)
             var focusFrameTransform: CGAffineTransform
             let adjustedFrame = convert(comicFrame.frame, to: self)
