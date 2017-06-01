@@ -6,15 +6,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="BackIssuesBB_reg.ttf">
-            <string>BackIssuesBB</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Pick a layout-->
         <scene sceneID="7Wi-Cc-xLY">
@@ -97,6 +91,13 @@
                                 <rect key="frame" x="16" y="16" width="382" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzO-5b-H3i" customClass="ComicElementSelectionPane" customModule="ComicStripApp" customModuleProvider="target">
+                                <rect key="frame" x="87" y="272" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="cgj-dL-mv3"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="600" width="414" height="72"/>
                                 <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -107,8 +108,11 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qzO-5b-H3i" secondAttribute="trailing" id="0Dd-D9-LOM"/>
+                            <constraint firstItem="qzO-5b-H3i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="9hU-gd-87k"/>
                             <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" constant="16" id="LZx-Mn-7Ao"/>
                             <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="NV4-ku-TR2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qzO-5b-H3i" secondAttribute="top" id="PmK-d2-Hsb"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wnm-6H-rl4"/>
                             <constraint firstItem="j94-Y9-5Wd" firstAttribute="top" secondItem="e8f-3c-5jF" secondAttribute="bottom" constant="16" id="YvG-cu-6qd"/>
                             <constraint firstAttribute="trailing" secondItem="j94-Y9-5Wd" secondAttribute="trailing" id="ZST-iv-hqS"/>
@@ -118,6 +122,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="comicElementSelectionPane" destination="qzO-5b-H3i" id="Tme-HC-QeY"/>
                         <outlet property="comicStripContainer" destination="e8f-3c-5jF" id="IdJ-74-2bB"/>
                         <outlet property="comicStylingToolbar" destination="j94-Y9-5Wd" id="PEI-Rv-S06"/>
                         <segue destination="mY3-f5-Qgw" kind="showDetail" identifier="savesegue" id="a68-ZT-0n9"/>
@@ -280,92 +285,6 @@
             </objects>
             <point key="canvasLocation" x="3672.4637681159425" y="118.20652173913044"/>
         </scene>
-        <!--Comic Element Selection View Controller-->
-        <scene sceneID="ALT-Oc-cG4">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PVf-vV-cT3" customClass="ComicElementSelectionViewController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rie-np-dPs"/>
-                        <viewControllerLayoutGuide type="bottom" id="0OC-ak-932"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rKN-Dk-zui">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sUC-GA-2Ge">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="SQg-GV-DsD">
-                                    <size key="itemSize" width="152" height="143"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="5" minY="10" maxX="10" maxY="10"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ComicFrameElementCell" id="YBK-3h-9lp" customClass="ComicFrameElementCell" customModule="ComicStripApp" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="10" width="152" height="143"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="152" height="143"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UZI-69-yiB">
-                                                    <rect key="frame" x="8" y="8" width="176" height="167"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-Qc-yO4">
-                                                            <rect key="frame" x="14.666666666666664" y="0.0" width="107" height="107"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="HLE-7e-zVZ"/>
-                                                                <constraint firstAttribute="width" secondItem="mJf-Qc-yO4" secondAttribute="height" multiplier="1:1" id="ahd-5X-ReN"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-4z-4wx">
-                                                            <rect key="frame" x="39" y="107" width="58" height="20"/>
-                                                            <fontDescription key="fontDescription" name="BackIssuesBB" family="Back Issues BB" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="leading" secondItem="YBK-3h-9lp" secondAttribute="leading" constant="8" id="Ypg-lW-hXm"/>
-                                            <constraint firstItem="UZI-69-yiB" firstAttribute="top" secondItem="YBK-3h-9lp" secondAttribute="top" constant="8" id="fl6-Zq-IgP"/>
-                                            <constraint firstAttribute="bottom" secondItem="UZI-69-yiB" secondAttribute="bottom" constant="8" id="fsC-5k-AnB"/>
-                                            <constraint firstAttribute="trailing" secondItem="UZI-69-yiB" secondAttribute="trailing" constant="8" id="hEB-Uc-i5F"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="image" destination="mJf-Qc-yO4" id="WFw-gA-GkH"/>
-                                            <outlet property="nameLabel" destination="xCO-4z-4wx" id="zhX-0w-PG7"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="sUC-GA-2Ge" firstAttribute="leading" secondItem="rKN-Dk-zui" secondAttribute="leading" id="RWl-sJ-7eX"/>
-                            <constraint firstItem="0OC-ak-932" firstAttribute="top" secondItem="sUC-GA-2Ge" secondAttribute="bottom" id="b5B-lj-6IS"/>
-                            <constraint firstItem="sUC-GA-2Ge" firstAttribute="top" secondItem="rie-np-dPs" secondAttribute="bottom" id="drG-Np-jrR"/>
-                            <constraint firstAttribute="trailing" secondItem="sUC-GA-2Ge" secondAttribute="trailing" id="mG2-GA-znI"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="m3e-JK-6em">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="H1A-24-x1G">
-                            <connections>
-                                <action selector="didTapCancelButton:" destination="PVf-vV-cT3" id="8dc-tE-bhi"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="collectionView" destination="sUC-GA-2Ge" id="Foa-mB-XEF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="in1-Ku-3Lq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="441" y="797"/>
-        </scene>
         <!--Splash View Controller-->
         <scene sceneID="A2T-W2-BTr">
             <objects>
@@ -473,14 +392,11 @@
             <objects>
                 <navigationController storyboardIdentifier="ComicElementSelectionNavController" automaticallyAdjustsScrollViewInsets="NO" id="RXq-bx-YxW" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Viw-L4-G2d">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Viw-L4-G2d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="PVf-vV-cT3" kind="relationship" relationship="rootViewController" id="egs-Kr-NP8"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJc-0u-4m9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -491,7 +407,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Der-we-Tyh" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1aT-lH-ten">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1aT-lH-ten">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.98832529783248901" green="0.98843103647232056" blue="0.96642953157424927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -592,7 +508,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWc-Em-hwD" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tjW-3y-ww4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tjW-3y-ww4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.12549019607843137" green="0.70196078431372544" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -616,7 +532,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mY3-f5-Qgw" customClass="ComicNavigationController" customModule="ComicStripApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="byo-qS-G4D">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="byo-qS-G4D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

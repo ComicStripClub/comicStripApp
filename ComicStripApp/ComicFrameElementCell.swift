@@ -12,15 +12,6 @@ class ComicFrameElementCell: UICollectionViewCell {
 
     var comicFrameElement: ComicFrameElement? {
         didSet {
-            let currentSize = self.bounds.size
-            // Move to a background thread to do some long running work
-//            DispatchQueue.global(qos: .default).async {
-//                let scaledImage = self.comicFrameElement?.icon.scaleImageToFitSize(size: currentSize, onlyScaleDown: true)
-//                // Bounce back to the main thread to update the UI
-//                DispatchQueue.main.async {
-//                    self.image?.image = scaledImage
-//                }
-//            }
             self.image?.image = comicFrameElement?.icon
 
             if let name = comicFrameElement?.name {
@@ -34,9 +25,26 @@ class ComicFrameElementCell: UICollectionViewCell {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        initializeSubViews()
+    }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initializeSubViews()
+    }
+    
+    private func initializeSubViews(){
+        let nib = UINib(nibName: String(describing: ComicFrameElementCell.self), bundle: nil)
+        let contentView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
 
     override func prepareForReuse() {

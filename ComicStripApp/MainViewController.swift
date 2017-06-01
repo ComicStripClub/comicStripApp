@@ -30,6 +30,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         get { return false }
     }
     var currentFrameCount = -1;
+    @IBOutlet weak var comicElementSelectionPane: ComicElementSelectionPane!
     @IBOutlet weak var comicStripContainer: ComicStripContainer!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     var currentComicFrame: ComicFrame? { get { return comicStripContainer.selectedFrame } }
@@ -229,6 +230,24 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         }
         comicStylingToolbar.mode = mode
     }
+    
+    public func showComicElementSelectionPane(withElements comicFrameElements: [ComicFrameElement]){
+        self.comicElementSelectionPane.comicFrameElements = comicFrameElements
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseOut, animations: { 
+            self.comicElementSelectionPane.center =
+                CGPoint(x: self.comicElementSelectionPane.center.x, y: self.comicStylingToolbar.frame.minY - self.comicElementSelectionPane.bounds.midY)
+        }, completion: nil)
+    }
+    
+    public func hideComicElementSelectionPane(){
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPane.center =
+                CGPoint(
+                    x: self.comicElementSelectionPane.center.x,
+                    y: self.comicStylingToolbar.frame.maxY + self.comicElementSelectionPane.bounds.midY)
+        }, completion: nil)
+
+    }
 }
 
 extension MainViewController: ComicFrameDelegate {
@@ -361,7 +380,8 @@ extension MainViewController: ComicStripToolbarDelegate {
             HandDrawnBubble3Element(),
             HandDrawnBubble5Element(),
             HandDrawnBubble4Element()]
-        presentSelectionController(withElements: speechBubbles)
+        showComicElementSelectionPane(withElements: speechBubbles)
+        //presentSelectionController(withElements: speechBubbles)
     }
     
     func didTapSoundEffectsButton() {
@@ -392,17 +412,19 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zaaap")),
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zap")),
             ]
-        presentSelectionController(withElements: soundEffects)
+        showComicElementSelectionPane(withElements: soundEffects)
+        //presentSelectionController(withElements: soundEffects)
     }
     
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
-        var i=1
+        var i = 1
         for filter in supportedFilters {
-            filterElements.append(FilterElement(filterIconName:"filter"+String(i) , filter: filter))
+            filterElements.append(FilterElement(filterIconName: "filter"+String(i) , filter: filter))
             i += 1
         }
-        presentSelectionController(withElements: filterElements)
+        showComicElementSelectionPane(withElements: filterElements)
+        //presentSelectionController(withElements: filterElements)
     }
     
     func didTapGoToCaptureMode() {
