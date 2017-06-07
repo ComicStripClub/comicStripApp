@@ -14,6 +14,9 @@
             <connections>
                 <outlet property="cameraModeToolbar" destination="k1u-j7-888" id="2yB-da-K2c"/>
                 <outlet property="editingModeToolbar" destination="ulp-q8-cGb" id="Shf-oX-0fp"/>
+                <outlet property="filtersButton" destination="xrE-59-4pg" id="bE7-Yb-FbD"/>
+                <outlet property="soundEffectsButton" destination="KLu-Tl-PUs" id="77W-Do-XmN"/>
+                <outlet property="speechBubbleButton" destination="7AO-Th-tLd" id="YT3-5H-9OQ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,13 +24,60 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1u-j7-888" userLabel="Camera mode toolbar">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrA-3l-Fem" userLabel="Switch Filter Button">
+                            <rect key="frame" x="16" y="16" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="SQj-xo-Vci"/>
+                                <constraint firstAttribute="height" constant="32" id="nBn-4z-FFq"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="filters_white"/>
+                            <connections>
+                                <action selector="didTapFilterButtonInCapture:" destination="-1" eventType="touchUpInside" id="QQ9-mA-JsM"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTg-NT-fRx" userLabel="Capture Button">
+                            <rect key="frame" x="158.5" y="3.5" width="57" height="57"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="PTg-NT-fRx" secondAttribute="height" multiplier="1:1" id="vv4-KD-23w"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="camera_capture_icon"/>
+                            <connections>
+                                <action selector="didTapCaptureButton:" destination="-1" eventType="touchUpInside" id="bD5-Mf-Tr1"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMa-1e-mAf" userLabel="Switch Camera Button">
+                            <rect key="frame" x="327" y="16.5" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="InW-V8-mTl"/>
+                                <constraint firstAttribute="width" constant="32" id="fGy-OZ-ApV"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="switchCameraFilled"/>
+                            <connections>
+                                <action selector="didTapSwitchCameraButton:" destination="-1" eventType="touchUpInside" id="NPj-sx-MmM"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="NrA-3l-Fem" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="0NJ-1o-RGh"/>
+                        <constraint firstItem="PTg-NT-fRx" firstAttribute="centerX" secondItem="k1u-j7-888" secondAttribute="centerX" id="7CC-kS-H6I"/>
+                        <constraint firstItem="uMa-1e-mAf" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="M6P-Wv-Uh7"/>
+                        <constraint firstItem="PTg-NT-fRx" firstAttribute="height" secondItem="k1u-j7-888" secondAttribute="height" constant="-8" id="NQ3-aj-aee"/>
+                        <constraint firstItem="NrA-3l-Fem" firstAttribute="leading" secondItem="k1u-j7-888" secondAttribute="leading" constant="16" id="awg-Xa-7z0"/>
+                        <constraint firstAttribute="trailing" secondItem="uMa-1e-mAf" secondAttribute="trailing" constant="16" id="m97-z9-RvM"/>
+                        <constraint firstItem="PTg-NT-fRx" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="xGh-fI-kwJ"/>
+                    </constraints>
+                </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulp-q8-cGb">
                     <rect key="frame" x="16" y="8" width="343" height="49"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleAspectFit" distribution="equalCentering" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="vX5-2W-sve">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="49"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Th-tLd">
                                     <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="7AO-Th-tLd" secondAttribute="height" multiplier="1:1" id="vPA-mN-pCJ"/>
@@ -87,51 +137,11 @@
                         <constraint firstItem="vX5-2W-sve" firstAttribute="leading" secondItem="ulp-q8-cGb" secondAttribute="leading" id="mQw-2v-oLa"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1u-j7-888" userLabel="Camera mode toolbar">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrA-3l-Fem" userLabel="Switch Filter Button">
-                            <rect key="frame" x="16" y="16" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="32" id="SQj-xo-Vci"/>
-                                <constraint firstAttribute="height" constant="32" id="nBn-4z-FFq"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="filters_white"/>
-                            <connections>
-                                <action selector="didTapFilterButtonInCapture:" destination="-1" eventType="touchUpInside" id="QQ9-mA-JsM"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTg-NT-fRx" userLabel="Capture Button">
-                            <rect key="frame" x="158.5" y="3.5" width="57" height="57"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="PTg-NT-fRx" secondAttribute="height" multiplier="1:1" id="vv4-KD-23w"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="camera_capture_icon"/>
-                            <connections>
-                                <action selector="didTapCaptureButton:" destination="-1" eventType="touchUpInside" id="bD5-Mf-Tr1"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMa-1e-mAf" userLabel="Switch Camera Button">
-                            <rect key="frame" x="327" y="16.5" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="InW-V8-mTl"/>
-                                <constraint firstAttribute="width" constant="32" id="fGy-OZ-ApV"/>
-                            </constraints>
-                            <state key="normal" title="Button" image="switchCameraFilled"/>
-                            <connections>
-                                <action selector="didTapSwitchCameraButton:" destination="-1" eventType="touchUpInside" id="NPj-sx-MmM"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.96470588239999999" green="0.84705882349999995" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQE-Wa-x0a">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.15127354452054795" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="NrA-3l-Fem" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="0NJ-1o-RGh"/>
-                        <constraint firstItem="PTg-NT-fRx" firstAttribute="centerX" secondItem="k1u-j7-888" secondAttribute="centerX" id="7CC-kS-H6I"/>
-                        <constraint firstItem="uMa-1e-mAf" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="M6P-Wv-Uh7"/>
-                        <constraint firstItem="PTg-NT-fRx" firstAttribute="height" secondItem="k1u-j7-888" secondAttribute="height" constant="-8" id="NQ3-aj-aee"/>
-                        <constraint firstItem="NrA-3l-Fem" firstAttribute="leading" secondItem="k1u-j7-888" secondAttribute="leading" constant="16" id="awg-Xa-7z0"/>
-                        <constraint firstAttribute="trailing" secondItem="uMa-1e-mAf" secondAttribute="trailing" constant="16" id="m97-z9-RvM"/>
-                        <constraint firstItem="PTg-NT-fRx" firstAttribute="centerY" secondItem="k1u-j7-888" secondAttribute="centerY" id="xGh-fI-kwJ"/>
+                        <constraint firstAttribute="height" constant="2" id="5WV-hy-gvx"/>
                     </constraints>
                 </view>
             </subviews>
@@ -139,12 +149,15 @@
             <constraints>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="centerX" secondItem="b3I-SQ-Hh9" secondAttribute="centerX" id="0LW-Dl-mul"/>
                 <constraint firstAttribute="trailing" secondItem="k1u-j7-888" secondAttribute="trailing" id="Ncf-GJ-UYN"/>
+                <constraint firstItem="BQE-Wa-x0a" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" id="Tow-i6-zyI"/>
+                <constraint firstItem="BQE-Wa-x0a" firstAttribute="leading" secondItem="b3I-SQ-Hh9" secondAttribute="leading" id="UrK-Tb-hnL"/>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" constant="8" id="Zep-O5-p5j"/>
                 <constraint firstItem="k1u-j7-888" firstAttribute="top" secondItem="b3I-SQ-Hh9" secondAttribute="top" id="i9N-Nc-4DO"/>
                 <constraint firstItem="k1u-j7-888" firstAttribute="leading" secondItem="b3I-SQ-Hh9" secondAttribute="leading" id="iRr-vv-8nW"/>
                 <constraint firstAttribute="bottom" secondItem="ulp-q8-cGb" secondAttribute="bottom" constant="8" id="iyV-rk-zYc"/>
                 <constraint firstItem="ulp-q8-cGb" firstAttribute="width" secondItem="b3I-SQ-Hh9" secondAttribute="width" constant="-32" id="njX-yQ-KPU"/>
                 <constraint firstAttribute="bottom" secondItem="k1u-j7-888" secondAttribute="bottom" id="oef-gV-Voe"/>
+                <constraint firstAttribute="trailing" secondItem="BQE-Wa-x0a" secondAttribute="trailing" id="tRa-gd-gJS"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

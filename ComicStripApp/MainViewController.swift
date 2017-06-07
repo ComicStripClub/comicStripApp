@@ -34,6 +34,9 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     @IBOutlet weak var comicElementSelectionPaneTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var comicStripContainer: ComicStripContainer!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
+    
+    @IBOutlet weak var comicElementSelectionPaneContainer: UIView!
+    
     var currentComicFrame: ComicFrame? { get { return comicStripContainer.selectedFrame } }
     var imagePickerTargetFrame: ComicFrame?
     var comicStrip: ComicStrip!
@@ -243,16 +246,17 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         comicStylingToolbar.mode = mode
     }
     
-    public func showComicElementSelectionPane(withElements comicFrameElements: [ComicFrameElement]){
-        self.comicElementSelectionPane.comicFrameElements = comicFrameElements
-        UIView.animate(withDuration: 0.600, delay: 0, options: .curveEaseOut, animations: { 
-            self.comicElementSelectionPane.transform = CGAffineTransform(translationX: 0, y: -(self.comicElementSelectionPane.bounds.height + self.comicStylingToolbar.bounds.height))
+    public func showComicElementSelectionPane(withElements comicFrameElements: [ComicFrameElement], collectionName: String){
+        self.comicElementSelectionPane.setComicFrameElements(collectionName: collectionName, elementCollection: comicFrameElements)
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 2.0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPaneContainer.transform = CGAffineTransform(translationX: 0, y: -(self.comicElementSelectionPane.bounds.height + self.comicStylingToolbar.bounds.height))
         }, completion: nil)
     }
     
     public func hideComicElementSelectionPane(){
-        UIView.animate(withDuration: 0.600, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-            self.comicElementSelectionPane.transform = CGAffineTransform.identity
+        self.comicStylingToolbar.selectButton(button: nil)
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPaneContainer.transform = CGAffineTransform.identity
         }, completion: nil)
 
     }
@@ -397,7 +401,7 @@ extension MainViewController: ComicStripToolbarDelegate {
             HandDrawnBubble3Element(),
             HandDrawnBubble5Element(),
             HandDrawnBubble4Element()]
-        showComicElementSelectionPane(withElements: speechBubbles)
+        showComicElementSelectionPane(withElements: speechBubbles, collectionName: "Speech bubbles")
         //presentSelectionController(withElements: speechBubbles)
     }
     
@@ -429,7 +433,7 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zaaap")),
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zap")),
             ]
-        showComicElementSelectionPane(withElements: soundEffects)
+        showComicElementSelectionPane(withElements: soundEffects, collectionName: "Sound effects")
         //presentSelectionController(withElements: soundEffects)
     }
     
@@ -440,7 +444,7 @@ extension MainViewController: ComicStripToolbarDelegate {
             filterElements.append(FilterElement(filterIconName: "filter"+String(i) , filter: filter))
             i += 1
         }
-        showComicElementSelectionPane(withElements: filterElements)
+        showComicElementSelectionPane(withElements: filterElements, collectionName: "Filters")
         //presentSelectionController(withElements: filterElements)
     }
     

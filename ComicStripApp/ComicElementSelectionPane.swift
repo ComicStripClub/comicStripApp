@@ -12,6 +12,7 @@ import UIKit
 class ComicElementSelectionPane: UIView
 {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var elementCollectionLabel: UILabel!
     
     var delegate: ComicElementSelectionDelegate?
     
@@ -20,6 +21,11 @@ class ComicElementSelectionPane: UIView
             updateCollectionViewScrollDirection()
             collectionView.reloadData()
         }
+    }
+    
+    func setComicFrameElements(collectionName: String, elementCollection: [ComicFrameElement]){
+        elementCollectionLabel.text = collectionName
+        comicFrameElements = elementCollection
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,7 +100,7 @@ extension ComicElementSelectionPane: UICollectionViewDelegate, UICollectionViewD
         let element = comicFrameElements![indexPath.row]
         let aspectRatio = element.icon.size.width / element.icon.size.height;
         var cellSize = isHorizontalScroll
-            ? CGSize(width: (bounds.height - 20) * aspectRatio, height: bounds.height - 20)
+            ? CGSize(width: (collectionView.bounds.height - 20) * aspectRatio, height: collectionView.bounds.height - 20)
             : CGSize(width: bounds.width / 2 - 10, height: bounds.width / 2 - 10)
         return cellSize
     }
