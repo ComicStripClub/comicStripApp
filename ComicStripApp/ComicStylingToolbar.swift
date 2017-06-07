@@ -22,6 +22,10 @@ protocol ComicStripToolbarDelegate {
 
 @IBDesignable class ComicStylingToolbar: UIView {
 
+    @IBOutlet weak var speechBubbleButton: UIButton!
+    @IBOutlet weak var soundEffectsButton: UIButton!
+    @IBOutlet weak var filtersButton: UIButton!
+    
     enum ComicStylingToolbarMode {
         case noActiveFrame
         case capture
@@ -76,19 +80,32 @@ protocol ComicStripToolbarDelegate {
     @IBAction func didTapGoToCaptureMode(_ sender: Any) {
         delegate?.didTapGoToCaptureMode()
     }
+    
     @IBAction func didTapSpeechBubbleButton(_ sender: Any) {
         delegate?.didTapSpeechBubbleButton()
+        selectButton(button: sender as? UIButton)
     }
     
     @IBAction func didTapSoundEffectsButton(_ sender: Any) {
         delegate?.didTapSoundEffectsButton()
+        selectButton(button: sender as? UIButton)
     }
     
     @IBAction func didTapFilterButtonInCapture(_ sender: Any) {
-    delegate?.didTapStyleButton()
+        delegate?.didTapStyleButton()
     }
     
     @IBAction func didTapStyleButton(_ sender: Any) {
         delegate?.didTapStyleButton()
+        selectButton(button: sender as? UIButton)
+    }
+    
+    func selectButton(button: UIButton?){
+        for btn in [speechBubbleButton, soundEffectsButton, filtersButton]{
+            btn?.isSelected = false
+        }
+        if let btn = button {
+            btn.isSelected = true
+        }
     }
 }

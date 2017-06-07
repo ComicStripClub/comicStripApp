@@ -102,19 +102,27 @@ class ComicFrame: UIView {
     
     private var pictureInput: PictureInput!
     private func updateImageWithCurrentFilter() {
-        if let photo = selectedPhoto {
-            pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
-            let renderView = addProcessedFramePhoto()
-            renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
-
-            if let filter = currentFilter?.value() {
-                pictureInput.addTarget(filter)
-                filter.addTarget(renderView)
-            } else {
-                pictureInput.addTarget(renderView)
+        if let originalPhoto = selectedPhoto {
+            var photo: UIImage = originalPhoto
+            DispatchQueue.global(qos: .userInitiated).async {
+                if (photo.size.width * photo.size.height > 490000){
+                    photo = photo.scaleImageToFitSize(size: CGSize(width: 600, height: 600), onlyScaleDown: true)
+                }
+                DispatchQueue.main.async {
+                    self.pictureInput = PictureInput(image: photo/*, smoothlyScaleOutput: true, orientation: ImageOrientation.fromOrientation(pickedImage.imageOrientation)*/)
+                    let renderView = self.addProcessedFramePhoto()
+                    renderView.orientation = ImageOrientation.fromOrientation(photo.imageOrientation)
+                    
+                    if let filter = self.currentFilter?.value() {
+                        self.pictureInput.addTarget(filter)
+                        filter.addTarget(renderView)
+                    } else {
+                        self.pictureInput.addTarget(renderView)
+                    }
+                    self.pictureInput.processImage(synchronously: false)
+                    self.delegate?.frameStateChanged(self)
+                }
             }
-            pictureInput.processImage(synchronously: false)
-            delegate?.frameStateChanged(self)
         }
     }
     

@@ -76,7 +76,10 @@ class ComicStripPhotoAlbum: NSObject {
         var imgArry = [UIImage]()
         let imageManager = PHCachingImageManager()
         if let result = fetchAssetCollectionForAlbum(){
-            let photoAssets = PHAsset.fetchAssets(in: result, options: nil)
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+
+            let photoAssets = PHAsset.fetchAssets(in: result, options: fetchOptions)
             photoAssets.enumerateObjects({ (object, count, stop) in
                 if object is PHAsset{
                     let asset = object 

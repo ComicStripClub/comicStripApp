@@ -38,6 +38,10 @@ class ComicElementSelectionViewController: UIViewController, UICollectionViewDel
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true;
+        let layout = ComicElementSelectionCollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView.collectionViewLayout = layout
     }
     
     @IBAction func didTapCancelButton(_ sender: Any) {
@@ -60,11 +64,15 @@ class ComicElementSelectionViewController: UIViewController, UICollectionViewDel
 
 }
 
+class ComicElementSelectionCollectionViewFlowLayout: UICollectionViewFlowLayout {
+
+}
+
 extension ComicElementSelectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let element = comicFrameElements![indexPath.row]
-        let width = collectionView.bounds.width / 2 - 10
+        let height = collectionView.bounds.height - 10
         //let itemAspectRatio = element.icon.size.width / element.icon.size.height
-        return CGSize(width: width, height: width)
+        return CGSize(width: height, height: height)
     }
 }

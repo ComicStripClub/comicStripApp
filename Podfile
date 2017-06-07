@@ -7,4 +7,5 @@ target 'ComicStripApp' do
 
   # Pods for ComicStripApp
   pod 'ISHHoverBar'
+  pod 'Fingertips'
 end

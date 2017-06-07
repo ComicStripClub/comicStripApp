@@ -30,8 +30,13 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         get { return false }
     }
     var currentFrameCount = -1;
+    @IBOutlet weak var comicElementSelectionPane: ComicElementSelectionPane!
+    @IBOutlet weak var comicElementSelectionPaneTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var comicStripContainer: ComicStripContainer!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
+    
+    @IBOutlet weak var comicElementSelectionPaneContainer: UIView!
+    
     var currentComicFrame: ComicFrame? { get { return comicStripContainer.selectedFrame } }
     var imagePickerTargetFrame: ComicFrame?
     var comicStrip: ComicStrip!
@@ -60,6 +65,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         super.viewDidLoad()
         comicStripContainer.delegate = self
         comicStylingToolbar.delegate = self
+        comicElementSelectionPane.delegate = self
         imagePicker.delegate = self
 
         handleNavigationBarItem()
@@ -72,6 +78,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         comicStylingToolbar.transform = CGAffineTransform(translationX: 0, y: comicStylingToolbar.bounds.height)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        tapGestureRecognizer.delegate = self
         view.addGestureRecognizer(tapGestureRecognizer)
         
         //currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
@@ -125,6 +132,15 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
         comicStripContainer.selectComicFrame(nil)
+        hideComicElementSelectionPane()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (!touches.contains(where: { (touch) -> Bool in
+            return touch.view?.isDescendant(of: self.comicElementSelectionPane) ?? false
+        })){
+            hideComicElementSelectionPane()
+        }
     }
     
     func handleNavigationBarItem (){
@@ -228,6 +244,30 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
             }, completion: nil)
         }
         comicStylingToolbar.mode = mode
+    }
+    
+    public func showComicElementSelectionPane(withElements comicFrameElements: [ComicFrameElement], collectionName: String){
+        self.comicElementSelectionPane.setComicFrameElements(collectionName: collectionName, elementCollection: comicFrameElements)
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 2.0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPaneContainer.transform = CGAffineTransform(translationX: 0, y: -(self.comicElementSelectionPane.bounds.height + self.comicStylingToolbar.bounds.height))
+        }, completion: nil)
+    }
+    
+    public func hideComicElementSelectionPane(){
+        self.comicStylingToolbar.selectButton(button: nil)
+        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPaneContainer.transform = CGAffineTransform.identity
+        }, completion: nil)
+
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isDescendant(of: self.comicElementSelectionPane) ?? false){
+            return false
+        }
+        return true
     }
 }
 
@@ -361,7 +401,8 @@ extension MainViewController: ComicStripToolbarDelegate {
             HandDrawnBubble3Element(),
             HandDrawnBubble5Element(),
             HandDrawnBubble4Element()]
-        presentSelectionController(withElements: speechBubbles)
+        showComicElementSelectionPane(withElements: speechBubbles, collectionName: "Speech bubbles")
+        //presentSelectionController(withElements: speechBubbles)
     }
     
     func didTapSoundEffectsButton() {
@@ -392,17 +433,19 @@ extension MainViewController: ComicStripToolbarDelegate {
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zaaap")),
             SoundEffectElement(soundEffectImg: #imageLiteral(resourceName: "zap")),
             ]
-        presentSelectionController(withElements: soundEffects)
+        showComicElementSelectionPane(withElements: soundEffects, collectionName: "Sound effects")
+        //presentSelectionController(withElements: soundEffects)
     }
     
     func didTapStyleButton() {
         var filterElements: [ComicFrameElement] = []
-        var i=1
+        var i = 1
         for filter in supportedFilters {
-            filterElements.append(FilterElement(filterIconName:"filter"+String(i) , filter: filter))
+            filterElements.append(FilterElement(filterIconName: "filter"+String(i) , filter: filter))
             i += 1
         }
-        presentSelectionController(withElements: filterElements)
+        showComicElementSelectionPane(withElements: filterElements, collectionName: "Filters")
+        //presentSelectionController(withElements: filterElements)
     }
     
     func didTapGoToCaptureMode() {

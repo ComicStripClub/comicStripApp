@@ -8,12 +8,21 @@
 
 import UIKit
 import CoreData
+import Fingertips
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
+    private var _window: MBFingerTipWindow!
+    var window: UIWindow? {
+        get {
+            if (_window == nil){
+                _window = MBFingerTipWindow(frame: UIScreen.main.bounds)
+                _window.alwaysShowTouches = true
+            }
+            return _window as? UIWindow
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

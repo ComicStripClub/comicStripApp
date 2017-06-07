@@ -1,12 +1,15 @@
 PODS:
+  - Fingertips (0.5.0)
   - ISHHoverBar (1.0.1)
 
 DEPENDENCIES:
+  - Fingertips
   - ISHHoverBar
 
 SPEC CHECKSUMS:
+  Fingertips: 8e557eed25253fcb4bfa25ac4418f8e8add1ad9a
   ISHHoverBar: 44d5161b7c815a60468d181e3ce70fbbfa5bef2a
 
-PODFILE CHECKSUM: 13c4bf07bd683af93d090f822ca69b8ee7aebd04
+PODFILE CHECKSUM: 3f5ccc74419e905fdf910f61fbdfdd45069f6961
 
 COCOAPODS: 1.2.0

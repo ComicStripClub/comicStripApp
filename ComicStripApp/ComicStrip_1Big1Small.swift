@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ComicStrip_1Big1Small: ComicStrip {
-    class var numberOfFrames: Int { get { return 1 } }
+    class var numberOfFrames: Int { get { return 2 } }
     class var frameLayoutBorders: (image: UIImage, size: CGSize) {
         get {
             return (image: #imageLiteral(resourceName: "ComicStripLayout_1b_1sm"), size: CGSize(width: 707, height: 1115))

@@ -19,7 +19,6 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
 //        imgParentView.startRotate()
         showRotateAnimationWithZoomInOut()
-        getStartedButton.isHidden = true
         getStartedButton.layer.cornerRadius = 5.0
         // Do any additional setup after loading the view.
     }
@@ -47,43 +46,30 @@ class SplashViewController: UIViewController {
     
     func showRotateAnimationWithZoomInOut(){
         self.imgParentView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        UIView.animate(withDuration: 1.0, animations: {
-            self.imgParentView.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-        }) { (isZoomOutDone) in
-            if isZoomOutDone{
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.imgParentView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                }, completion: { (isComplete) in
-                    if isComplete{
-//                        self.imgParentView.stopRotate()
-                        self.handleButtonVisisblity()
-                        
-                    }
-                })
-            }
-        }
+        UIView.animate(withDuration: 1.5, delay: 0.15, usingSpringWithDamping: 0.3, initialSpringVelocity: 4.0, options: [], animations: {
+            self.imgParentView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        }, completion: nil)
+        handleButtonVisisblity()
     }
     
     func handleButtonVisisblity(){
-        getStartedButton.isHidden = false
-        getStartedButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        UIView.animate(withDuration: 2.0,
-                       delay: 0,
-                       usingSpringWithDamping: 0.2,
-                       initialSpringVelocity: 6.0,
+        getStartedButton.transform = CGAffineTransform(scaleX: 0, y: 0)
+        UIView.animate(withDuration: 1.5,
+                       delay: 0.3,
+                       usingSpringWithDamping: 0.3,
+                       initialSpringVelocity: 4.0,
                        options: .allowUserInteraction,
-                       animations: { [weak self] in
-                        self?.getStartedButton.transform = .identity
-            },
-                       completion: nil)
+                       animations: {
+                        self.getStartedButton.transform = .identity
+            }, completion: nil)
     }
     
     func animateTitleLable(){
         titleLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        UIView.animate(withDuration: 2.0,
+        UIView.animate(withDuration: 1.5,
                        delay: 0,
-                       usingSpringWithDamping: 0.2,
-                       initialSpringVelocity: 6.0,
+                       usingSpringWithDamping: 0.3,
+                       initialSpringVelocity: 4.0,
                        options: .allowUserInteraction,
                        animations: { [weak self] in
                         self?.titleLabel.transform = .identity
