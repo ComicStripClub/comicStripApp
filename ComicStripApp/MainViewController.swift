@@ -31,6 +31,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     }
     var currentFrameCount = -1;
     @IBOutlet weak var comicElementSelectionPane: ComicElementSelectionPane!
+    @IBOutlet weak var comicElementSelectionPaneTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var comicStripContainer: ComicStripContainer!
     @IBOutlet weak var comicStylingToolbar: ComicStylingToolbar!
     var currentComicFrame: ComicFrame? { get { return comicStripContainer.selectedFrame } }
@@ -61,6 +62,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         super.viewDidLoad()
         comicStripContainer.delegate = self
         comicStylingToolbar.delegate = self
+        comicElementSelectionPane.delegate = self
         imagePicker.delegate = self
 
         handleNavigationBarItem()
@@ -73,6 +75,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         comicStylingToolbar.transform = CGAffineTransform(translationX: 0, y: comicStylingToolbar.bounds.height)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        tapGestureRecognizer.delegate = self
         view.addGestureRecognizer(tapGestureRecognizer)
         
         //currentFilter = (key: "Cartoon", value: supportedFilters["Cartoon"]!)
@@ -126,6 +129,7 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     @objc private func didTapView(_ tapGestureRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
         comicStripContainer.selectComicFrame(nil)
+        hideComicElementSelectionPane()
     }
     
     func handleNavigationBarItem (){
@@ -233,20 +237,25 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
     
     public func showComicElementSelectionPane(withElements comicFrameElements: [ComicFrameElement]){
         self.comicElementSelectionPane.comicFrameElements = comicFrameElements
-        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseOut, animations: { 
-            self.comicElementSelectionPane.center =
-                CGPoint(x: self.comicElementSelectionPane.center.x, y: self.comicStylingToolbar.frame.minY - self.comicElementSelectionPane.bounds.midY)
+        UIView.animate(withDuration: 0.600, delay: 0, options: .curveEaseOut, animations: { 
+            self.comicElementSelectionPane.transform = CGAffineTransform(translationX: 0, y: -(self.comicElementSelectionPane.bounds.height + self.comicStylingToolbar.bounds.height))
         }, completion: nil)
     }
     
     public func hideComicElementSelectionPane(){
-        UIView.animate(withDuration: 0.300, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
-            self.comicElementSelectionPane.center =
-                CGPoint(
-                    x: self.comicElementSelectionPane.center.x,
-                    y: self.comicStylingToolbar.frame.maxY + self.comicElementSelectionPane.bounds.midY)
+        UIView.animate(withDuration: 0.600, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+            self.comicElementSelectionPane.transform = CGAffineTransform.identity
         }, completion: nil)
 
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isDescendant(of: self.comicElementSelectionPane) ?? false){
+            return false
+        }
+        return true
     }
 }
 

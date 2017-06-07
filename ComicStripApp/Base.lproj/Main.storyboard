@@ -92,10 +92,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzO-5b-H3i" customClass="ComicElementSelectionPane" customModule="ComicStripApp" customModuleProvider="target">
-                                <rect key="frame" x="87" y="272" width="240" height="128"/>
+                                <rect key="frame" x="0.0" y="672" width="414" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="cgj-dL-mv3"/>
+                                    <constraint firstAttribute="height" constant="100" id="cgj-dL-mv3"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="j94-Y9-5Wd" customClass="ComicStylingToolbar" customModule="ComicStripApp" customModuleProvider="target">
@@ -108,8 +108,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="qzO-5b-H3i" secondAttribute="trailing" id="0Dd-D9-LOM"/>
-                            <constraint firstItem="qzO-5b-H3i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="9hU-gd-87k"/>
+                            <constraint firstAttribute="trailing" secondItem="qzO-5b-H3i" secondAttribute="trailing" id="0Dd-D9-LOM"/>
+                            <constraint firstItem="qzO-5b-H3i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9hU-gd-87k"/>
                             <constraint firstAttribute="trailing" secondItem="e8f-3c-5jF" secondAttribute="trailing" constant="16" id="LZx-Mn-7Ao"/>
                             <constraint firstItem="e8f-3c-5jF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="NV4-ku-TR2"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qzO-5b-H3i" secondAttribute="top" id="PmK-d2-Hsb"/>
@@ -123,6 +123,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="comicElementSelectionPane" destination="qzO-5b-H3i" id="Tme-HC-QeY"/>
+                        <outlet property="comicElementSelectionPaneTopConstraint" destination="PmK-d2-Hsb" id="Nnt-wT-Mxt"/>
                         <outlet property="comicStripContainer" destination="e8f-3c-5jF" id="IdJ-74-2bB"/>
                         <outlet property="comicStylingToolbar" destination="j94-Y9-5Wd" id="PEI-Rv-S06"/>
                         <segue destination="mY3-f5-Qgw" kind="showDetail" identifier="savesegue" id="a68-ZT-0n9"/>

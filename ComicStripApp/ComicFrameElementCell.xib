@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -27,11 +26,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="0Dp-iE-Y7u">
-                    <rect key="frame" x="34.5" y="0.0" width="107" height="107"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="1LU-MS-Czi"/>
-                        <constraint firstAttribute="width" secondItem="0Dp-iE-Y7u" secondAttribute="height" multiplier="1:1" id="Mrk-YM-1hF"/>
-                    </constraints>
+                    <rect key="frame" x="0.0" y="0.0" width="176" height="107"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-wf-ZSm">
                     <rect key="frame" x="59" y="107" width="58" height="60"/>
@@ -40,6 +35,9 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <constraints>
+                <constraint firstItem="0Dp-iE-Y7u" firstAttribute="width" secondItem="tAX-7n-gvk" secondAttribute="width" id="pb3-lU-21f"/>
+            </constraints>
         </stackView>
     </objects>
 </document>
