@@ -96,11 +96,6 @@ extension ComicElementSelectionPane: UICollectionViewDelegate, UICollectionViewD
         var cellSize = isHorizontalScroll
             ? CGSize(width: (bounds.height - 20) * aspectRatio, height: bounds.height - 20)
             : CGSize(width: bounds.width / 2 - 10, height: bounds.width / 2 - 10)
-        if (element.name != nil) {
-            let cell = collectionView.cellForItem(at: indexPath) as! ComicFrameElementCell
-            let labelSize = cell.nameLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-            cellSize.width = labelSize.width + 10
-        }
         return cellSize
     }
 }

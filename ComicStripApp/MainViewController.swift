@@ -132,6 +132,14 @@ class MainViewController: UIViewController, UIViewControllerTransitioningDelegat
         hideComicElementSelectionPane()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (!touches.contains(where: { (touch) -> Bool in
+            return touch.view?.isDescendant(of: self.comicElementSelectionPane) ?? false
+        })){
+            hideComicElementSelectionPane()
+        }
+    }
+    
     func handleNavigationBarItem (){
         // Changing the navigation controller's title colour
         self.navigationItem.title = ""
