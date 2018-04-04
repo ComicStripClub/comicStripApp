@@ -32,9 +32,8 @@
 [Application wireframes](http://bit.ly/2o21y1o)
 
 ## Video Walkthrough
-
-[TODO: Show video walkthrough of user stories]
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+YouTube demo link:
+https://youtu.be/ivVrlRArm8Q
 
 ## Notes
 
